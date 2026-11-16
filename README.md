@@ -124,19 +124,56 @@ Settings > Updates shows what it is doing and has **Check now**. Download the zi
 [Horizon](https://github.com/horizon-rust/horizon), the MIT-licensed rewrite of Minecraft: Java Edition 26.3 in Rust.
 It speaks the vanilla protocol, so normal Minecraft clients join it as they join any server.
 
-HorizonsX is tuned for player count. Most of its changes produce the same packets in the same order; a few change
-random draws or follow Paper's defaults:
+HorizonsX is tuned for player count.
 
-- **Region threads** (Folia's model): parts of the world far enough apart tick on their own cores. This covers block
-  ticks, mob ticks, natural spawning and random ticks.
-- **One clock on every core:** with `horizonsx-region-threads=false` the whole server keeps one TPS, as on Paper, while
-  each tick's work is still spread over three quarters of the CPU threads. The measurements below use this mode.
-- **Multi-core sending:** chunk encoding and each player's entity tracking run on a shared worker pool.
-- **Paper's defaults:** entity activation range, and an item merge radius of 2.5 blocks.
+### One clock, every core
+
+Normal Minecraft (and Paper) runs on one clock: a single thread does the whole tick, 20 times a second, every mob,
+block, spawn, chunk and player one after the other. However many cores the machine has, that one thread sets the
+limit, and when it can't finish a tick in 50 ms the whole server slows down.
+
+HorizonsX keeps the same game clock, 20 ticks a second and never uncapped, so the game runs at normal speed and the
+server has one TPS, as on Paper. What changes is who does the work inside each tick. The world is split into regions
+far enough apart that they can't touch in one tick, and each region's mobs, blocks, spawning and random ticks run on
+their own core at the same time. The clock waits for every region before the next tick starts, so players and
+plugins still see one server. Sending chunks and tracking what each player can see run on every core too.
+
+| | Vanilla / Paper | HorizonsX |
+|---|---|---|
+| Game clocks | 1, at 20 ticks a second | 1, at 20 ticks a second |
+| Cores doing each tick's work | 1 | three quarters of the CPU threads (12 on a 16-thread CPU) |
+| What sets the limit | the one thread | the busiest region |
+
+This is `horizonsx-region-threads=false` in `server.properties`, and the measurements below use it. With region
+threads on (Folia's model), regions far apart keep their own pace instead of waiting for the slowest one; it uses more
+RAM.
+
+### More improvements
+
+- **Crowds of mobs:** a region with thousands of mobs splits further into 128-block cells, ticked in four rounds
+  across the cores (Folia ticks a region on one core). Measured with about 5,000 mobs in one region: 44.8 to 27.5 ms.
+- **Idle mobs:** a mob more than 32 blocks from every player, on the ground with nothing happening to it, ticks one
+  tick in eight (Paper's entity activation range).
+- **Spawning:** a large spawn area spawns in 8x8-chunk tiles across the cores, with mob caps still exact; it finds the
+  players near a chunk with a grid instead of checking every player.
+- **Dropped items:** each item's own tick runs on every core, then merges happen in vanilla's order; items merge
+  within 2.5 blocks, as on Paper.
+- **Sending:** all of a tick's packets to a player go out in one write; chunks are encoded on several cores with a
+  shared cache, and at most 8 new chunks a tick go to each player, so someone landing on new land doesn't stall the
+  tick for everyone.
+- **Locator bar:** each player's waypoints are indexed (vanilla rechecks every pair, which grows with the cube of the
+  player count).
+- **One work queue:** every parallel job goes on one queue; whichever thread is free takes the largest job left.
+- **Smaller savings:** a chunk batch reads each neighbouring chunk once, and the tick queues use a faster hash.
+- **Safe by design:** the engine forbids `unsafe` Rust; the parts that run in parallel only read data the compiler
+  proves thread-safe.
 - **Rust plugins hot-reload:** drop a `.dll` into `plugins/` while the server runs, with no restart.
 - **The Paper plugin layer** ([`horizonsx/plugin-layer/`](horizonsx/plugin-layer)): the Paper API surface plugins
   call (events, commands, scheduler, permissions, inventories, boss bars, scoreboards), wired into the engine's hook
   points.
+
+Most of these produce the same packets in the same order as vanilla; a few change random draws or follow Paper's
+defaults, and each one has a switch that turns it off.
 
 **Measured** on an AMD Ryzen 7 7800X3D (8 cores) with 64 GB of RAM and an RTX 3060 Ti, Windows 11, one clock, walking
 players spread over the map with live mob spawning:
