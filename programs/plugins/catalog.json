@@ -1,5 +1,6 @@
 [
   {"file": "playit_rs.dll", "name": "playit.gg", "description": "A public address with no port forwarding; friends keep their real IP", "built_in": true},
+  {"file": "network_rs.dll", "name": "Network", "description": "/server and /hub for the servers of a network (put in for you on the Network page)"},
   {"file": "essentials_bundle.dll", "name": "EssentialsX", "description": "Homes, warps, kits, /spawn, chat formats, money and 100+ everyday commands"},
   {"file": "luckperms_rs.dll", "name": "LuckPerms", "description": "Ranks and permissions: who may use which commands"},
   {"file": "coreprotect_rs.dll", "name": "CoreProtect", "description": "Logs every block change; roll back griefing"},
