@@ -1,4 +1,4 @@
-HORIZONX 0.3.0 for Windows (64-bit)
+HORIZONX 0.3.1 for Windows (64-bit)
 
 Start
   1. Unzip this folder anywhere you like, for example Documents\HorizonX.
@@ -20,6 +20,9 @@ Friends joining from anywhere
   Turn playit off on a server's Plugins page if you don't want one.
 
 Plugins
+  28 plugins written in Rust come built in: pick them while making a server,
+  or add them later on its Plugins page (EssentialsX, LuckPerms, CoreProtect,
+  WorldEdit, Multiverse, mcMMO, Jobs, ChestShop, TAB and more).
   Search Modrinth on the Plugins page and click Add, or click "Add a .jar" for
   a Paper or Spigot plugin you already have. The Java layer and its own Java 25
   runtime come with HorizonX; it has its own switch on each server.

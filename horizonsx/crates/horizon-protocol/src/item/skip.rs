@@ -364,6 +364,14 @@ fn tool(r: &mut Reader) -> Result<()> {
     varint(r)?;
     boolean(r)
 }
+/// `Equippable.assetId` from an equippable component's bytes: the equipment asset whose
+/// layers a worn piece draws (an item's own, not its prototype's, as `HumanoidArmorLayer` reads it).
+pub(super) fn equippable_asset(bytes: &[u8]) -> Option<String> {
+    let mut r = Reader::new(bytes);
+    r.varint().ok()?;
+    sound(&mut r).ok()?;
+    if r.bool().ok()? { r.string(32767).ok() } else { None }
+}
 /// Equippable: slot, equipSound, assetId, cameraOverlay, allowedEntities, dispensable,
 /// swappable, damageOnHurt, equipOnInteract, canBeSheared, shearingSound.
 fn equippable(r: &mut Reader) -> Result<()> {
