@@ -1,15 +1,11 @@
 """A private test server (the "rig": <workspace>/parity/jobs/server on :25797) as tools: build a plugin and hot-drop it, see items in game with
-their tooltips, rejoin after a pack change, and put server-pack icons on items. All with the muted offscreen
+their tooltips, and rejoin after a pack change. All with the muted offscreen
 "Tester" client (<workspace>/parity/pwarps/pw.py), which is closed again when a call is done.
 
     rig_drop(crate)                       build plugin-ports/<crate> and hot-drop it onto the rig
     rig_shots(commands, item, name)       run commands as Tester, hover every matching item, screenshot each
     rig_rejoin()                          reconnect and wait for the server packs to finish loading
-    rig_pack_icons(icons)                 add zenith-pack icons to the rig pack as zenith:<key> item models
 """
-import hashlib
-import io
-import json
 import os
 import pathlib
 import re
@@ -17,7 +13,6 @@ import shutil
 import subprocess
 import sys
 import time
-import zipfile
 
 import workspace
 
@@ -28,10 +23,6 @@ PLUGINS = RIG / 'plugins'
 PW_DIR = HORIZON / 'parity' / 'pwarps'
 SHOTS = PW_DIR / 'shots' / 'rig'
 PACK_DIR = HORIZON / 'parity' / 'jobs' / 'packsrv'
-RIG_PACK = PACK_DIR / 'relic-pack.zip'
-BASE_PACK = PACK_DIR / 'zenithbackpacks-pack-3d-sel.zip'
-ZENITH_PACK = HORIZON / 'parity' / 'axpw' / 'pack' / 'zenith-pack.zip'
-PACK_CONFIG = PLUGINS / 'ZenithBackpacks' / 'config.yml'
 ADDRESS = '127.0.0.1:25797'
 TMP = pathlib.Path(os.environ.get('HORIZON_TMP') or HORIZON / 'tmp')
 
@@ -185,61 +176,9 @@ def rig_shots(commands, item='', name='shot', crop=True, close=True, fill_hotbar
     return {'slots': slots, 'shots': paths, 'tip': 'items in hotbar slots get cut off: put them in slots 9-35 (set_item_at) for full tooltips'}
 
 
-def rig_pack_icons(icons):
-    """Put zenith-pack icons on the rig as item models. `icons` = `key=path` pairs, comma-separated, e.g.
-    `relic_pearl=dcss/amulet/pearl, relic_jade=dcss/amulet/jade` -> item_model `zenith:relic_pearl`. Keeps the
-    icons already added, points the rig's pack at the new zip, and reloads it."""
-    pairs = [p.split('=', 1) for p in icons.replace('\n', ',').split(',') if '=' in p]
-    if not pairs:
-        return {'error': 'give key=path pairs, e.g. relic_pearl=dcss/amulet/pearl'}
-    from PIL import Image
-    src = zipfile.ZipFile(ZENITH_PACK)
-    names = set(src.namelist())
-    have = {}
-    if RIG_PACK.exists():
-        old = zipfile.ZipFile(RIG_PACK)
-        have = {n: old.read(n) for n in old.namelist() if n.startswith('assets/zenith/')}
-        old.close()
-    added, missing = [], []
-    for key, path in ((k.strip(), v.strip().removesuffix('.png')) for k, v in pairs):
-        tex = f'assets/zenith/textures/item/{path}.png'
-        if tex not in names:
-            missing.append(path)
-            continue
-        im = Image.open(io.BytesIO(src.read(tex))).convert('RGBA')
-        buf = io.BytesIO()
-        im.save(buf, 'PNG')
-        # Flat ids: one folder level, the same shape as every other working icon.
-        have[f'assets/zenith/textures/item/{key}.png'] = buf.getvalue()
-        have[f'assets/zenith/models/item/{key}.json'] = json.dumps({'parent': 'minecraft:item/generated', 'textures': {'layer0': f'zenith:item/{key}'}}).encode()
-        have[f'assets/zenith/items/{key}.json'] = json.dumps({'model': {'type': 'minecraft:model', 'model': f'zenith:item/{key}'}}).encode()
-        added.append(f'zenith:{key}')
-    base = zipfile.ZipFile(BASE_PACK)
-    tmp = RIG_PACK.with_suffix('.tmp')
-    with zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as out:
-        for n in base.namelist():
-            out.writestr(n, base.read(n))
-        for n, data in sorted(have.items()):
-            out.writestr(n, data)
-    base.close()
-    tmp.replace(RIG_PACK)
-    sha = hashlib.sha1(RIG_PACK.read_bytes()).hexdigest()
-    cfg = PACK_CONFIG.read_text(encoding='utf-8')
-    cfg = re.sub(r'(url: "http://127\.0\.0\.1:8174/)[^"]+(")', r'\1relic-pack.zip\2', cfg)
-    cfg = re.sub(r'(sha1: ")[0-9a-f]{40}(")', rf'\g<1>{sha}\2', cfg, count=1)
-    PACK_CONFIG.write_text(cfg, encoding='utf-8', newline='')
-    pw = _pw()
-    _client_up(pw)
-    pw.c('command', 'zenithbackpacksadmin reload')
-    time.sleep(2)
-    joined = rig_rejoin()
-    return {'added': added, 'missing': missing, 'pack': str(RIG_PACK), 'sha1': sha, 'rejoin': joined,
-            'browse': 'icons to pick from: <workspace>/parity/relic/relic_icons.png (+ relic_icons.txt)'}
-
 
 TOOLS = {
     'rig_drop': (rig_drop, 'Build a plugin crate (plugin-ports/<crate>) and hot-drop its DLL onto the private test server (the jobs rig :25797) with a fresh file time. Errors come back as file:line.', {'crate': 'string', 'release': 'boolean'}),
     'rig_shots': (rig_shots, 'See items in game: on the rig, as the muted offscreen Tester (op), clear the inventory (hotbar filled so gives land where tooltips fit), run `;`-separated commands, open the inventory, hover each slot with `item` (e.g. clock) and screenshot every tooltip. Gives image paths cropped to each tooltip; closes the client after.', {'commands': 'string', 'item': 'string', 'name': 'string', 'crop': 'boolean', 'close': 'boolean', 'fill_hotbar': 'boolean'}),
     'rig_rejoin': (rig_rejoin, 'Reconnect the rig Tester client and wait for server packs to load (after any server pack change: a change during a join can leave the client on old packs).', {}),
-    'rig_pack_icons': (rig_pack_icons, 'Put zenith-pack icons on the rig as item models: `key=path` pairs (relic_pearl=dcss/amulet/pearl) -> item_model zenith:<key>; rebuilds the rig pack, updates its sha1, reloads and rejoins.', {'icons': 'string'}),
 }

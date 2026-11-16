@@ -84,7 +84,7 @@ fn custom_item() -> ItemStack {
     let mut s = ItemStack::new(Material::of("CLOCK"), 1);
     item::name(&mut s, "<#86efac><bold>Hearthroot Relic</bold> <#60a5fa>★★★<#3f3f46>★★");
     item::lore(&mut s, &["".to_owned(), "<#86efac>┃ <#d4d4d8>Walk across your farms.".to_owned()]);
-    s.set_component("minecraft:item_model", json!("zenith:relic_filigree")); // an items/<id>.json in the server pack
+    s.set_component("minecraft:item_model", json!("myserver:relic_filigree")); // an items/<id>.json in the server pack
     s.set_component("minecraft:enchantment_glint_override", json!(true));
     s.set_component("minecraft:max_stack_size", json!(1));
     s.set_component("minecraft:tooltip_display", json!({ "hidden_components": ["minecraft:enchantments"] }));

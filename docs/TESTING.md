@@ -22,7 +22,6 @@ The tools expect this layout in your workspace (`HORIZON_WORKSPACE`, default `~/
 | Build and install | `rig_drop myplugin_rs` | `cargo build --release` in `<workspace>/plugin-ports/myplugin_rs`, then copies the DLL in with a fresh time so the server swaps it in. Build errors come back as `file:line` |
 | See items in game | `rig_shots "give Tester diamond; hitems give Tester relic" clock relic` | Clears the inventory, fills the hotbar so new items land where tooltips fit, runs the commands, hovers every matching item and saves one screenshot per tooltip, cropped to the tooltip |
 | After changing the pack | `rig_rejoin` | Reconnects and waits for the server packs to load |
-| Add pack icons | `rig_pack_icons "relic_pearl=dcss/amulet/pearl"` | Copies icons from the icon pack into the test pack as `zenith:<key>` item models, updates the pack's sha1 and reloads |
 
 The client is closed after each call (and any copy left running is stopped by its process id), so nothing keeps
 playing sound or using memory in the background.

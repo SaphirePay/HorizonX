@@ -83,7 +83,6 @@ Build, hot-drop, look at items in game, and check a server. The rig tools need t
 | `rig_drop` | `crate`, `release` | Build a plugin crate (plugin-ports/<crate>) and hot-drop its DLL onto the private test server (the jobs rig :25797) with a fresh file time. Errors come back as file:line. |
 | `rig_shots` | `commands`, `item`, `name`, `crop`, `close`, `fill_hotbar` | See items in game: on the rig, as the muted offscreen Tester (op), clear the inventory (hotbar filled so gives land where tooltips fit), run `;`-separated commands, open the inventory, hover each slot with `item` (e.g. clock) and screenshot every tooltip. Gives image paths cropped to each tooltip; closes the client after. |
 | `rig_rejoin` | - | Reconnect the rig Tester client and wait for server packs to load (after any server pack change: a change during a join can leave the client on old packs). |
-| `rig_pack_icons` | `icons` | Put zenith-pack icons on the rig as item models: `key=path` pairs (relic_pearl=dcss/amulet/pearl) -> item_model zenith:<key>; rebuilds the rig pack, updates its sha1, reloads and rejoins. |
 | `rig_doctor` | - | Why a test server would not start or would refuse a DLL, before a test finds out: prepared game files, engine build age, who is on. |
 | `check_start` | `kind` | Start a check in the background: fast (conformance and the event comparison, about 4 minutes), full (those with parity and the proof, about 8 minutes), events, conformance, probe, parity or proof. |
 | `check_status` | `lines` | How the check from check_start stands. |

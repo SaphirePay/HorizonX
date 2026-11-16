@@ -1,8 +1,10 @@
-//! The network's dark menu window, for every plugin: the server pack (ZenithBackpacks' pack) draws a window for each
-//! chest size (font `zbackpacks:gui`, `\u{E011}`..`\u{E016}` for 1-6 rows). Players who loaded the pack get it, with
-//! the title in white; everyone else gets the game's own window. Was a copy in each plugin; now one module.
+//! A themed menu window for every plugin, drawn by your server's resource pack: a font glyph per chest size
+//! (`first`..`first + 5` for 1-6 rows). Players who loaded the pack get it, with the title in white; everyone else
+//! gets the game's own window. Off until a server gives its pack with `set_style` (then everyone gets the game's
+//! window, menus still work).
 //!
 //! ```ignore
+//! horizon_kit::window::set_style(Style { pack_id, url, sha1, font: "myserver:gui".into(), enabled: true, ..Default::default() });
 //! horizon_kit::window::install(plugin);                 // on_enable
 //! let mut m = horizon_kit::window::menu(&p, 6, "<b>Kits");
 //! m.button(22, theme::item(...), |c| ...);
@@ -23,7 +25,10 @@ use std::time::Instant;
 /// The pack and its window glyphs.
 #[derive(Clone, Debug)]
 pub struct Style {
+    /// The pack's id (a UUID, dashes or not) and where players download it.
     pub pack_id: String,
+    pub url: String,
+    pub sha1: String,
     pub font: String,
     /// The glyph of a 1-row window; 2..6 rows follow it.
     pub first: u32,
@@ -36,7 +41,17 @@ pub struct Style {
 
 impl Default for Style {
     fn default() -> Self {
-        Style { pack_id: "5a1f0c3e2b7d4c919e4a7b3d2f6a8c10".into(), font: "zbackpacks:gui".into(), first: 0xE011, before: '\u{E001}', after: '\u{E002}', enabled: true }
+        // No pack of its own: off until a server sets one.
+        Style {
+            pack_id: String::new(),
+            url: String::new(),
+            sha1: String::new(),
+            font: String::new(),
+            first: 0xE011,
+            before: '\u{E001}',
+            after: '\u{E002}',
+            enabled: false,
+        }
     }
 }
 
@@ -86,13 +101,9 @@ fn status(e: &mut PlayerResourcePackStatusEvent) {
     }
 }
 
-/// Who already has the pack (after a reload): this plugin's saved list and ZenithBackpacks' one.
+/// Who already has the pack (after a reload): this plugin's saved list.
 fn restore() {
-    let mut text = std::fs::read_to_string(app::folder().join(".pack-loaded")).unwrap_or_default();
-    if let Some(zb) = app::folder().parent().map(|f| f.join("ZenithBackpacks").join(".pack-loaded")) {
-        text.push('\n');
-        text.push_str(&std::fs::read_to_string(zb).unwrap_or_default());
-    }
+    let text = std::fs::read_to_string(app::folder().join(".pack-loaded")).unwrap_or_default();
     let online: HashSet<String> = horizon_bukkit::get_online_players().iter().map(|p| p.get_unique_id()).collect();
     let set: HashSet<String> = text.lines().map(str::trim).filter(|u| online.contains(*u)).map(str::to_owned).collect();
     LOADED.lock().unwrap_or_else(|e| e.into_inner()).get_or_insert_with(HashSet::new).extend(set);
@@ -114,12 +125,11 @@ pub fn forget(uuid: &str) {
     }
 }
 
-/// The pack ZenithBackpacks offers (its config's resource-pack url and sha1).
+/// The pack set with `set_style` (its download url and sha1).
 fn pack() -> Option<(String, String)> {
-    let file = app::folder().parent()?.join("ZenithBackpacks").join("config.yml");
-    let c = crate::config::Config::parse(&std::fs::read_to_string(file).ok()?);
-    let url = c.str("resource-pack.url", "").trim().to_owned();
-    let sha = c.str("resource-pack.sha1", "").trim().to_ascii_lowercase();
+    let s = style();
+    let url = s.url.trim().to_owned();
+    let sha = s.sha1.trim().to_ascii_lowercase();
     (!url.is_empty() && sha.len() == 40).then_some((url, sha))
 }
 
