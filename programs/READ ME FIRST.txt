@@ -1,0 +1,39 @@
+HORIZONX 0.3.0 for Windows (64-bit)
+
+Start
+  1. Unzip this folder anywhere you like, for example Documents\HorizonX.
+  2. Double-click HorizonX.exe.
+  3. Click "Make a server" and follow the five steps.
+
+Nothing else needs to be installed. The server engine (HorizonsX) and its
+network proxy, the built-in plugins, the Java layer with a Java runtime, and
+the Visual C++ runtime are all in this folder.
+
+The first time
+  HorizonX prepares the Minecraft 26.3 server files from your own copy of
+  Minecraft: Java Edition. Play 26.3 once on this PC first. This takes a few
+  minutes and happens only once.
+
+Friends joining from anywhere
+  Every server gets a public address through playit.gg, with no port
+  forwarding. The first time, HorizonX shows a link to claim the address.
+  Turn playit off on a server's Plugins page if you don't want one.
+
+Plugins
+  Search Modrinth on the Plugins page and click Add, or click "Add a .jar" for
+  a Paper or Spigot plugin you already have. The Java layer and its own Java 25
+  runtime come with HorizonX; it has its own switch on each server.
+
+Updates
+  HorizonX updates itself from GitHub: it checks when it opens and every 6
+  hours, then downloads, checks and installs the new version on its own.
+  Running servers keep running and use the new engine at their next restart.
+  You don't need to download this zip again.
+
+Folder contents
+  HorizonX.exe              the app
+  engines\horizonsx\        the HorizonsX server engine and horizon-proxy
+  plugins\                  plugins HorizonX can install with one click
+  java\                     the Java layer for Paper/Spigot plugins, and Java 25
+                            (Eclipse Temurin, GPLv2 with Classpath Exception)
+  vcruntime140*.dll         Microsoft Visual C++ runtime (redistributable)

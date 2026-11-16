@@ -1,0 +1,3 @@
+# The compiled programs are kept exactly as built: no line-ending changes.
+programs/** -text
+programs/README.md text

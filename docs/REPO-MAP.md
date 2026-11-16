@@ -4,6 +4,7 @@ What every top-level folder holds, and where to look for what.
 
 ```
 HorizonX/
+  programs/      Every compiled program, ready to run (HorizonX.exe, the engine, the proxy, plugins, Java layer)
   host/          HorizonX, the desktop app (setup wizard, dashboard, server pages)
   app/           horizonx-core: the app's engine room (servers, downloads, plugins, playit, updates)
   horizonsx/     HorizonsX, the server engine (a fork of Horizon)

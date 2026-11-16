@@ -17,10 +17,11 @@
 Run your own Minecraft: Java Edition 26.3 server on your PC in a few clicks. Friends join from anywhere with no port
 forwarding.
 
-This repository holds four parts that work together:
+This repository holds four parts that work together, and every program built from them:
 
 | Part | Folder | What it is |
 |---|---|---|
+| **Programs** | [`programs/`](programs) | Every compiled program in one folder, ready to run: the app, the engine, the proxy, the plugins and the Java layer |
 | [HorizonX](#horizonx) | [`host/`](host), [`app/`](app) | The server program: a setup wizard and a dashboard for every server on the PC |
 | [HorizonsX](#horizonsx) | [`horizonsx/`](horizonsx) | The server engine, a fork of Horizon tuned for many players |
 | [SDK](#sdk) | [`sdk/`](sdk) | Write server plugins in Rust with the Bukkit/Paper API you already know |
@@ -31,6 +32,9 @@ This repository holds four parts that work together:
 1. Download **`HorizonX-0.3.0-windows-x64.zip`** from [the latest release](https://github.com/SaphirePay/HorizonX/releases/latest).
 2. Unzip it anywhere.
 3. Double-click **`HorizonX.exe`**.
+
+The same programs are in [`programs/`](programs) in this repository: clone it or download it as a zip, then run
+`programs/HorizonX.exe`. [programs/README.md](programs/README.md) lists what each file is.
 
 There is nothing else to install. The zip carries the app, the HorizonsX engine and its network proxy, the built-in
 plugins, the Java layer with its own Java 25 runtime, and the Visual C++ runtime.
