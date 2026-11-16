@@ -49,7 +49,40 @@ Paper's load order, as on Paper. The Paper engine's files are only read.
 - The serial mob and random-tick loops stay as the base commit wrote them, so the port's rows find
   them; the multi-core paths run first and leave them nothing to tick.
 
-## Measured (7800X3D, quiet machine, 11-04)
+## Measured (11-15, the build in this repository)
+
+**Test PC:** AMD Ryzen 7 7800X3D (8 cores, 16 threads), 64 GB of RAM, NVIDIA GeForce RTX 3060 Ti, Windows 11. The
+bots ran on the same PC, and the numbers are the server's own report. Runs were repeated whenever another program
+compiled during them.
+
+**Setup:** `horizonsx-region-threads=false` (one clock: see below), walking bots in groups of 5 at homes 512 blocks
+apart on a pre-generated world, mob spawning as on a live survival server (monster cap 45, spawn attempts every 2
+ticks), 60 s warm-up, 20 s to settle, then 15 s measured:
+`python -I tools/v2/ramp.py NAME --mode spread --group 5 --start 300 --step 50 --max 500`.
+
+| Players | TPS | ms a tick (average) | p99 | Worst tick | RAM | CPU in use |
+|---|---|---|---|---|---|---|
+| 300 | 20.0 | 28.3 | 59 ms | 111 ms | 3.7 GB | 5.5 cores |
+| 400 | 20.0 | 37.9-38.5 | 63-82 ms | 141-169 ms | 4.4 GB | 7.3-7.5 cores |
+| 450 | 20.0 | 45.6 | 139 ms | 193 ms | 5.0 GB | 8.5 cores |
+| 500 | 19.2 | 51.9 | 96 ms | 202 ms | 5.4 GB | 9.3 cores |
+
+The 400-player row is the range of four runs. A tick has 50 ms; 400 players leave about 12 ms of it spare.
+
+**One clock** (`horizonsx-region-threads=false` in `server.properties`): the whole server keeps one TPS, as on Paper,
+and no part of the world runs ahead or falls behind. Each tick's work still goes over the cores, as Pumpkin does it:
+the level's regions are ticked by a few region games at once (three quarters of the hardware threads: 12 on the
+7800X3D), and every tick waits for all of them. This is the mode measured above. With region threads on, each
+region keeps its own TPS (Folia's model). `HORIZON_REGION_THREADS=0` is the one-thread server.
+
+Where the 400-player tick goes (about 38 ms): the slowest region game about 26 ms (natural spawning, block ticks,
+mobs, entity tracking, chunks), plus about 10-12 ms of serial work on the main thread. Every 100 ticks the resident
+regions land back on the main thread, which makes that one tick about 135 ms.
+
+## Earlier measurements (11-04, an older build with region threads on)
+
+Kept for comparison; the numbers above replace them.
+
 
 100 players spread over the map (`bench.py NAME 100 --behaviour walk --spread 512:5`, 60 s warm-up, 60 s
 measured): 20.0 TPS, 47 ms a tick, p99 69 ms, 1.55 GB. With a third of them flying non-stop over new land

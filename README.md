@@ -108,7 +108,9 @@ HorizonsX is tuned for player count. Most of its changes produce the same packet
 random draws or follow Paper's defaults:
 
 - **Region threads** (Folia's model): parts of the world far enough apart tick on their own cores. This covers block
-  ticks, mob ticks, natural spawning and random ticks. Turn it off for one vanilla-order tick.
+  ticks, mob ticks, natural spawning and random ticks.
+- **One clock on every core:** with `horizonsx-region-threads=false` the whole server keeps one TPS, as on Paper, while
+  each tick's work is still spread over three quarters of the CPU threads. The measurements below use this mode.
 - **Multi-core sending:** chunk encoding and each player's entity tracking run on a shared worker pool.
 - **Paper's defaults:** entity activation range, and an item merge radius of 2.5 blocks.
 - **Rust plugins hot-reload:** drop a `.dll` into `plugins/` while the server runs, with no restart.
@@ -116,7 +118,16 @@ random draws or follow Paper's defaults:
   call (events, commands, scheduler, permissions, inventories, boss bars, scoreboards), wired into the engine's hook
   points.
 
-**Measured:** 100 players spread over the map, on a Ryzen 7 7800X3D: 20.0 TPS, 47 ms per tick, p99 69 ms, 1.55 GB.
+**Measured** on an AMD Ryzen 7 7800X3D (8 cores) with 64 GB of RAM and an RTX 3060 Ti, Windows 11, one clock, walking
+players spread over the map with live mob spawning:
+
+| Players | TPS | ms a tick | p99 | RAM |
+|---|---|---|---|---|
+| 300 | 20.0 | 28 | 59 ms | 3.7 GB |
+| 400 | 20.0 | 38 | 63-82 ms | 4.4 GB |
+| 500 | 19.2 | 52 | 96 ms | 5.4 GB |
+
+How it was measured, and every step from 300 to 500 players: [`horizonsx/docs/v2/README.md`](horizonsx/docs/v2/README.md#measured-11-15-the-build-in-this-repository).
 
 Every change, what it differs from vanilla and the switch that turns it off are in
 [`horizonsx/docs/v2/README.md`](horizonsx/docs/v2/README.md). Upstream Horizon's own README is
