@@ -327,7 +327,7 @@ impl HostApp {
             })
             .when(replaces, |d| d.child(ui::text(12., FontWeight::NORMAL, ink::QUIET).mt(px(12.)).child(if f.backup { "Takes the place of this server's backup schedule." } else { "Takes the place of this server's restart schedule." })))
             .child(div().flex().mt(px(18.)).child(add))
-            .child(ui::text(11.5, FontWeight::NORMAL, ink::FAINT).mt(px(10.)).child(if f.backup { "Backups run while the server runs." } else { "Restarts run while Horizon Host is open." }))
+            .child(ui::text(11.5, FontWeight::NORMAL, ink::FAINT).mt(px(10.)).child(if f.backup { "Backups run while the server runs." } else { "Restarts run while HorizonX is open." }))
     }
 
     fn add_rule(&mut self) {

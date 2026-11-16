@@ -26,6 +26,7 @@ pub enum SettingsTab {
     Servers,
     Network,
     Java,
+    Ai,
     Updates,
     About,
 }
@@ -69,6 +70,12 @@ pub struct PageState {
     pub confirm: Option<String>,
     /// Plugin changes on a running server that wait for its restart, by server.
     pub pending: std::collections::HashMap<PathBuf, std::collections::BTreeSet<String>>,
+    /// Plugins: the Modrinth search and its results.
+    pub market: crate::plugins_page::Market,
+    /// The Network page.
+    pub net: crate::network_page::NetState,
+    /// Settings > AI assistants: which clients have HorizonX (read when the tab opens and after Connect).
+    pub ai: Option<Vec<bool>>,
 }
 
 impl HostApp {
@@ -78,6 +85,7 @@ impl HostApp {
             Page::Servers => self.servers_page(cx),
             Page::Players => self.players_page(cx),
             Page::Plugins => self.plugins_page(cx),
+            Page::Network => self.network_page(cx),
             Page::Backups => self.backups_page(cx),
             Page::Schedules => self.schedules_page(cx),
             Page::Settings => self.settings_page(cx),
@@ -101,6 +109,7 @@ impl HostApp {
                     self.load_details(&d);
                 }
             }
+            Page::Network => self.net_poll(true),
             Page::Backups => {
                 for d in dirs {
                     self.load_backups(&d);

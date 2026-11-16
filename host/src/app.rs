@@ -1,4 +1,4 @@
-//! Horizon Host's window: its state, the work done off the UI thread, and the frame every view sits in (the
+//! HorizonX's window: its state, the work done off the UI thread, and the frame every view sits in (the
 //! pixel-sunset scene behind frosted plates, the sidebar beside the page).
 use crate::frame::Page;
 use crate::line_edit::{self, Key, LineEdit};
@@ -33,6 +33,12 @@ pub enum Field {
     AddPlayer,
     /// A message to the player chosen on the Players page.
     Message,
+    /// Plugins: the Modrinth search.
+    PluginSearch,
+    /// Network: the name of a new network, the address players join with, the server list message.
+    NetName,
+    NetAddress,
+    NetMotd,
 }
 
 /// What the background tells the window.
@@ -63,6 +69,14 @@ pub enum Ev {
     Stats(PathBuf, Stats),
     /// A player's face (by UUID), from their skin.
     Face(String, Option<Vec<[u8; 4]>>),
+    /// Modrinth's plugins for a search: (query, offset, the page).
+    Market(String, usize, Result<horizon_launcher::plugin_market::Results, String>),
+    /// A Modrinth plugin put into servers: (servers, the plugin's title, what each install said).
+    MarketDone(Vec<PathBuf>, String, Vec<Result<horizon_launcher::plugin_market::Installed, String>>),
+    /// The network's state, read in the background.
+    Net(Box<crate::network_page::NetSnapshot>),
+    /// A network action finished, with what to tell.
+    NetDone(Result<String, String>),
 }
 
 /// A setup step's state.
@@ -109,6 +123,8 @@ pub struct HostApp {
     sampled: Option<Instant>,
     pc_read: Option<Instant>,
     update_checked: Option<Instant>,
+    /// The updater's state last drawn (`update::generation`).
+    update_seen: u64,
     restored: bool,
     pub copied: Option<(String, Instant)>,
     pub note: Option<(String, Instant)>,
@@ -175,9 +191,10 @@ impl HostApp {
             sampled: None,
             pc_read: None,
             update_checked: None,
+            update_seen: 0,
             restored: false,
             copied: None,
-            note: crate::update::settle().then(|| (format!("Horizon Host updated to {}.", env!("CARGO_PKG_VERSION")), Instant::now())),
+            note: crate::update::settle().then(|| (format!("HorizonX updated to {}.", env!("CARGO_PKG_VERSION")), Instant::now())),
             busy: HashMap::new(),
             tour: crate::demo::on().then(crate::demo::Tour::new),
             root,
@@ -196,9 +213,14 @@ impl HostApp {
                     "servers" => Some(Page::Servers),
                     "players" => Some(Page::Players),
                     "plugins" => Some(Page::Plugins),
+                    "network" => Some(Page::Network),
                     "backups" => Some(Page::Backups),
                     "schedules" => Some(Page::Schedules),
                     "settings" => Some(Page::Settings),
+                    "settings-ai" => {
+                        app.pages.settings_tab = crate::pages::SettingsTab::Ai;
+                        Some(Page::Settings)
+                    }
                     _ => None,
                 };
                 if let Some(p) = page {
@@ -221,6 +243,11 @@ impl HostApp {
                 app.pages.chart_server = Some(e.dir.clone());
                 app.load_details(&e.dir);
             }
+        }
+        // `HORIZON_HOST_SEARCH=shop`: that Modrinth search on the Plugins page, for screenshots.
+        if let Ok(q) = std::env::var("HORIZON_HOST_SEARCH") {
+            app.set_text(Field::PluginSearch, &q);
+            app.market_search(0);
         }
         if let Ok(name) = std::env::var("HORIZON_HOST_SERVER") {
             if let Some(e) = app.list.iter().find(|e| e.name == name).cloned() {
@@ -259,7 +286,11 @@ impl HostApp {
             self.pc = stats::pc().or(self.pc);
             changed = true;
         }
-        // A newer Horizon Host waiting beside this one: swap to it (not in the middle of setting a server up).
+        if crate::update::generation() != self.update_seen {
+            self.update_seen = crate::update::generation();
+            changed = true;
+        }
+        // A newer HorizonX waiting beside this one: swap to it (not in the middle of setting a server up).
         if self.update_checked.is_none_or(|t| t.elapsed() > Duration::from_secs(5)) && !matches!(self.view, View::Wizard | View::Setup) {
             self.update_checked = Some(Instant::now());
             if crate::update::pending() {
@@ -445,6 +476,10 @@ impl HostApp {
                 Err(e) => self.setup.error = Some(e),
             },
             Ev::Note(n) => self.note = Some((n, Instant::now())),
+            Ev::Market(q, offset, r) => self.market_event(q, offset, r),
+            Ev::MarketDone(dirs, title, results) => self.market_done(dirs, title, results),
+            Ev::Net(s) => self.net_event(s),
+            Ev::NetDone(r) => self.net_done(r),
             Ev::Config(dir, config, note) => {
                 self.dash.config_loading = false;
                 if let Some(c) = config {
@@ -478,7 +513,7 @@ impl HostApp {
         cx.notify();
     }
 
-    /// Starts the servers that were running when Horizon Host last closed (once, when it opens), and remembers
+    /// Starts the servers that were running when HorizonX last closed (once, when it opens), and remembers
     /// which run now.
     fn restore_and_remember(&mut self) {
         let running: Vec<PathBuf> = self.list.iter().filter(|e| self.status.get(&e.dir).is_some_and(|s| s.running())).map(|e| e.dir.clone()).collect();
@@ -693,7 +728,9 @@ impl HostApp {
             Field::Command => self.send_command(cx),
             Field::AddPlayer => self.add_player(cx),
             Field::Message => self.send_message(cx),
-            Field::Name | Field::Seed => {}
+            Field::PluginSearch => self.market_search(0),
+            Field::NetAddress | Field::NetMotd => self.net_save_fields(),
+            Field::Name | Field::Seed | Field::NetName => {}
         }
     }
 

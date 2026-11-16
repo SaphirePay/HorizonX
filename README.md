@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="docs/media/dashboard.jpg" alt="Horizon Host's dashboard: players over time, server health, memory and every server on the PC" width="100%">
+  <img src="docs/media/dashboard.jpg" alt="HorizonX's dashboard: players over time, server health, memory and every server on the PC" width="100%">
 </p>
 
 <p align="center">
   <a href="https://github.com/SaphirePay/HorizonX/releases/latest"><b>Download</b></a> ·
-  <a href="#horizon-host"><b>Horizon Host</b></a> ·
+  <a href="#horizonx"><b>HorizonX</b></a> ·
   <a href="#horizonsx"><b>HorizonsX</b></a> ·
   <a href="#sdk"><b>SDK</b></a> ·
   <a href="#java-layer"><b>Java layer</b></a> ·
@@ -12,7 +12,7 @@
   <a href="docs/README.md"><b>Docs</b></a>
 </p>
 
-# Horizon Host
+# HorizonX
 
 Run your own Minecraft: Java Edition 26.3 server on your PC in a few clicks. Friends join from anywhere with no port
 forwarding.
@@ -21,30 +21,30 @@ This repository holds four parts that work together:
 
 | Part | Folder | What it is |
 |---|---|---|
-| [Horizon Host](#horizon-host) | [`host/`](host), [`app/`](app) | The server program: a setup wizard and a dashboard for every server on the PC |
+| [HorizonX](#horizonx) | [`host/`](host), [`app/`](app) | The server program: a setup wizard and a dashboard for every server on the PC |
 | [HorizonsX](#horizonsx) | [`horizonsx/`](horizonsx) | The server engine, a fork of Horizon tuned for many players |
 | [SDK](#sdk) | [`sdk/`](sdk) | Write server plugins in Rust with the Bukkit/Paper API you already know |
 | [Java layer](#java-layer) | [`java-layer/`](java-layer) | Runs Bukkit, Spigot and Paper plugin jars unchanged on HorizonsX |
 
 ## Download
 
-1. Download **`Horizon-Host-0.2.1-windows-x64.zip`** from [the latest release](https://github.com/SaphirePay/HorizonX/releases/latest).
+1. Download **`HorizonX-0.3.0-windows-x64.zip`** from [the latest release](https://github.com/SaphirePay/HorizonX/releases/latest).
 2. Unzip it anywhere.
-3. Double-click **`horizon-host.exe`**.
+3. Double-click **`HorizonX.exe`**.
 
-There is nothing else to install. The zip carries the app, the HorizonsX engine, the built-in plugins, the Java layer
-with its own Java 25 runtime, and the Visual C++ runtime.
+There is nothing else to install. The zip carries the app, the HorizonsX engine and its network proxy, the built-in
+plugins, the Java layer with its own Java 25 runtime, and the Visual C++ runtime.
 
 **Requirements**
 
 - Windows 10 (1903 or newer) or Windows 11, 64-bit.
 - Minecraft: Java Edition 26.3, played once on the PC. The first server is prepared from your own copy of the game;
-  Horizon Host contains no Minecraft code or assets.
+  HorizonX contains no Minecraft code or assets.
 - About 2 GB of free memory for each running server.
 
 ---
 
-## Horizon Host
+## HorizonX
 
 The server program. It makes a server in five steps, runs every server on the PC from one window, and keeps them
 running on their own.
@@ -81,7 +81,15 @@ rights, add them to the whitelist, message them, kick them, or ban and unban the
 - HorizonsX plugins load and unload while the server runs, with no restart.
 - One click installs a built-in plugin: LuckPerms, CoreProtect, WorldEdit, Multiverse, MiniMOTD, Player Warps,
   Voice Chat or Elevators.
+- **Get plugins from Modrinth:** search the Paper, Spigot and Bukkit plugins made for 26.3. **Add** puts one on the
+  server, or **Add to all** on every server, with the plugins it needs.
 - **Add a .jar** puts in a Paper or Spigot plugin; the Java layer comes with it.
+- **The Java layer** has its own switch on each server. Off keeps the jars but doesn't load them, and nothing turns it
+  back on by itself.
+
+**Networks.** Put several servers behind one address with `horizon-proxy`, HorizonsX's Rust proxy. Pick a lobby;
+players move between servers with `/server` and `/hub`. The Network page starts, stops and restarts the whole
+network and shows its log.
 
 **Files.** A colour-coded viewer and editor for YAML, JSON, TOML, `server.properties` and logs.
 
@@ -91,16 +99,24 @@ rights, add them to the whitelist, message them, kick them, or ban and unban the
 their own and keep the newest 12.
 
 **A public address without port forwarding.** The built-in playit.gg plugin gives each server an address friends can
-join from anywhere.
+join from anywhere. Turn it off on the Plugins page for a server that should only be reachable on your own network;
+it stays off until you turn it back on.
 
-**Updates itself.** A new build replaces the app in place. Running servers keep running, because they are separate
-processes.
+**Works with AI assistants.** HorizonX has a built-in MCP server. Connect Claude Code, Claude Desktop or Cursor in
+one click (Settings > AI assistants), then ask in plain words: make a server, add any Modrinth plugin to every server,
+change settings, set up the network, or find out why a server lags. It asks you before deleting anything
+([AI-ASSISTANTS.md](docs/AI-ASSISTANTS.md)).
+
+**Updates itself.** HorizonX checks its GitHub releases when it opens and every 6 hours. A newer release is
+downloaded, checked against its SHA-256 and put in place: the app, the HorizonsX engine, the plugins and the Java layer.
+Running servers keep running, because they are separate processes, and take the new engine at their next restart.
+Settings > Updates shows what it is doing and has **Check now**. Download the zip once; after that it stays current.
 
 ---
 
 ## HorizonsX
 
-[`horizonsx/`](horizonsx) is the server engine every Horizon Host server runs. It is a fork of
+[`horizonsx/`](horizonsx) is the server engine every HorizonX server runs. It is a fork of
 [Horizon](https://github.com/horizon-rust/horizon), the MIT-licensed rewrite of Minecraft: Java Edition 26.3 in Rust.
 It speaks the vanilla protocol, so normal Minecraft clients join it as they join any server.
 
@@ -184,7 +200,7 @@ against their own copy of [`horizon-kit`](horizonsx/plugins/horizon-kit); new pl
 
 **Documentation:** [`docs/`](docs/README.md) covers a first plugin ([GETTING-STARTED.md](docs/GETTING-STARTED.md)),
 every common job ([PLUGIN-GUIDE.md](docs/PLUGIN-GUIDE.md)), working code ([COOKBOOK.md](docs/COOKBOOK.md)), the AI
-tools ([MCP-SETUP.md](docs/MCP-SETUP.md), [MCP-TOOLS.md](docs/MCP-TOOLS.md)), testing ([TESTING.md](docs/TESTING.md))
+tools ([MCP-SETUP.md](docs/MCP-SETUP.md), [MCP-TOOLS.md](docs/MCP-TOOLS.md)), running servers with an AI assistant ([AI-ASSISTANTS.md](docs/AI-ASSISTANTS.md)), testing ([TESTING.md](docs/TESTING.md))
 and a map of this repository ([REPO-MAP.md](docs/REPO-MAP.md)).
 
 ---
@@ -227,10 +243,10 @@ Java layer also needs JDK 25.
 git clone --recurse-submodules https://github.com/SaphirePay/HorizonX.git
 cd HorizonX
 
-# Horizon Host
+# HorizonX
 cargo build --release --manifest-path host/Cargo.toml
 
-# HorizonsX with the Paper plugin layer (the engine Horizon Host ships)
+# HorizonsX with the Paper plugin layer (the engine HorizonX ships)
 cargo install --git https://github.com/horizon-rust/horizon-mixins
 python horizonsx/tools/v2/paper_build.py hostregions     # -> build/engines/hostregions/horizon-client.exe
 
@@ -244,7 +260,7 @@ cargo build --release --manifest-path java-layer/rust/Cargo.toml
 
 If you cloned without `--recurse-submodules`, run `git submodule update --init` first.
 
-Horizon Host looks for the engine in `engines/horizonsx/` and the plugins in `plugins/` beside its exe. The
+HorizonX looks for the engine in `engines/horizonsx/` and the plugins in `plugins/` beside its exe. The
 `HORIZON_HOST_ENGINE` and `HORIZON_HOST_PLUGINS` variables override those two folders.
 
 Some development scripts under `horizonsx/tools/` and in the docs name the maintainers' own folders. They are dev
@@ -252,7 +268,7 @@ tools; nothing in the builds above depends on them.
 
 ## Licenses
 
-- Horizon Host (`host/`, `app/`): [MIT](LICENSE).
+- HorizonX (`host/`, `app/`): [MIT](LICENSE).
 - HorizonsX (`horizonsx/`): MIT, the upstream Horizon license in [`horizonsx/LICENSE`](horizonsx/LICENSE). Third-party
   notices are in [`horizonsx/THIRD_PARTY_NOTICES.md`](horizonsx/THIRD_PARTY_NOTICES.md).
 - SDK (`sdk/`): Apache-2.0.

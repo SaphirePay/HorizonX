@@ -1,11 +1,11 @@
 //! Plugins: one server at a time. What's installed on it (HorizonsX plugins and Java plugins, each on or off,
 //! its settings, remove), a note when a change waits for a restart, and the plugins that come with Horizon
 //! Host, one click to install. Java jars come in with Add a .jar.
-use crate::app::{Ev, HostApp};
+use crate::app::{Ev, Field, HostApp};
 use crate::pages::{self, panel_title, plugin_folder};
 use crate::ui::{self, px, white, Kind, Tone};
 use gpui::{div, prelude::*, ClickEvent, Context, Div, FontWeight, PathPromptOptions, SharedString};
-use horizon_launcher::host;
+use horizon_launcher::{host, plugin_market};
 use horizon_theme::glass::{ink, radius};
 use std::path::{Path, PathBuf};
 
@@ -141,16 +141,36 @@ impl HostApp {
             }
         }
         if filter != 1 && !java.is_empty() {
-            installed = installed.child(group(if layer { "Java plugins · apply at the next restart" } else { "Java plugins · the Java layer is off on this server" }));
+            let d = dir.clone();
+            let switch = div()
+                .flex()
+                .items_center()
+                .gap(px(8.))
+                .child(ui::text(12., FontWeight::NORMAL, ink::QUIET).child("Java layer"))
+                .child(ui::toggle("java-layer-on", layer).on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
+                    match host::set_java_layer(&d, !layer) {
+                        Ok(()) => {
+                            if this.status_of(&d).running() {
+                                this.pages.pending.entry(d.clone()).or_default().insert("The Java layer".into());
+                            }
+                        }
+                        Err(e) => this.note = Some((e, std::time::Instant::now())),
+                    }
+                    this.load_details(&d);
+                    cx.notify();
+                })));
+            installed = installed.child(group(if layer { "Java plugins · apply at the next restart" } else { "Java plugins · the Java layer is off on this server" }).child(switch));
             for (i, r) in java.iter().enumerate() {
                 installed = installed.child(self.plugin_row(&dir, 100 + i, r, st.running(), layer, cx));
             }
         }
         let catalog = self.catalog_panel(&dir, &name, &files, cx);
+        let market = self.market_panel(&dir, &name, cx);
         let body = if ui::wide() {
-            div().flex().items_start().gap(px(16.)).child(installed).child(catalog.flex_none().w(px(400.)))
+            let left = div().flex().flex_col().gap(px(16.)).flex_1().min_w_0().child(installed).child(market);
+            div().flex().items_start().gap(px(16.)).child(left).child(catalog.flex_none().w(px(400.)))
         } else {
-            div().flex().flex_col().gap(px(16.)).child(installed).child(catalog)
+            div().flex().flex_col().gap(px(16.)).child(installed).child(market).child(catalog)
         };
         pages::page("plugins-scroll", head, body)
     }
@@ -170,12 +190,11 @@ impl HostApp {
             Tone::Live => white(ink::FULL),
             _ => white(ink::QUIET),
         };
-        let control = if r.built_in {
-            div().child(ui::chip("Built in", None))
-        } else {
+        let control = {
             let (d, file, name, on) = (dir.to_path_buf(), r.file.clone(), r.name.clone(), r.on);
             div().child(ui::toggle(SharedString::from(format!("pl-on-{i}")), r.on).on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
-                match host::set_plugin_on(&d, &file, !on) {
+                let done = if file == host::PLAYIT { host::set_playit(&d, !on) } else { host::set_plugin_on(&d, &file, !on) };
+                match done {
                     Ok(()) => {
                         if this.status_of(&d).running() {
                             this.pages.pending.entry(d.clone()).or_default().insert(name.clone());
@@ -295,14 +314,14 @@ impl HostApp {
         }))
     }
 
-    /// The plugins that come with Horizon Host: Install, or ticked when the server has them.
+    /// The plugins that come with HorizonX: Install, or ticked when the server has them.
     fn catalog_panel(&mut self, dir: &Path, name: &str, files: &[(String, bool)], cx: &mut Context<Self>) -> Div {
         let mut items: Vec<host::Plugin> = self.catalog.iter().filter(|p| !p.built_in).cloned().collect();
         // Not installed first.
         items.sort_by_key(|p| files.iter().any(|(f, _)| f == &p.file));
         let mut list = div().flex().flex_col().mt(px(6.));
         if items.is_empty() {
-            list = list.child(ui::text(12.5, FontWeight::NORMAL, ink::QUIET).py(px(8.)).child("Horizon Host's plugins aren't on this PC (its plugins folder is missing)."));
+            list = list.child(ui::text(12.5, FontWeight::NORMAL, ink::QUIET).py(px(8.)).child("HorizonX's plugins aren't on this PC (its plugins folder is missing)."));
         }
         let n = items.len();
         for (i, p) in items.into_iter().enumerate() {
@@ -352,7 +371,7 @@ impl HostApp {
         ui::panel()
             .px(px(20.))
             .py(px(20.))
-            .child(ui::heading(18.).child("Built into Horizon Host"))
+            .child(ui::heading(18.).child("Built into HorizonX"))
             .child(ui::text(12.5, FontWeight::NORMAL, ink::QUIET).mt(px(2.)).child(format!("Made for HorizonsX. One click puts it on {name}; it starts right away.")))
             .child(list)
             .child(
@@ -378,3 +397,216 @@ fn group(label: &'static str) -> Div {
 
 #[allow(unused)]
 fn _keep(_: PathBuf) {}
+
+// ----- Modrinth: plugins for the server's game version ---------------------------------------------
+
+/// The Modrinth search on the Plugins page.
+#[derive(Default)]
+pub struct Market {
+    /// The search the results are for (None: nothing asked yet).
+    pub query: Option<String>,
+    pub hits: Vec<plugin_market::Hit>,
+    pub total: usize,
+    pub loading: bool,
+    pub error: Option<String>,
+    /// Plugins being put in (project ids).
+    pub adding: std::collections::BTreeSet<String>,
+}
+
+impl HostApp {
+    /// Searches Modrinth (from the first result, or the next page with `offset`).
+    pub fn market_search(&mut self, offset: usize) {
+        let query = if offset == 0 { self.text(Field::PluginSearch).trim().to_owned() } else { self.pages.market.query.clone().unwrap_or_default() };
+        let m = &mut self.pages.market;
+        if m.loading {
+            return;
+        }
+        m.loading = true;
+        m.error = None;
+        if offset == 0 {
+            m.query = Some(query.clone());
+        }
+        let tx = self.tx.clone();
+        std::thread::spawn(move || {
+            let r = plugin_market::search(&query, offset);
+            let _ = tx.send(Ev::Market(query, offset, r));
+        });
+    }
+
+    pub fn market_event(&mut self, query: String, offset: usize, r: Result<plugin_market::Results, String>) {
+        let m = &mut self.pages.market;
+        m.loading = false;
+        if m.query.as_deref() != Some(query.as_str()) {
+            return;
+        }
+        match r {
+            Ok(res) => {
+                if offset == 0 {
+                    m.hits = res.hits;
+                } else {
+                    m.hits.extend(res.hits);
+                }
+                m.total = res.total;
+            }
+            Err(e) => m.error = Some(e),
+        }
+    }
+
+    /// Puts a Modrinth plugin into these servers in the background.
+    fn market_add(&mut self, dirs: Vec<PathBuf>, id: String, title: String) {
+        if !self.pages.market.adding.insert(id.clone()) {
+            return;
+        }
+        let tx = self.tx.clone();
+        std::thread::spawn(move || {
+            let results = dirs.iter().map(|d| plugin_market::install(d, &id)).collect();
+            let _ = tx.send(Ev::MarketDone(dirs, format!("{id}\u{0}{title}"), results));
+        });
+    }
+
+    pub fn market_done(&mut self, dirs: Vec<PathBuf>, key: String, results: Vec<Result<plugin_market::Installed, String>>) {
+        let (id, title) = key.split_once('\u{0}').map(|(a, b)| (a.to_owned(), b.to_owned())).unwrap_or((key.clone(), key));
+        self.pages.market.adding.remove(&id);
+        let mut ok = Vec::new();
+        let mut errors = Vec::new();
+        let mut with = std::collections::BTreeSet::new();
+        for (d, r) in dirs.iter().zip(results) {
+            match r {
+                Ok(i) => {
+                    with.extend(i.with.iter().cloned());
+                    if self.status_of(d).running() {
+                        self.pages.pending.entry(d.clone()).or_default().insert(i.name.clone());
+                    }
+                    ok.push(self.name_of(d).to_string());
+                }
+                Err(e) => errors.push(format!("{}: {e}", self.name_of(d))),
+            }
+            self.load_details(d);
+        }
+        let mut note = String::new();
+        if !ok.is_empty() {
+            note = format!("{title} added to {}", ok.join(", "));
+            if !with.is_empty() {
+                note.push_str(&format!(" (with {}, which it needs)", with.into_iter().collect::<Vec<_>>().join(", ")));
+            }
+            note.push_str(". It starts at the server's next restart.");
+        }
+        if !errors.is_empty() {
+            if !note.is_empty() {
+                note.push(' ');
+            }
+            note.push_str(&errors.join(" · "));
+        }
+        self.note = Some((note, std::time::Instant::now()));
+    }
+
+    /// Search box, results with Add and Add to all, and More.
+    fn market_panel(&mut self, dir: &Path, name: &str, cx: &mut Context<Self>) -> Div {
+        if self.pages.market.query.is_none() && !self.pages.market.loading {
+            // The most downloaded first, before any search.
+            self.market_search(0);
+        }
+        let field = self.field(Field::PluginSearch, "Search: shops, ranks, chat, protection...", cx);
+        let search = ui::sized_button("market-search", "Search", Kind::Secondary, 36., 12.5).on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
+            this.market_search(0);
+            cx.notify();
+        }));
+        let have = plugin_market::installed(dir);
+        let all: Vec<PathBuf> = self.list.iter().map(|e| e.dir.clone()).collect();
+        let many = all.len() > 1;
+        let m = &self.pages.market;
+        let (hits, total, loading, error, adding) = (m.hits.clone(), m.total, m.loading, m.error.clone(), m.adding.clone());
+        let searched = m.query.clone().unwrap_or_default();
+        let mut list = div().flex().flex_col().mt(px(8.));
+        if let Some(e) = error {
+            list = list.child(ui::text(12.5, FontWeight::NORMAL, ink::QUIET).py(px(8.)).child(e));
+        } else if hits.is_empty() && loading {
+            list = list.child(ui::text(12.5, FontWeight::NORMAL, ink::QUIET).py(px(8.)).child("Looking on Modrinth..."));
+        } else if hits.is_empty() {
+            list = list.child(ui::text(12.5, FontWeight::NORMAL, ink::QUIET).py(px(8.)).child(format!("No plugins for Minecraft {} match \"{searched}\".", plugin_market::GAME_VERSION)));
+        }
+        let n = hits.len();
+        for (i, h) in hits.into_iter().enumerate() {
+            let installed = have.contains_key(&h.id);
+            let busy = adding.contains(&h.id);
+            let action = if busy {
+                ui::chip("Adding...", Some(Tone::Busy)).into_any_element()
+            } else if installed {
+                div()
+                    .flex()
+                    .items_center()
+                    .gap(px(5.))
+                    .child(ui::icon("tick-02", 13., ui::color(ui::LIVE)))
+                    .child(ui::text(12., FontWeight::NORMAL, ink::QUIET).child("Installed"))
+                    .into_any_element()
+            } else {
+                let (d, id, title) = (dir.to_path_buf(), h.id.clone(), h.title.clone());
+                let add = ui::sized_button(SharedString::from(format!("mk-add-{i}")), "Add", Kind::Secondary, 28., 12.).on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
+                    this.market_add(vec![d.clone()], id.clone(), title.clone());
+                    cx.notify();
+                }));
+                let mut col = div().flex().flex_col().items_end().gap(px(4.)).child(add);
+                if many {
+                    let (dirs, id, title) = (all.clone(), h.id.clone(), h.title.clone());
+                    col = col.child(
+                        div()
+                            .id(SharedString::from(format!("mk-all-{i}")))
+                            .cursor_pointer()
+                            .child(ui::text(11., FontWeight::NORMAL, ink::QUIET).hover(|s| s.text_color(white(ink::FULL))).child("Add to all"))
+                            .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
+                                this.market_add(dirs.clone(), id.clone(), title.clone());
+                                cx.notify();
+                            })),
+                    );
+                }
+                col.into_any_element()
+            };
+            let url = h.url();
+            let title = div()
+                .id(SharedString::from(format!("mk-open-{i}")))
+                .cursor_pointer()
+                .child(ui::text(13.5, FontWeight::SEMIBOLD, ink::FULL).truncate().hover(|s| s.underline()).child(h.title.clone()))
+                .on_click(move |_, _, cx| cx.open_url(&url));
+            list = list.child(
+                div()
+                    .flex()
+                    .items_center()
+                    .gap(px(12.))
+                    .py(px(10.))
+                    .px(px(2.))
+                    .when(i + 1 < n, |d| d.border_b_1().border_color(white(0.06)))
+                    .child(div().flex().flex_none().items_center().justify_center().size(px(32.)).rounded(px(9.)).bg(white(0.07)).child(ui::text(13., FontWeight::SEMIBOLD, ink::BODY).child(h.title.chars().next().map(|c| c.to_uppercase().to_string()).unwrap_or_default())))
+                    .child(
+                        div()
+                            .flex()
+                            .flex_col()
+                            .flex_1()
+                            .min_w_0()
+                            .child(title)
+                            .child(ui::text(11.5, FontWeight::NORMAL, ink::QUIET).truncate().child(format!("by {} · {} downloads", h.author, plugin_market::short_count(h.downloads))))
+                            .child(ui::text(12., FontWeight::NORMAL, ink::BODY).line_clamp(2).child(h.description.clone())),
+                    )
+                    .child(div().flex_none().child(action)),
+            );
+        }
+        let shown = list_len(n, total);
+        let more = (n < total && n > 0).then(|| {
+            ui::sized_button("market-more", if loading { "Loading..." } else { "More" }, Kind::Ghost, 30., 12.5).on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
+                this.market_search(n);
+                cx.notify();
+            }))
+        });
+        ui::panel()
+            .px(px(20.))
+            .py(px(20.))
+            .child(div().flex().items_center().gap(px(8.)).child(ui::icon("globe-02", 17., white(ink::BODY))).child(ui::heading(18.).child("Get plugins from Modrinth")))
+            .child(ui::text(12.5, FontWeight::NORMAL, ink::QUIET).mt(px(2.)).child(format!("Paper, Spigot and Bukkit plugins made for Minecraft {}. Add puts one on {name}, with the plugins it needs.", plugin_market::GAME_VERSION)))
+            .child(div().flex().items_center().gap(px(8.)).mt(px(12.)).child(div().flex_1().min_w_0().child(field)).child(search))
+            .child(list)
+            .child(div().flex().items_center().justify_between().mt(px(10.)).child(ui::text(11.5, FontWeight::NORMAL, ink::QUIET).child(shown)).children(more))
+    }
+}
+
+fn list_len(shown: usize, total: usize) -> String {
+    if total == 0 { String::new() } else { format!("{shown} of {} plugins", plugin_market::short_count(total as u64)) }
+}

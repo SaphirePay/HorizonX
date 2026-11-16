@@ -294,7 +294,7 @@ impl HostApp {
                     .child(ui::text(13., FontWeight::NORMAL, ink::QUIET).child(if ready {
                         "Ready: the server files are prepared."
                     } else {
-                        "First time: Horizon Host downloads Horizon and prepares the game from your own Minecraft. A few minutes, once."
+                        "First time: HorizonX downloads Horizon and prepares the game from your own Minecraft. A few minutes, once."
                     })),
             )
             .child(ui::chip(if ready { "Ready" } else { "Prepared on create" }, Some(if ready { Tone::Live } else { Tone::Busy })));
@@ -304,7 +304,7 @@ impl HostApp {
     fn step_plugins(&mut self, cx: &mut Context<Self>) -> Div {
         let mut grid = div().flex().flex_wrap().gap(px(12.));
         if self.catalog.is_empty() {
-            return div().child(ui::text(15., FontWeight::NORMAL, ink::QUIET).child("No plugins came with Horizon Host."));
+            return div().child(ui::text(15., FontWeight::NORMAL, ink::QUIET).child("No plugins came with HorizonX."));
         }
         for p in self.catalog.clone() {
             let built_in = p.built_in;

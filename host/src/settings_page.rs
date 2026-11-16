@@ -1,4 +1,4 @@
-//! Settings: Horizon Host's own, under centred tabs. General (open with Windows, start servers that were
+//! Settings: HorizonX's own, under centred tabs. General (open with Windows, start servers that were
 //! running, warn before scheduled restarts), Servers (where they live, the server software), Network (each
 //! server's public address), Java plugins (which servers run jars), Updates and About. Only settings that do
 //! something are here.
@@ -37,6 +37,7 @@ impl HostApp {
                 (SettingsTab::Servers, "Servers"),
                 (SettingsTab::Network, "Network"),
                 (SettingsTab::Java, "Java plugins"),
+                (SettingsTab::Ai, "AI assistants"),
                 (SettingsTab::Updates, "Updates"),
                 (SettingsTab::About, "About"),
             ],
@@ -51,12 +52,13 @@ impl HostApp {
                 }
             },
         );
-        let head = pages::header("Horizon Host on this PC", "Settings", None);
+        let head = pages::header("HorizonX on this PC", "Settings", None);
         let body = match tab {
             SettingsTab::General => self.settings_general(cx),
             SettingsTab::Servers => self.settings_servers(),
             SettingsTab::Network => self.settings_network(cx),
             SettingsTab::Java => self.settings_java(cx),
+            SettingsTab::Ai => self.settings_ai(cx),
             SettingsTab::Updates => self.settings_updates(),
             SettingsTab::About => self.settings_about(),
         };
@@ -85,8 +87,8 @@ impl HostApp {
             cx.notify();
         }));
         group("General")
-            .child(row("Open Horizon Host when Windows starts", "Your servers come back after a reboot, with the setting below.", t1))
-            .child(row("Start servers that were running when Horizon Host opens", "The ones running when it last closed.", t2))
+            .child(row("Open HorizonX when Windows starts", "Your servers come back after a reboot, with the setting below.", t1))
+            .child(row("Start servers that were running when HorizonX opens", "The ones running when it last closed.", t2))
             .child(row("Warn players before a scheduled restart", "A chat message 5 minutes ahead.", t3))
     }
 
@@ -167,6 +169,53 @@ impl HostApp {
         g
     }
 
+    fn settings_ai(&mut self, cx: &mut Context<Self>) -> Div {
+        use crate::mcp::Client;
+        let connected = self.pages.ai.get_or_insert_with(|| Client::ALL.iter().map(|c| c.connected()).collect()).clone();
+        let mut g = group("AI assistants").child(
+            ui::text(12.5, FontWeight::NORMAL, ink::QUIET).pb(px(6.)).child(
+                "Let an AI assistant run HorizonX for you: make and start servers, add plugins from Modrinth, change settings and configs, moderate players, back up, run the network and find problems. It does what you ask, and asks you before deleting anything.",
+            ),
+        );
+        for (i, client) in Client::ALL.into_iter().enumerate() {
+            let on = connected.get(i).copied().unwrap_or(false);
+            let control: gpui::AnyElement = if on {
+                ui::chip("Connected", Some(Tone::Live)).into_any_element()
+            } else {
+                ui::sized_button(SharedString::from(format!("ai-connect-{i}")), "Connect", Kind::Primary, 30., 12.5)
+                    .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
+                        let note = match client.connect() {
+                            Ok(m) => m,
+                            Err(e) => format!("{}: {e}", client.label()),
+                        };
+                        this.pages.ai = None;
+                        this.note = Some((note, std::time::Instant::now()));
+                        cx.notify();
+                    }))
+                    .into_any_element()
+            };
+            let note = match client {
+                Client::ClaudeCode => "Adds HorizonX to Claude Code for every project (claude mcp add).",
+                Client::ClaudeDesktop => "Adds HorizonX to Claude Desktop's settings; restart it after.",
+                Client::Cursor => "Adds HorizonX to Cursor's MCP settings.",
+            };
+            g = g.child(row(client.label(), if on { "HorizonX is in its tools." } else { note }, control));
+        }
+        let config = crate::mcp::client_config();
+        let copied = self.copied(&config);
+        let (cmd, _) = crate::mcp::launch_command();
+        g.child(row(
+            "Any other MCP client",
+            format!("Runs \"{cmd}\" mcp. Copy the setup and paste it into the client's MCP settings."),
+            ui::sized_button("ai-copy", if copied { "Copied" } else { "Copy setup" }, Kind::Secondary, 30., 12.5).on_click(cx.listener(move |this, _: &ClickEvent, _, cx| this.copy(config.clone(), cx))),
+        ))
+        .child(row(
+            "What it can do",
+            format!("{} tools: servers, settings and files, plugins (HorizonX's and Modrinth's), players, backups, schedules, the network and diagnostics.", crate::mcp::tools().len()),
+            div(),
+        ))
+    }
+
     fn settings_updates(&mut self) -> Div {
         let engine = servers::runtime_release().unwrap_or_else(|| "not set up yet".into());
         let available = self.status.values().find_map(|s| s.update_available.clone());
@@ -178,7 +227,12 @@ impl HostApp {
         };
         group("Updates")
             .child(row(format!("HorizonsX runtime {engine}"), note, chip))
-            .child(row(format!("Horizon Host {}", env!("CARGO_PKG_VERSION")), "Updates itself: a new version installs and reopens on its own, and servers keep running.", ui::chip("Automatic", Some(Tone::Live))))
+            .child({
+                let state = crate::update::state();
+                let note = if state.is_empty() { "Updates itself from GitHub: a new version downloads, installs and reopens on its own, and servers keep running.".to_string() } else { state };
+                let check = ui::sized_button("update-check", "Check now", Kind::Secondary, 30., 12.5).on_click(|_, _, _| crate::update::check_now());
+                row(format!("HorizonX {}", env!("CARGO_PKG_VERSION")), note, div().flex().items_center().gap(px(8.)).child(ui::chip("Automatic", Some(Tone::Live))).child(check))
+            })
     }
 
     fn settings_about(&mut self) -> Div {
@@ -186,7 +240,7 @@ impl HostApp {
         let d2 = data.clone();
         let open = ui::sized_button("about-open", "Open", Kind::Secondary, 32., 12.5).on_click(move |_, _, cx| cx.open_with_system(&d2));
         group("About")
-            .child(row(format!("Horizon Host {}", env!("CARGO_PKG_VERSION")), "Make a Minecraft server on HorizonsX in a few clicks; friends join from anywhere.", crate::frame::logo(32.)))
+            .child(row(format!("HorizonX {}", env!("CARGO_PKG_VERSION")), "Make a Minecraft server on HorizonsX in a few clicks; friends join from anywhere.", crate::frame::logo(32.)))
             .child(row("Data folder", data.display().to_string(), open))
     }
 }

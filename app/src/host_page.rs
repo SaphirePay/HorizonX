@@ -1,4 +1,4 @@
-//! Horizon Host's parts of the Servers page, in the glass look: the public address (the playit
+//! HorizonX's parts of the Servers page, in the glass look: the public address (the playit
 //! plugin's claim link, then the address to copy), and the tabs the launcher doesn't have: Plugins,
 //! Files, Performance and Schedule. The work is in `horizon_launcher::host`; this draws it.
 use super::*;
@@ -38,7 +38,7 @@ const BACKUP_HOURS: [(u32, &str); 6] = [(0, "Off"), (1, "1 h"), (3, "3 h"), (6, 
 const RESTART_HOURS: [(u32, &str); 6] = [(24, "Off"), (3, "3:00"), (4, "4:00"), (5, "5:00"), (6, "6:00"), (12, "12:00")];
 
 impl Launcher {
-    /// After a server is opened: make it Horizon Host's (HorizonsX, the playit plugin), then read
+    /// After a server is opened: make it HorizonX's (HorizonsX, the playit plugin), then read
     /// its plugins and schedule.
     pub(super) fn host_open(&mut self, dir: &Path) {
         let tx = self.servers.tx.clone();
@@ -231,7 +231,7 @@ impl Launcher {
         });
         list = list.child(head);
         if catalog.is_empty() {
-            return list.child(ui::empty().child(tr("No plugins came with Horizon Host.")));
+            return list.child(ui::empty().child(tr("No plugins came with HorizonX.")));
         }
         for p in catalog {
             let on = installed.contains(&p.file);

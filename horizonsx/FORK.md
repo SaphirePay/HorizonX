@@ -1,6 +1,6 @@
 # HorizonsX
 
-This folder is HorizonsX, the server engine Horizon Host runs. It is a fork of
+This folder is HorizonsX, the server engine HorizonX runs. It is a fork of
 [Horizon](https://github.com/horizon-rust/horizon) (MIT, see [LICENSE](LICENSE)), a Rust rewrite of Minecraft: Java
 Edition 26.3. [README.md](README.md) is upstream Horizon's own page.
 
@@ -11,7 +11,7 @@ Edition 26.3. [README.md](README.md) is upstream Horizon's own page.
   and builds the engine.
 - **Plugins built on the SDK:** [plugins/](plugins).
 
-Snapshot of the `horizonsx` branch at `7f56ad069b`: the source of the engine in the Horizon Host 0.2.1 release.
+Snapshot of the `horizonsx` branch at `7f56ad069b`: the source of the engine in the HorizonX 0.2.1 release.
 
 ## Build
 

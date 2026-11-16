@@ -1,4 +1,4 @@
-//! Horizon Host: make a Minecraft server on HorizonsX in a few clicks with a setup wizard, run it
+//! HorizonX: make a Minecraft server on HorizonsX in a few clicks with a setup wizard, run it
 //! from a dashboard, and let friends join from anywhere with no port forwarding (playit.gg built
 //! in). Its own program, in the Horizon launcher's style: the pixel-sunset scene behind frosted
 //! plates, Geist and Bricolage, one violet accent.
@@ -15,6 +15,8 @@ mod glass;
 mod highlight;
 mod home;
 mod line_edit;
+mod mcp;
+mod network_page;
 mod motion;
 mod pages;
 mod players_page;
@@ -46,6 +48,26 @@ impl gpui::AssetSource for Assets {
 }
 
 fn main() {
+    // `HorizonX mcp`: the MCP server for AI assistants, on stdin and stdout (no window).
+    if std::env::args().nth(1).as_deref() == Some("mcp") {
+        if let Err(e) = mcp::serve() {
+            eprintln!("{e}");
+            std::process::exit(1);
+        }
+        return;
+    }
+    // `HorizonX update`: check GitHub and install a newer release now, with no window (also for a PC without a
+    // screen). `HorizonX version` prints this copy's version.
+    match std::env::args().nth(1).as_deref() {
+        Some("update") => std::process::exit(update::run_cli()),
+        Some("version" | "--version") => {
+            println!("HorizonX {}", env!("CARGO_PKG_VERSION"));
+            return;
+        }
+        _ => {}
+    }
+    // New releases from GitHub, in the background (an installed copy; a build from source is left alone).
+    update::start_checking();
     gpui_platform::application().with_assets(Assets).run(|cx: &mut App| {
         cx.text_system()
             .add_fonts(vec![
@@ -64,8 +86,8 @@ fn main() {
                 // The demo records a full-screen window.
                 window_bounds: Some(if demo::on() { WindowBounds::Fullscreen(bounds) } else { WindowBounds::Windowed(bounds) }),
                 window_min_size: Some(size(px(1180.), px(720.))),
-                titlebar: Some(gpui::TitlebarOptions { title: Some("Horizon Host".into()), ..Default::default() }),
-                app_id: Some("horizon-host".into()),
+                titlebar: Some(gpui::TitlebarOptions { title: Some("HorizonX".into()), ..Default::default() }),
+                app_id: Some("horizonx".into()),
                 ..Default::default()
             },
             |window, cx| cx.new(|cx| app::HostApp::new(window, cx)),

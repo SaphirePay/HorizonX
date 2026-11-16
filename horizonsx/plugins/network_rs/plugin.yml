@@ -1,0 +1,13 @@
+name: Network
+version: '1.0.0'
+main: dev.horizon.network.Network
+api-version: '1.21'
+folia-supported: true
+description: 'Moves players between the servers of a HorizonX network'
+commands:
+  server:
+    description: List the network's servers, or go to one
+    usage: /server [name]
+  hub:
+    description: Go back to the lobby
+    aliases: [lobby]

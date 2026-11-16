@@ -165,7 +165,7 @@ impl HostApp {
         if people.is_empty() {
             rows = rows.child(ui::text(13., FontWeight::NORMAL, ink::QUIET).px(px(10.)).py(px(14.)).child(match tab {
                 PlayersTab::Online => "Nobody is online right now.",
-                PlayersTab::Everyone => "Players show here once they've joined while Horizon Host was open.",
+                PlayersTab::Everyone => "Players show here once they've joined while HorizonX was open.",
                 PlayersTab::Operators => "No operators. Make someone one from their row, while the server runs.",
                 PlayersTab::Banned => "Nobody is banned.",
             }));

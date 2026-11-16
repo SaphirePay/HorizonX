@@ -1,6 +1,8 @@
 //! The launcher's core, shared by the GUI, the CLI and the MCP server.
 pub mod account;
 pub mod agents;
+/// HorizonX updating itself from its GitHub releases.
+pub mod app_update;
 pub mod backend;
 pub mod browser;
 pub mod build_import;
@@ -46,8 +48,10 @@ pub mod rust_toolchain;
 pub mod screenshots;
 pub mod server_list;
 pub mod servers;
-/// Horizon Host: HorizonsX, plugins, the playit address, schedules, files, graphs.
+/// HorizonX: HorizonsX, plugins, the playit address, schedules, files, graphs.
 pub mod host;
+pub mod network;
+pub mod plugin_market;
 pub mod stats;
 pub mod setup_args;
 pub mod shop;

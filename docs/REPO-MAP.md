@@ -3,9 +3,9 @@
 What every top-level folder holds, and where to look for what.
 
 ```
-horizon-host/
-  host/          Horizon Host, the desktop app (setup wizard, dashboard, server pages)
-  app/           horizon-host-core: the app's engine room (servers, downloads, plugins, playit, updates)
+HorizonX/
+  host/          HorizonX, the desktop app (setup wizard, dashboard, server pages)
+  app/           horizonx-core: the app's engine room (servers, downloads, plugins, playit, updates)
   horizonsx/     HorizonsX, the server engine (a fork of Horizon)
   sdk/           Everything for writing plugins
   java-layer/    Runs Bukkit/Spigot/Paper .jar plugins unchanged
@@ -14,12 +14,12 @@ horizon-host/
   docs/          This documentation
 ```
 
-## `host/` and `app/`: Horizon Host
+## `host/` and `app/`: HorizonX
 
 | Path | What |
 |---|---|
 | `host/src/` | The window: home, setup wizard (server type, plugins, world, performance, review), the dashboard and each server's tabs (Overview, Console, Players, Plugins, Performance, Backups, Schedule, Settings, Files) |
-| `app/src/` | The library the window drives: making and starting servers, the engine download, the plugin catalogue, playit.gg addresses, schedules, backups, self-update. Also builds `horizon-host-cli`, the same features from a terminal |
+| `app/src/` | The library the window drives: making and starting servers, the engine download, the plugin catalogue, playit.gg addresses, schedules, backups, self-update. Also builds `horizonx-cli`, the same features from a terminal |
 | `app/docs/`, `app/README.md` | Notes on the core library |
 
 Build: `cargo build --release` in `host/`.
@@ -71,5 +71,5 @@ for many players (region threads, multi-core sending, hot-reloaded plugins).
 | [COOKBOOK.md](COOKBOOK.md) | Working code |
 | [MCP-SETUP.md](MCP-SETUP.md), [MCP-TOOLS.md](MCP-TOOLS.md) | The AI tools |
 | [TESTING.md](TESTING.md) | Testing on a private server |
-| [DESIGN.md](DESIGN.md) | Horizon Host's design and feature map |
+| [DESIGN.md](DESIGN.md) | HorizonX's design and feature map |
 | [launcher-commands.md](launcher-commands.md) | The command-line interface |

@@ -1,4 +1,4 @@
-# Horizon Host
+# HorizonX
 
 A desktop app for hosting a Minecraft server on your own PC in a few clicks and letting friends join
 over the internet with no port forwarding. A native Rust rewrite of what SquidServers 0.10.3 does,
@@ -32,9 +32,9 @@ Builder's calls (changeable):
 - Plugins: a catalog of Horizon's Rust plugins (DLLs shipped in `plugins/` beside the app), install
   and remove per server.
 
-## Features (SquidServers -> Horizon Host)
+## Features (SquidServers -> HorizonX)
 
-| SquidServers | Horizon Host |
+| SquidServers | HorizonX |
 |---|---|
 | Create server (type, version, mode, difficulty, seed, players) | Create dialog (launcher's), HorizonsX engine |
 | Start / stop / restart, crash restart | launcher's (horizon-server supervisor) |

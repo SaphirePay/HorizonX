@@ -12,16 +12,18 @@ pub enum Page {
     Servers,
     Players,
     Plugins,
+    Network,
     Backups,
     Schedules,
     Settings,
 }
 
-const PAGES: [(Page, &str, &str); 7] = [
+const PAGES: [(Page, &str, &str); 8] = [
     (Page::Dashboard, "Dashboard", "dashboard-square-01"),
     (Page::Servers, "Servers", "computer"),
     (Page::Players, "Players", "user-multiple-02"),
     (Page::Plugins, "Plugins", "puzzle"),
+    (Page::Network, "Network", "link-01"),
     (Page::Backups, "Backups", "download-04"),
     (Page::Schedules, "Schedules", "refresh"),
     (Page::Settings, "Settings", "sliders-horizontal"),
@@ -223,7 +225,7 @@ impl HostApp {
                     .items_center()
                     .gap(px(10.))
                     .child(logo(34.))
-                    .child(div().flex().flex_col().child(ui::heading(16.).child("Horizon Host")).child(ui::text(11.5, FontWeight::NORMAL, ink::QUIET).child("Servers on HorizonsX"))),
+                    .child(div().flex().flex_col().child(ui::heading(16.).child("HorizonX")).child(ui::text(11.5, FontWeight::NORMAL, ink::QUIET).child("Servers on HorizonsX"))),
             )
             .child(nav)
             .when(!servers.is_empty(), |d| d.child(div().flex().flex_col().gap(px(6.)).child(div().px(px(10.)).child(ui::mono(10.5, ink::QUIET).child("YOUR SERVERS"))).child(list)))

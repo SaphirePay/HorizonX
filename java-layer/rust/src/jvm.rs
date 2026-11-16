@@ -213,8 +213,13 @@ fn vm(plugin: &Plugin, server: &Path) -> Result<JavaVM, String> {
         format!("-Xmx{memory}"),
         "-Xms8m".to_owned(),
         "-XX:+UseSerialGC".to_owned(),
+        // Java 25: 8-byte object headers (vanilla's ~2 million small objects: AABBs, shapes, block states).
+        "-XX:+UseCompactObjectHeaders".to_owned(),
         "-XX:MinHeapFreeRatio=10".to_owned(),
         "-XX:MaxHeapFreeRatio=30".to_owned(),
+        // A small young generation (default: a third of the heap, ~100 MB committed at once): short-lived
+        // objects die young here too, and pauses stay under ~10 ms.
+        "-Xmn32m".to_owned(),
         "-XX:ReservedCodeCacheSize=64m".to_owned(),
         "-XX:CICompilerCount=2".to_owned(),
         "-XX:-UsePerfData".to_owned(),

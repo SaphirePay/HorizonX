@@ -1,4 +1,4 @@
-//! What Horizon Host remembers between runs: each server's players over time and every player's record
+//! What HorizonX remembers between runs: each server's players over time and every player's record
 //! (`host-stats.json` in the server's folder, written once a minute while the app is open and the server
 //! runs), this PC's processor and memory use, and the app's own settings (`host-settings.json` in the
 //! data folder).
@@ -362,12 +362,12 @@ pub fn disk_free(path: &Path) -> Option<u64> {
     text.lines().nth(1)?.split_whitespace().nth(3)?.parse::<u64>().ok().map(|k| k * 1024)
 }
 
-// ----- Horizon Host's own settings ------------------------------------------------------------------------
+// ----- HorizonX's own settings ------------------------------------------------------------------------
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct HostSettings {
-    /// Start servers that were running when Horizon Host was last closed.
+    /// Start servers that were running when HorizonX was last closed.
     pub restore_servers: bool,
     /// Servers running at the last look (their folders).
     pub were_running: Vec<PathBuf>,
@@ -403,19 +403,24 @@ pub fn save_settings(s: &HostSettings) -> Result<(), String> {
 }
 
 const RUN_KEY: &str = r"Software\Microsoft\Windows\CurrentVersion\Run";
-const RUN_NAME: &str = "Horizon Host";
+const RUN_NAME: &str = "HorizonX";
+/// The name before the app was HorizonX (Horizon Host 0.2).
+const RUN_NAME_BEFORE: &str = "Horizon Host";
 
-/// Whether Windows opens Horizon Host when the user signs in.
+/// Whether Windows opens HorizonX when the user signs in.
 #[cfg(windows)]
 pub fn opens_with_windows() -> bool {
     use winreg::{enums::HKEY_CURRENT_USER, RegKey};
-    RegKey::predef(HKEY_CURRENT_USER).open_subkey(RUN_KEY).and_then(|k| k.get_value::<String, _>(RUN_NAME)).is_ok()
+    let Ok(k) = RegKey::predef(HKEY_CURRENT_USER).open_subkey(RUN_KEY) else { return false };
+    [RUN_NAME, RUN_NAME_BEFORE].iter().any(|n| k.get_value::<String, _>(n).is_ok())
 }
 
 #[cfg(windows)]
 pub fn set_opens_with_windows(on: bool) -> Result<(), String> {
     use winreg::{enums::HKEY_CURRENT_USER, RegKey};
     let (key, _) = RegKey::predef(HKEY_CURRENT_USER).create_subkey(RUN_KEY).map_err(|e| e.to_string())?;
+    // The entry from before the rename goes either way, so Windows never opens the app twice.
+    let _ = key.delete_value(RUN_NAME_BEFORE);
     if on {
         let exe = std::env::current_exe().map_err(|e| e.to_string())?;
         key.set_value(RUN_NAME, &format!("\"{}\"", exe.display())).map_err(|e| e.to_string())

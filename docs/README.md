@@ -8,6 +8,7 @@ Everything in this repository, and how to use it. Start with the page for what y
 | Write my first plugin | [GETTING-STARTED.md](GETTING-STARTED.md) |
 | Look up how to do something in a plugin (items, events, menus, blocks, configs...) | [PLUGIN-GUIDE.md](PLUGIN-GUIDE.md) |
 | Copy working code for a common job | [COOKBOOK.md](COOKBOOK.md) |
+| Let an AI assistant run my servers (create, plugins, settings, network, problems) | [AI-ASSISTANTS.md](AI-ASSISTANTS.md) |
 | Let an AI assistant write plugins with me | [MCP-SETUP.md](MCP-SETUP.md), then [MCP-TOOLS.md](MCP-TOOLS.md) |
 | Test plugins on a private server, with screenshots of items in game | [TESTING.md](TESTING.md) |
 | Know what each folder in this repository is | [REPO-MAP.md](REPO-MAP.md) |

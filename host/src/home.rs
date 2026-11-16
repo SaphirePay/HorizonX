@@ -367,7 +367,7 @@ impl HostApp {
                         .right(px(46.))
                         .flex()
                         .justify_center()
-                        .child(ui::text(13., FontWeight::NORMAL, ink::QUIET).child("No players yet in this range. It fills in while servers run with Horizon Host open.")),
+                        .child(ui::text(13., FontWeight::NORMAL, ink::QUIET).child("No players yet in this range. It fills in while servers run with HorizonX open.")),
                 )
             })
             .on_mouse_move(cx.listener(move |this, ev: &MouseMoveEvent, _, cx| {
@@ -704,7 +704,7 @@ impl HostApp {
                 .w_full()
                 .max_w(px(820.))
                 .p(px(44.))
-                .child(ui::mono(12., ink::QUIET).child("HORIZON HOST"))
+                .child(ui::mono(12., ink::QUIET).child("HORIZONX"))
                 .child(ui::display(46.).mt(px(4.)).child("Your own Minecraft server, in a few clicks"))
                 .child(ui::text(16., FontWeight::NORMAL, ink::BODY).mt(px(10.)).child(
                     "Runs on HorizonsX, Horizon's fast server, right on this PC. Friends join from anywhere: no port forwarding, no commands.",

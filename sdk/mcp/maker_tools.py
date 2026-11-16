@@ -82,7 +82,98 @@ ITEM = re.compile(r'^\s*pub\s+(?:const\s+|unsafe\s+|async\s+)*(fn|struct|enum|ty
 IMPL = re.compile(r'^impl(?:<[^>]*>)?\s+(?:[\w:<>,\' ]+\s+for\s+)?(?:\w+::)*([A-Za-z_]\w*)')
 TRAIT = re.compile(r'^pub trait\s+([A-Za-z_]\w*)')
 TRAIT_FN = re.compile(r'^\s+(fn)\s+([a-z_]\w*)')
-TAG = re.compile(r'^\s*///\s*bukkit(~?):\s*([^|]+?)(?:\s*\|\s*(.*))?$')
+# `pub mod damage_cause {`: its functions are `damage_cause::values` (enums.rs, argument_types...).
+MOD = re.compile(r'^pub mod\s+([a-z_]\w*)\s*\{')
+MACRO = re.compile(r'^macro_rules!\s+(\w+)')
+# Inside a macro: `impl $name {` / `impl Event for $name {`: methods every type the macro is called with gets.
+MACRO_IMPL = re.compile(r"^\s*(?:\$\(\s*)?impl(?:<[^>]*>)?\s+(?:[\w:<>,' ]+\s+for\s+)?(\$\w+|[A-Z]\w*)")
+TYPE_NAME = re.compile(r'^[A-Z][A-Za-z0-9]*$')
+
+
+MACRO_FN = re.compile(r'^\s*pub\s+(fn)\s+(\$\w+)')
+OPEN, CLOSE = '([{', ')]}'
+
+
+def _call_bodies(text, macro):
+    """The text inside each `macro!(...)` / `macro! { ... }` call."""
+    for m in re.finditer(rf'\b{re.escape(macro)}!\s*[(\[{{]', text):
+        depth, i = 1, m.end()
+        while i < len(text) and depth:
+            depth += 1 if text[i] in OPEN else -1 if text[i] in CLOSE else 0
+            i += 1
+        yield text[m.end():i - 1]
+
+
+def _split_top(body, seps):
+    """`body` cut at the separators outside brackets (`::` is a path, not a `:` separator)."""
+    out, depth, start, i = [], 0, 0, 0
+    while i < len(body):
+        c = body[i]
+        if c in OPEN:
+            depth += 1
+        elif c in CLOSE:
+            depth -= 1
+        elif depth == 0 and c in seps:
+            if c == ':' and (body[i + 1:i + 2] == ':' or body[i - 1:i] == ':'):
+                i += 1
+                continue
+            out.append(body[start:i])
+            start = i + 1
+        i += 1
+    out.append(body[start:])
+    return [p for p in out if p.strip()]
+
+
+def _top_groups(body):
+    """The `( ... )` groups at the top level of `body`, without their brackets."""
+    out, depth, start = [], 0, 0
+    for i, c in enumerate(body):
+        if c in OPEN:
+            if depth == 0:
+                start = i + 1
+            depth += 1
+        elif c in CLOSE:
+            depth -= 1
+            if depth == 0:
+                out.append(body[start:i])
+    return out
+
+
+def macro_calls(text, macro, pattern):
+    """Each call of `macro!` as {parameter: the name it was given}, each row of a repeated pattern on its own:
+    `toggle_event!(PlayerToggleSneakEvent, "sneak", is_sneaking)` -> {name: PlayerToggleSneakEvent, what: "",
+    getter: is_sneaking}."""
+    arm = pattern.split('=>', 1)[0]
+    arm = arm[arm.find('{') + 1:]
+    # Doc attributes passed through (`$(#[$doc:meta])*`) aren't arguments.
+    arm = re.sub(r'\$\(\s*#\[\$\w+:meta\]\s*\)\s*\*', '', arm)
+    params = re.findall(r'\$(\w+):\w+', arm)
+    flat = arm.replace(' ', '').replace('\n', '')
+    # Repeated rows are `$( ... ),*` / `$( ... );*` / `+`; an optional `$( ... )?` part is not a row.
+    tuples = '$((' in flat
+    repeated = tuples or re.search(r'\$\(.*\)[,;]?[*+]', flat) is not None
+    semis = re.search(r'\)\s*;\s*\*', arm) is not None
+    out = []
+    for body in _call_bodies(text, macro):
+        body = re.sub(r'//[^\n]*', '', body)
+        body = re.sub(r'#\[[^\]]*\]', '', body)
+        body = re.sub(r'"(?:[^"\\]|\\.)*"', '""', body)
+        if tuples:
+            rows = _top_groups(body)
+        elif repeated:
+            rows = _split_top(body, ';' if semis else ',')
+        else:
+            rows = [body]
+        for row in rows:
+            values = []
+            for piece in _split_top(row, ',;:'):
+                found = re.match(r'\s*([\w$]+(?:::[\w$]+)*|"")', piece)
+                values.append(found.group(1).split('::')[-1] if found else '')
+            out.append(dict(zip(params, values)))
+    return out
+
+
+TAG =re.compile(r'^\s*///\s*bukkit(~?):\s*([^|]+?)(?:\s*\|\s*(.*))?$')
 _sdk = (0.0, [])
 
 
@@ -113,15 +204,30 @@ def sdk_items():
     stamp = max(path.stat().st_mtime for path in files)
     if stamp == _sdk[0]:
         return _sdk[1]
-    items = []
+    items, patterns = [], {}
     for path in files:
         lines = path.read_text(encoding='utf-8', errors='replace').split('\n')
-        owner, in_trait = '', False
+        owner, in_trait, macro = '', False, None
         for number, line in enumerate(lines):
             if not line.startswith(' ') and (found := IMPL.match(line)):
                 owner = found.group(1)
+            elif (found := MOD.match(line)):
+                owner = found.group(1)
+            elif (found := MACRO.match(line)):
+                owner, macro = '', found.group(1)
+                # Its first arm's pattern, to read its calls by.
+                arm = ''
+                for more in lines[number:number + 12]:
+                    arm += more + '\n'
+                    if '=>' in more:
+                        break
+                patterns[macro] = arm
             elif line.startswith(('}', 'pub ')) and not line.startswith('pub fn'):
                 owner = ''
+                if line.startswith('}'):
+                    macro = None
+            if macro and (found := MACRO_IMPL.match(line)):
+                owner = f'${macro}|{found.group(1)}'
             if line.startswith('}'):
                 in_trait = False
             elif (trait := TRAIT.match(line)):
@@ -129,6 +235,8 @@ def sdk_items():
             found = ITEM.match(line)
             if not found and in_trait:
                 found = TRAIT_FN.match(line)
+            if not found and owner.startswith('$'):
+                found = MACRO_FN.match(line)
             if not found:
                 continue
             kind, name = found.groups()
@@ -148,6 +256,31 @@ def sdk_items():
                 above -= 1
             items.append({'rust': f'{owner}::{name}' if owner and kind == 'fn' else name, 'kind': kind, 'signature': head.split('{')[0].strip().rstrip(' ;'), 'place': f'{path.name}:{number + 1}', 'java': java, 'partial': partial, 'note': ' '.join(notes)})
         items += macro_rows(path, lines)
+    # A macro's methods on every type it is called with (`trade_event!(PlayerTradeEvent, ...)` ->
+    # `PlayerTradeEvent::set_cancelled`); a macro never called by name keeps its own name as the owner.
+    text = chr(10).join(path.read_text(encoding='utf-8', errors='replace') for path in files)
+    known = {item['rust'] for item in items}
+    made, calls = [], {}
+    for item in items:
+        if not item['rust'].startswith('$'):
+            continue
+        head, name = item['rust'][1:].split('::', 1)
+        macro, target = head.split('|', 1)
+        if macro not in calls:
+            calls[macro] = macro_calls(text, macro, patterns.get(macro, ''))
+        for row in calls[macro] or [{}]:
+            type_name = row.get(target[1:]) if target.startswith('$') else target
+            fn = row.get(name[1:]) if name.startswith('$') else name
+            if not type_name and target.startswith('$') and not calls[macro]:
+                type_name = macro
+            if not type_name or not fn or not re.match(r'^[A-Za-z_]\w*$', fn) or not re.match(r'^[A-Za-z_]\w*$', type_name):
+                continue
+            signature = item['signature'].replace(name, fn) if name.startswith('$') else item['signature']
+            rust = f'{type_name}::{fn}'
+            if rust not in known:
+                known.add(rust)
+                made.append({**item, 'rust': rust, 'signature': signature})
+    items = [item for item in items if not item['rust'].startswith('$')] + made
     _sdk = (stamp, items)
     return items
 

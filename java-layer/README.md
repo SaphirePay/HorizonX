@@ -45,7 +45,7 @@ cargo +1.99.1 build --release                          # in rust/
 ```
 
 `runtime/` holds `jrt` and `jbridge`, the Java-runtime crates the bridge is built on. The SDK it calls is `../sdk`.
-Horizon Host ships the built layer (`horizon_java.dll`, `java/out/lib` and a Java 25 runtime) and puts it into a server
+HorizonX ships the built layer (`horizon_java.dll`, `java/out/lib` and a Java 25 runtime) and puts it into a server
 when a jar is added.
 
 ## What doesn't work

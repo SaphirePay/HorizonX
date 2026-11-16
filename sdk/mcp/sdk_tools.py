@@ -9,6 +9,7 @@ Everything is cached by file times: the first call after an SDK or engine change
 instant.
 """
 import collections
+import functools
 import pathlib
 import re
 
@@ -170,6 +171,28 @@ def sdk_fires(event):
 
 # ---- horizon-kit ----
 
+def fn_docs():
+    """SDK item place (file:line) -> its doc comment in words (not the bukkit: lines)."""
+    files = sorted(SDK_SRC.glob('*.rs'))
+
+    def build():
+        out = {}
+        for path in files:
+            lines = path.read_text(encoding='utf-8', errors='replace').split('\n')
+            for i, l in enumerate(lines):
+                if re.match(r'\s*pub (?:fn|struct|enum|trait|type) ', l):
+                    doc, j = [], i - 1
+                    while j >= 0 and lines[j].strip().startswith(('///', '#[')):
+                        t = lines[j].strip()
+                        if t.startswith('///') and not re.match(r'/// bukkit~?:', t):
+                            doc.insert(0, t[3:].strip())
+                        j -= 1
+                    if doc:
+                        out[f'{path.name}:{i + 1}'] = ' '.join(doc)[:300]
+        return out
+    return _cached('fn_docs', files, build)
+
+
 def kit_items():
     files = sorted(KIT_SRC.glob('*.rs'))
 
@@ -177,6 +200,9 @@ def kit_items():
         out = []
         for path in files:
             lines = path.read_text(encoding='utf-8', errors='replace').split('\n')
+            module_doc = ' '.join(l[3:].strip() for l in lines if l.startswith('//!'))
+            if module_doc:
+                out.append({'kit': f'horizon_kit::{path.stem}', 'signature': f'mod {path.stem} (horizon_kit::{path.stem}::*)', 'doc': module_doc[:300], 'place': f'{path.name}:1'})
             for i, l in enumerate(lines):
                 t = l.strip()
                 if t.startswith(('pub fn ', 'pub struct ', 'pub enum ', 'pub trait ')):
@@ -210,7 +236,49 @@ SYNONYMS = {
     'icon': ['model', 'item'], 'rightclick': ['interact', 'right'], 'click': ['click', 'interact'], 'sneak': ['sneak', 'toggle'],
     'death': ['death', 'die', 'killed'], 'respawn': ['respawn'], 'fall': ['fall', 'distance'], 'water': ['water', 'fluid', 'bucket'],
     'lava': ['lava', 'fluid', 'fire'], 'fire': ['fire', 'combust', 'burn'], 'night': ['time', 'night'], 'day': ['time', 'day'],
+    'persistent': ['pdc', 'persistent'], 'tag': ['pdc', 'namespaced', 'tag'], 'check': ['has', 'is', 'can', 'check'],
+    'save': ['store', 'save', 'persist', 'docs'], 'economy': ['economy', 'hooks', 'vault', 'balance'], 'money': ['economy', 'balance', 'hooks'],
+    'vault': ['economy', 'hooks', 'vault'], 'slot': ['slot', 'item', 'at'], 'perms': ['permission'], 'rank': ['group', 'prefix', 'hooks'],
+    'kill': ['death', 'damage', 'kill'], 'hit': ['damage', 'attack'], 'mob': ['entity', 'creature', 'mob'], 'npc': ['entity', 'packets'],
 }
+
+
+def _stem(w):
+    for end in ('ing', 'ed', 'es', 's'):
+        if len(w) > len(end) + 2 and w.endswith(end):
+            return w[: -len(end)]
+    return w
+
+
+@functools.lru_cache(maxsize=1024)
+def _alts(q):
+    """A query word, its synonyms and its stem's, with their weight (the word itself counts most)."""
+    stem = _stem(q)
+    return tuple((alt, 0 if i == 0 else 1) for i, alt in enumerate([q, *SYNONYMS.get(q, []), *([stem, *SYNONYMS.get(stem, [])] if stem != q else [])]))
+
+
+_ITEM_WORDS = [None, None]
+
+
+def _item_words(items, docs):
+    """Each SDK item's word sets (name and Java names; name alone; name and doc), made once per index."""
+    key = (id(items), len(items), id(docs))
+    if _ITEM_WORDS[0] != key:
+        rows = []
+        for item in items:
+            d = docs.get(item['place'], '')
+            owner, _, name = item['rust'].rpartition('::')
+            # Its Java names as (class words, method words): `Block.getState` for `Block::tile`.
+            java = []
+            for j in item['java']:
+                tail = j.rsplit('/', 1)[-1]
+                if '.' in tail:
+                    cls, member = tail.rsplit('.', 1)
+                    java.append((frozenset(_words(cls.replace('$', ' '))), frozenset(_words(member))))
+            rows.append((set(_words(' '.join([item['rust'], *item['java']]))), set(_words(item['rust'])), set(_words(item['rust'] + ' ' + d)) if d else None,
+                         frozenset(_words(owner)), frozenset(_words(name)), tuple(java)))
+        _ITEM_WORDS[0], _ITEM_WORDS[1] = key, rows
+    return _ITEM_WORDS[1]
 
 
 def _score(query_words, text_words):
@@ -218,8 +286,7 @@ def _score(query_words, text_words):
     total = hits = 0
     for q in query_words:
         best = 0
-        for i, alt in enumerate([q, *SYNONYMS.get(q, [])]):
-            weight = 0 if i == 0 else 1
+        for alt, weight in _alts(q):
             if alt in text_words:
                 best = max(best, 3 - weight)
             elif any(w.startswith(alt) for w in text_words):
@@ -235,6 +302,55 @@ def _score(query_words, text_words):
     return hits * 10 + total
 
 
+KIT_NAME = re.compile(r'\b(?:fn|struct|enum|trait|type|const|static|mod)\s+(\w+)')
+JAVA_REF = re.compile(r'([A-Za-z_$][\w$]*)\s*[.#]\s*([a-z_$][\w$]*)')
+
+
+def java_index():
+    """`Class.member` (the simple class name, nested classes as `Outer$Inner` and `Inner`) -> SDK items."""
+    items = maker_tools.sdk_items()
+    key = (id(items), len(items))
+    if _JAVA_INDEX[0] != key:
+        idx = {}
+        for item in items:
+            for j in item.get('java') or []:
+                tail = j.rsplit('/', 1)[-1]
+                if '.' in tail.split('(')[0]:
+                    # `motd(Component)` is `motd`; a constructor is `<init>`.
+                    simple, member = tail.split('(')[0].rsplit('.', 1)
+                    for c in {simple, simple.rsplit('$', 1)[-1]}:
+                        idx.setdefault(f'{c}.{member}'.lower(), []).append(item)
+                else:
+                    # A whole class: `Farmland` -> FarmlandData.
+                    for c in {tail, tail.rsplit('$', 1)[-1]}:
+                        idx.setdefault(f'class:{c}'.lower(), []).append(item)
+        _JAVA_INDEX[0], _JAVA_INDEX[1] = key, idx
+    return _JAVA_INDEX[1]
+
+
+_JAVA_INDEX = [None, None]
+
+
+def java_exact(query):
+    """SDK items for every `Class.member` / `Class#member` named in the query (a package path in front is fine)."""
+    idx = java_index()
+    rows, seen = [], set()
+    flat = query.replace('/', ' ')
+    keys = [f'{cls}.{member}'.lower() for cls, member in JAVA_REF.findall(flat)]
+    # Constructors: `new ItemStack(...)`, `ItemStack.<init>`, `ItemStack::new`.
+    keys += [f'{cls.rsplit(".", 1)[-1]}.<init>'.lower() for cls in re.findall(r'\bnew\s+([A-Z][\w$.]*)\s*\(', flat)]
+    keys += [f'{cls}.<init>'.lower() for cls in re.findall(r'([A-Za-z_$][\w$]*)\s*(?:\.\s*<init>|::\s*new\b)', flat)]
+    # A Java class named on its own (`Farmland`, `org/bukkit/block/data/type/Farmland`, `EntityDamageEvent$DamageCause`).
+    keys += [f'class:{word}'.lower() for word in re.findall(r'(?<![\w.$#])([A-Z][\w$]*)(?![\w$]*\s*[.#]\s*[a-z_$])', flat)]
+    for key in keys:
+        for item in idx.get(key, []):
+            if item['rust'] not in seen:
+                seen.add(item['rust'])
+                java = next((j for j in item['java'] if j.lower().endswith(key.split(':')[-1].lower())), item['java'][0])
+                rows.append({'rust': item['rust'], 'java': java, 'use': use_path(item['rust'], item['place']), 'place': item['place']})
+    return rows
+
+
 def sdk_can(query, limit=30):
     """Can a plugin do X? Searches SDK functions, events (with whether the engine fires them) and kit helpers by
     words, best first: `hunger`, `enderman target`, `crop age`, `item model`, `action bar`."""
@@ -248,8 +364,35 @@ def sdk_can(query, limit=30):
         if s:
             ev_hits.append((s, {'event': e['event'], 'hook': e['hook'], 'engine_fires': bool(sites.get(e['hook'])), 'methods': e['methods'][:12], 'place': e['place']}))
     fn_hits = []
-    for item in maker_tools.sdk_items():
-        s = _score(qw, set(_words(' '.join([item['rust'], *item['java']])))) + _score(qw, set(_words(item['rust'])))
+    docs = fn_docs()
+    items = maker_tools.sdk_items()
+    qset = set(qw)
+    for item, (named, own, with_doc, owner_w, name_w, java_w) in zip(items, _item_words(items, docs)):
+        s = _score(qw, named)
+        if s:
+            s += _score(qw, own)
+            # The query names this exact item: its type and its own name (`set health Player`, `Player setHealth`).
+            owner_hit = bool(owner_w) and owner_w <= qset
+            sure = 0
+            if name_w and name_w <= qset:
+                s += 6
+                if owner_hit:
+                    # Its own Rust type and name: the surest match, scored by how much of the query they cover, so
+                    # `get player Player Toggle Sneak Event` is that event's, not every PlayerEvent.getPlayer.
+                    sure = 22 + _score(qw, owner_w | name_w)
+                # A function of its own (no type) asked for by exactly its name: `get world` = Bukkit.getWorld.
+                elif not owner_w and name_w == qset:
+                    s += 12
+            # Or by its Java name: the class (or its Rust type) and the Java method (`Block getState` -> Block::tile,
+            # `Bukkit getPlayer` -> the free get_player): as sure as its own name and type.
+            for cls, member in java_w:
+                if member and member <= qset and ((cls and cls <= qset) or owner_hit):
+                    sure = max(sure, 20 + _score(qw, set(cls | member)))
+                    break
+            s += sure
+        elif with_doc:
+            # The doc says what it does in words: a weaker match than the name.
+            s = _score(qw, with_doc) // 2
         if s:
             row = {'rust': item['rust'], 'signature': item['signature'], 'place': item['place']}
             if item.get('partial') or item.get('note'):
@@ -259,15 +402,27 @@ def sdk_can(query, limit=30):
     for k in kit_items():
         s = _score(qw, set(_words(f"{k['kit']} {k['signature']} {k['doc']}")))
         if s:
+            # Its own name (the fn, struct or enum) and its module, said in the query: that one first.
+            m = KIT_NAME.search(k['signature'])
+            name_w = set(_words(m.group(1))) if m else set()
+            if name_w and name_w <= qset:
+                is_mod = k['signature'].startswith('mod ')
+                s += 10 + 3 * len(name_w) + (6 if not is_mod and k['kit'].split('::')[-1] in qset else 0)
             kit_hits.append((s, k))
     best = lambda rows: [r for _, r in sorted(rows, key=lambda x: -x[0])]
     ev, fn, kit = best(ev_hits), best(fn_hits), best(kit_hits)
     for row in fn[:limit]:
         row['use'] = use_path(row['rust'], row['place'])
-    return {
+    out = {}
+    exact = java_exact(query)
+    if exact:
+        # A Paper name pasted as it is (`PlayerEvent.getPlayer`, `org/bukkit/entity/Player#setHealth`): every SDK
+        # item that is that method, the inherited ones on each subclass included.
+        out['java_exact'] = exact
+    return out | {
         'events': ev[:max(5, limit // 3)],
         'functions': fn[:limit],
-        'kit': kit[:max(5, limit // 3)],
+        'kit': kit[:max(8, limit // 2)],
         'counts': {'events': len(ev), 'functions': len(fn), 'kit': len(kit)},
         'recipes': _recipe_rank(qw)[:3],
         'next': 'sdk_recipe <task> = working code; sdk_doc <name> = one item in full; sdk_usage <name> = real uses; sdk_fires <Event> = where the engine fires it',
@@ -400,7 +555,9 @@ def sdk_doc(name):
     q = name.strip()
     short = q.split('::')[-1]
     items = maker_tools.sdk_items()
-    rows = [i for i in items if i['rust'] == q or i['rust'].endswith('::' + q)]
+    # The item named exactly first; others ending in the name after (`get_world`: the free function, then
+    # `Entity::get_world`...).
+    rows = [i for i in items if i['rust'] == q] + [i for i in items if i['rust'] != q and i['rust'].endswith('::' + q)]
     if not rows:
         rows = [i for i in items if i['rust'].split('::')[-1].lower() == short.lower()]
     if not rows:
@@ -465,4 +622,155 @@ TOOLS.update({
     'sdk_recipe': (sdk_recipe, 'Working, compiler-checked code for a common plugin job (skeleton, command, chat, action bar, sound, particles, custom item with pack model/glint/tag, item tags, inventory slots, right-click item, timers, config, menu, blocks near, crop age, extra drops, hunger, mob target, fake blocks). No task = the list.', {'task': 'string'}),
     'sdk_usage': (sdk_usage, 'Real uses of an SDK or kit name in our own plugins, hand-written ones first, with the code around each: the fastest way to see how a call is really used.', {'name': 'string', 'limit': 'integer'}),
     'sdk_doc': (sdk_doc, 'One SDK item in full: the `use` path, doc, Java name, whole definition, what is not exact, and how many of our plugins use it.', {'name': 'string'}),
+})
+
+
+# ---- Names: the SDK's value lists and the game's own ids ----
+
+ENUMS_RS = SDK_SRC / 'enums.rs'
+
+
+def _game_registries():
+    """The game's registries report (every id the game knows), from prepared game files when present."""
+    import os
+    candidates = [os.environ.get('HORIZON_REGISTRIES', '')]
+    candidates += [str(p) for p in [
+        HORIZON / 'jltest-1115' / 'horizonsx' / 'runtime' / '.local' / 'datagen' / 'out' / 'reports' / 'registries.json',
+        pathlib.Path(os.environ.get('APPDATA', '')) / 'horizon-launcher' / 'server-runtime' / 'game-files' / 'horizon-client' / '26.3' / 'registries.json',
+        HORIZON / 'runtime' / 'game-files' / 'horizon-client' / '26.3' / 'registries.json',
+    ]]
+    for c in candidates:
+        if c and pathlib.Path(c).is_file():
+            return pathlib.Path(c)
+    return None
+
+
+def enum_lists():
+    """SDK value lists: module -> (Java class, values)."""
+    def build():
+        text = ENUMS_RS.read_text(encoding='utf-8', errors='replace')
+        out = {}
+        for m in re.finditer(r'/// `([^`]+)`\.\npub mod (\w+) \{\n(.*?)\n\}\n', text, re.S):
+            vals = re.findall(r'pub const (\w+): &str = "([^"]*)";', m.group(3))
+            out[m.group(2)] = (m.group(1), vals)
+        return out
+    return _cached('enums', [ENUMS_RS], build)
+
+
+def game_ids():
+    """The game's registries: registry -> ids."""
+    path = _game_registries()
+    if not path:
+        return {}
+
+    def build():
+        import json
+        data = json.loads(path.read_text(encoding='utf-8'))
+        return {k: list(v.get('entries', {}).keys()) for k, v in data.items()}
+    return _cached('game_ids', [path], build)
+
+
+def sdk_names(query, kind='', limit=40):
+    """Exact names by words: SDK value lists (Bukkit names: `BLOCK_AMETHYST_BLOCK_CHIME`, `HAPPY_VILLAGER`,
+    `DIAMOND_BOOTS`) and the game's ids (`minecraft:block.amethyst_block.chime`, `minecraft:item_model`).
+    `kind` narrows: a list (`sound`, `particle`, `material`, `entity_type`...) or a registry (`sound_event`,
+    `data_component_type`, `item`, `block`, `mob_effect`, `enchantment`...)."""
+    qw = _words(query)
+    kind = kind.strip().lower().removeprefix('minecraft:')
+    sdk_hits = []
+    for mod, (java, vals) in enum_lists().items():
+        if kind and kind not in mod:
+            continue
+        for const, v in vals:
+            s = _score(qw, set(_words(const.replace('_', ' ') + ' ' + v.replace(':', ' ').replace('_', ' '))))
+            if s:
+                sdk_hits.append((s, len(const), f'horizon_bukkit::enums::{mod}::{const}', java, v))
+    game_hits = []
+    for reg, ids in game_ids().items():
+        r = reg.removeprefix('minecraft:')
+        if kind and kind not in r:
+            continue
+        for i in ids:
+            s = _score(qw, set(_words(i.replace('minecraft:', '').replace('.', ' ').replace('/', ' ').replace('_', ' '))))
+            if s:
+                game_hits.append((s, len(i), i, r))
+    sdk_hits.sort(key=lambda h: (-h[0], h[1]))
+    game_hits.sort(key=lambda h: (-h[0], h[1]))
+    return {
+        'sdk_values': [{'name': n.rsplit('::', 1)[-1], 'value': v, 'use': n, 'java': j} for _, _, n, j, v in sdk_hits[:limit]],
+        'game_ids': [{'id': i, 'registry': r} for _, _, i, r in game_hits[:limit]],
+        'counts': {'sdk_values': len(sdk_hits), 'game_ids': len(game_hits)},
+        'lists': 'kind= one of the SDK lists (sound, particle, material, entity_type, ... 274) or a game registry (95)' if not (sdk_hits or game_hits) else '',
+        'note': '' if game_ids() else 'game ids need the prepared game files (set HORIZON_REGISTRIES to a registries.json)',
+    }
+
+
+# ---- Item data components ----
+
+# The value each common component takes, as set_component wants it (JSON), and what it does.
+COMPONENT_EXAMPLES = {
+    'minecraft:item_model': ('"myicons:relic"', 'The model (icon) from a resource pack: assets/<ns>/items/<id>.json'),
+    'minecraft:custom_name': ('{"text":"Name","italic":false}', 'The name; item::name(&mut s, "<gold>Name") sets it from MiniMessage'),
+    'minecraft:item_name': ('{"text":"Name"}', 'The default name (not italic, not editable in an anvil)'),
+    'minecraft:lore': ('[{"text":"line","italic":false}]', 'Tooltip lines; item::lore(&mut s, &lines) from MiniMessage'),
+    'minecraft:enchantment_glint_override': ('true', 'The enchanted shimmer on (true) or off (false)'),
+    'minecraft:max_stack_size': ('1', 'How many stack (1-99)'),
+    'minecraft:tooltip_display': ('{"hidden_components":["minecraft:enchantments","minecraft:attribute_modifiers"]}', 'Hide vanilla tooltip lines (or {"hide_tooltip":true})'),
+    'minecraft:rarity': ('"epic"', 'Name colour: common, uncommon, rare, epic'),
+    'minecraft:enchantments': ('{"minecraft:sharpness":5}', 'Enchantments and levels'),
+    'minecraft:stored_enchantments': ('{"minecraft:mending":1}', 'An enchanted book\'s enchantments'),
+    'minecraft:attribute_modifiers': ('[{"type":"minecraft:armor","amount":3.0,"operation":"add_value","slot":"feet","id":"myplugin:armor"}]', 'Stats the item gives'),
+    'minecraft:equippable': ('{"slot":"head","asset_id":"minecraft:diamond","equip_sound":"minecraft:item.armor.equip_diamond"}', 'Wearable in a slot, how it looks worn'),
+    'minecraft:unbreakable': ('{}', 'Never loses durability'),
+    'minecraft:damage': ('5', 'Durability used'),
+    'minecraft:max_damage': ('250', 'Total durability'),
+    'minecraft:custom_model_data': ('{"floats":[1.0],"strings":["red"]}', 'Values a resource pack\'s model can switch on'),
+    'minecraft:custom_data': ('{"myplugin":{"id":"relic"}}', 'Hidden data; prefer pdc_set/pdc_get (PublicBukkitValues)'),
+    'minecraft:dyed_color': ('16711680', 'Leather/dyeable colour (RGB integer)'),
+    'minecraft:food': ('{"nutrition":4,"saturation":2.4,"can_always_eat":false}', 'Makes it food (with consumable)'),
+    'minecraft:consumable': ('{"consume_seconds":1.6,"animation":"eat"}', 'Can be eaten/drunk/used up'),
+    'minecraft:use_cooldown': ('{"seconds":5.0}', 'A cooldown after use'),
+    'minecraft:repairable': ('{"items":"minecraft:diamond"}', 'What repairs it in an anvil'),
+    'minecraft:enchantable': ('{"value":10}', 'Can be enchanted, with this enchantability'),
+    'minecraft:glider': ('{}', 'Glides like an elytra when worn'),
+    'minecraft:tool': ('{"rules":[],"default_mining_speed":1.0,"damage_per_block":1}', 'Mining speeds'),
+    'minecraft:weapon': ('{"item_damage_per_attack":1}', 'Damage per hit to the item'),
+    'minecraft:profile': ('{"name":"Notch"}', 'A player head\'s skin'),
+    'minecraft:potion_contents': ('{"potion":"minecraft:swiftness"}', 'A potion\'s effects or colour'),
+    'minecraft:can_place_on': ('[{"blocks":"minecraft:stone"}]', 'Adventure mode: where it may be placed'),
+    'minecraft:can_break': ('[{"blocks":"minecraft:stone"}]', 'Adventure mode: what it may break'),
+    'minecraft:trim': ('{"material":"minecraft:gold","pattern":"minecraft:sentry"}', 'Armour trim'),
+    'minecraft:death_protection': ('{}', 'Saves from death like a totem'),
+    'minecraft:fire_resistant': ('{}', 'Doesn\'t burn in fire or lava'),
+}
+
+
+def sdk_components(query=''):
+    """Item data components (`ItemStack::set_component(id, json)`): every id the game has, a value example and
+    what it does for the common ones, and the SDK helpers that already read or write it. A query narrows by
+    words (`glint`, `stack`, `hide tooltip`, `model`)."""
+    ids = game_ids().get('minecraft:data_component_type') or sorted(COMPONENT_EXAMPLES)
+    qw = _words(query) if query.strip() else []
+    texts = [(p, p.read_text(encoding='utf-8', errors='replace')) for p in sorted(SDK_SRC.glob('*.rs'))]
+    rows = []
+    for cid in ids:
+        example, what = COMPONENT_EXAMPLES.get(cid, ('', ''))
+        if qw and not _score(qw, set(_words(cid.replace('minecraft:', '').replace('_', ' ') + ' ' + what))):
+            continue
+        helpers = []
+        for p, t in texts:
+            for m in re.finditer(re.escape(f'"{cid}"'), t):
+                head = t.rfind('pub fn ', 0, m.start())
+                if head >= 0:
+                    name = re.match(r'pub fn (\w+)', t[head:head + 80])
+                    if name and t.count('\n', head, m.start()) < 6:
+                        helpers.append(f'{p.name}:{name.group(1)}')
+        rows.append({'id': cid, 'example': example, 'does': what, 'sdk_helpers': sorted(set(helpers))[:6]})
+    rows.sort(key=lambda r: (not r['example'], r['id']))
+    return {'set_with': 'stack.set_component("minecraft:...", json!(...)); read with stack.get_component(id)', 'components': rows, 'count': len(rows)}
+
+
+TOOLS.update({
+    'sdk_names': (sdk_names, 'Exact names by words: the SDK\'s 274 value lists (Bukkit names: sounds, particles, materials, entity types...) and the game\'s own ids from its registries (sounds, particles, items, blocks, effects, enchantments, data components...). kind= narrows to one list or registry.', {'query': 'string', 'kind': 'string', 'limit': 'integer'}),
+    'sdk_components': (sdk_components, 'Item data components for ItemStack::set_component: every id the game has, a JSON value example and what it does for the common ones, and the SDK helpers that already handle it. query= narrows (glint, stack, hide tooltip, model).', {'query': 'string'}),
 })

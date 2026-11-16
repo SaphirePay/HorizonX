@@ -72,7 +72,7 @@ impl Launcher {
         );
         // Sculk's banner right under the server, where it is seen without scrolling past the
         // server's tabs (as before the glass look, under the page's actions).
-        // Horizon Host shows no paid-hosting partner.
+        // HorizonX shows no paid-hosting partner.
         let _ = Self::glass_sculk;
         if let Some(dir) = &open {
             page = page.child(self.glass_server_tabs(dir, &status, cx));
@@ -688,7 +688,7 @@ impl Launcher {
                 .mt(px(4.)),
             );
         let internet = self.glass_internet(port, cx);
-        // Horizon Host: the public address (playit) comes first: it's what friends elsewhere need.
+        // HorizonX: the public address (playit) comes first: it's what friends elsewhere need.
         let public = self
             .servers
             .open

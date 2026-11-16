@@ -134,7 +134,7 @@ impl Page {
             Ok("versions") => Page::Versions,
             Ok("settings") => Page::Settings,
             Ok("play") => Page::Play,
-            // Horizon Host opens on its servers.
+            // HorizonX opens on its servers.
             _ => Page::Servers,
         };
         // The data folder did not open: start on Settings, where the message and the two
@@ -160,7 +160,7 @@ impl Page {
     /// The pages the top bar shows: all but Settings, and the Wardrobe and the Shop only when
     /// `wardrobe` (`Launcher::wardrobe_shown`).
     fn in_top_bar(wardrobe: bool) -> impl Iterator<Item = (Page, &'static str, &'static str)> {
-        // Horizon Host: the server pages only (Settings has its own button).
+        // HorizonX: the server pages only (Settings has its own button).
         let _ = wardrobe;
         Self::ALL
             .into_iter()
@@ -5775,7 +5775,7 @@ fn main() {
                     titlebar: Some(titlebar::options()),
                     #[cfg(target_os = "linux")]
                     window_decorations: Some(gpui::WindowDecorations::Client),
-                    app_id: Some("horizon-host".into()),
+                    app_id: Some("horizonx".into()),
                     // GPUI draws a window without focus at most every 33 ms to save energy. A
                     // benchmark's window often starts without it (KDE keeps focus from windows
                     // a background process opens), and it measures drawing, not that limit.

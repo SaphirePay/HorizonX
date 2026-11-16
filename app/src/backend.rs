@@ -3501,7 +3501,7 @@ fn launcher_asset_running_from(appimage: bool) -> Option<&'static str> {
 
 /// Development builds and `HORIZON_LAUNCHER_NO_SELF_UPDATE` never replace themselves.
 pub fn self_update_allowed() -> bool {
-    // Horizon Host is not the launcher: the launcher's self-update would replace it with the launcher.
+    // HorizonX is not the launcher: the launcher's self-update would replace it with the launcher.
     false
 }
 

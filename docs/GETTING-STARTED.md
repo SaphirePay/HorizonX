@@ -7,7 +7,7 @@ This page takes you from nothing to a plugin running on a server. It takes about
 | Tool | Why | Get it |
 |---|---|---|
 | Rust (stable, 1.99 or newer) | Builds plugins | <https://rustup.rs> |
-| A HorizonsX server | Runs them | Horizon Host makes one in five steps ([README](../README.md#download)), or build `horizonsx/` yourself |
+| A HorizonsX server | Runs them | HorizonX makes one in five steps ([README](../README.md#download)), or build `horizonsx/` yourself |
 | Python 3.11+ (optional) | Runs the MCP tools for AI assistants | <https://python.org> |
 
 On Windows, Rust needs the Visual Studio C++ build tools (the Rust installer offers them).

@@ -1,4 +1,4 @@
-//! What Horizon Host adds to the launcher's servers (`servers.rs` drives `horizon-server`):
+//! What HorizonX adds to the launcher's servers (`servers.rs` drives `horizon-server`):
 //!
 //! - the HorizonsX engine: every server runs it (`engine.path`), from `engines/horizonsx/` beside
 //!   the app (`HORIZON_HOST_ENGINE` overrides);
@@ -42,7 +42,7 @@ pub fn bundled_plugins() -> Option<PathBuf> {
         .filter(|p| p.is_dir())
 }
 
-/// Makes a server Horizon Host's: HorizonsX as its engine and the playit plugin in. Safe to run
+/// Makes a server HorizonX's: HorizonsX as its engine and the playit plugin in. Safe to run
 /// again (on every server opened), it only fills in what's missing. Returns what it did.
 pub fn adopt(dir: &Path) -> Vec<String> {
     let mut did = vec![];
@@ -67,11 +67,16 @@ pub fn adopt(dir: &Path) -> Vec<String> {
             }
         }
     }
-    if !plugin_installed(dir, PLAYIT) {
+    if !plugin_installed(dir, PLAYIT) && !plugin_installed(dir, &format!("{PLAYIT}.disabled")) && !schedule(dir).playit_off {
         match install_plugin(dir, PLAYIT) {
             Ok(()) => did.push("Public address: the playit plugin is in".to_string()),
             Err(e) => did.push(format!("Couldn't add the playit plugin: {e}")),
         }
+    }
+    // The app shipped newer builds of plugins this server has (after an update): put them in.
+    let fresh = refresh_plugins(dir);
+    if fresh > 0 {
+        did.push(format!("Plugins: {fresh} updated"));
     }
     if has_jars(dir) {
         match ensure_java_layer(dir) {
@@ -145,6 +150,9 @@ fn link_folder(link: &Path, target: &Path) -> Result<(), String> {
 /// app ships a newer one and the server isn't holding it), and `java-layer/lib` and
 /// `java-layer/runtime` linked to the app's copies. Returns whether the plugin was newly added.
 pub fn ensure_java_layer(dir: &Path) -> Result<bool, String> {
+    if schedule(dir).java_layer_off {
+        return Ok(false);
+    }
     let Some(java) = bundled_java() else { return Ok(false) };
     let file = java_layer_file();
     let source = java.join(file);
@@ -274,9 +282,34 @@ pub fn plugin_installed(dir: &Path, file: &str) -> bool {
     dir.join("plugins").join(file).is_file()
 }
 
+/// Replaces the server's copies of shipped plugins (on or off) with the app's when they differ, so an update of
+/// the app reaches every server. Returns how many changed. One a running server holds stays for the next try.
+pub fn refresh_plugins(dir: &Path) -> usize {
+    let Some(bundle) = bundled_plugins() else { return 0 };
+    let folder = dir.join("plugins");
+    let mut n = 0;
+    for (file, on) in plugin_files(dir) {
+        let shipped = bundle.join(&file);
+        if !shipped.is_file() {
+            continue;
+        }
+        let here = if on { folder.join(&file) } else { folder.join(format!("{file}.disabled")) };
+        if crate::app_update::same(&shipped, &here) {
+            continue;
+        }
+        let tmp = folder.join(format!(".{file}.copying"));
+        if fs::copy(&shipped, &tmp).is_ok() && fs::rename(&tmp, &here).is_ok() {
+            n += 1;
+        } else {
+            let _ = fs::remove_file(&tmp);
+        }
+    }
+    n
+}
+
 /// Copies a shipped plugin into the server (HorizonsX loads it at once when it runs).
 pub fn install_plugin(dir: &Path, file: &str) -> Result<(), String> {
-    let from = bundled_plugins().map(|f| f.join(file)).filter(|p| p.is_file()).ok_or_else(|| format!("{file} isn't in Horizon Host's plugins"))?;
+    let from = bundled_plugins().map(|f| f.join(file)).filter(|p| p.is_file()).ok_or_else(|| format!("{file} isn't in HorizonX's plugins"))?;
     let to_dir = dir.join("plugins");
     fs::create_dir_all(&to_dir).map_err(|e| e.to_string())?;
     let tmp = to_dir.join(format!(".{file}.copying"));
@@ -409,6 +442,12 @@ pub struct Schedule {
     /// "horizon" when the owner chose the plain Horizon engine (not switched to HorizonsX).
     #[serde(default)]
     pub engine: String,
+    /// The owner turned playit off: the app leaves it out (no public address).
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub playit_off: bool,
+    /// The owner turned the Java layer off: jars stay, and nothing puts the layer back.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub java_layer_off: bool,
 }
 
 pub fn schedule(dir: &Path) -> Schedule {
@@ -563,6 +602,59 @@ pub struct JavaPlugin {
 pub fn java_layer_on(dir: &Path) -> bool {
     let file = if cfg!(windows) { "horizon_java.dll" } else { "libhorizon_java.so" };
     dir.join("plugins").join(file).is_file()
+}
+
+/// Turns the Java layer on or off for a server, and remembers it. Off keeps the jars and the layer as `.disabled`;
+/// a running server notices at its next restart.
+pub fn set_java_layer(dir: &Path, on: bool) -> Result<(), String> {
+    let mut s = schedule(dir);
+    s.java_layer_off = !on;
+    save_schedule(dir, &s)?;
+    let file = java_layer_file();
+    if on {
+        let off = dir.join("plugins").join(format!("{file}.disabled"));
+        if off.is_file() && !dir.join("plugins").join(file).is_file() {
+            set_plugin_on(dir, file, true)?;
+        }
+        let _ = fs::remove_file(&off);
+        if bundled_java().is_some() {
+            ensure_java_layer(dir)?;
+        } else if !java_layer_on(dir) {
+            return Err("The Java layer isn't beside the app: reinstall HorizonX.".into());
+        }
+        Ok(())
+    } else {
+        let _ = fs::remove_file(dir.join("plugins").join(format!("{file}.disabled")));
+        set_plugin_on(dir, file, false)
+    }
+}
+
+/// Whether playit (the public address) is on for a server.
+pub fn playit_on(dir: &Path) -> bool {
+    plugin_installed(dir, PLAYIT)
+}
+
+/// Turns playit on or off for a server, and remembers it. A running HorizonsX server loads or unloads it at once.
+pub fn set_playit(dir: &Path, on: bool) -> Result<(), String> {
+    let mut s = schedule(dir);
+    s.playit_off = !on;
+    save_schedule(dir, &s)?;
+    let off = dir.join("plugins").join(format!("{PLAYIT}.disabled"));
+    if on {
+        if plugin_installed(dir, PLAYIT) {
+            let _ = fs::remove_file(&off);
+            Ok(())
+        } else if off.is_file() {
+            set_plugin_on(dir, PLAYIT, true)
+        } else {
+            install_plugin(dir, PLAYIT)
+        }
+    } else {
+        if plugin_installed(dir, PLAYIT) {
+            let _ = fs::remove_file(&off);
+        }
+        set_plugin_on(dir, PLAYIT, false)
+    }
 }
 
 /// The jars in the server's plugins folder, by name.
@@ -725,7 +817,7 @@ mod tests {
 
     #[test]
     fn schedule_due() {
-        let s = Schedule { backup_hours: 2, restart_hour: Some(4), restart_every: 0, last_backup: 0, last_restart: 0, engine: String::new() };
+        let s = Schedule { backup_hours: 2, restart_hour: Some(4), restart_every: 0, last_backup: 0, last_restart: 0, engine: String::new(), ..Default::default() };
         assert_eq!(due(&s, 4, None), (true, true));
         assert_eq!(due(&s, 5, None), (true, false));
         let s = Schedule { backup_hours: 0, restart_hour: None, ..s };
@@ -754,6 +846,32 @@ mod tests {
     }
 
     #[test]
+    fn playit_can_be_turned_off_and_stays_off() {
+        let base = std::env::temp_dir().join(format!("hh-playit-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&base);
+        let plugins = base.join("plugins");
+        fs::create_dir_all(&plugins).unwrap();
+        fs::write(plugins.join(PLAYIT), b"dll").unwrap();
+        let server = base.join("server");
+        fs::create_dir_all(server.join("plugins")).unwrap();
+        // SAFETY: the only test that reads this variable.
+        unsafe { std::env::set_var("HORIZON_HOST_PLUGINS", &plugins) };
+        set_playit(&server, true).unwrap();
+        assert!(playit_on(&server));
+        set_playit(&server, false).unwrap();
+        assert!(!playit_on(&server));
+        assert!(schedule(&server).playit_off);
+        // Opening the server again doesn't put it back.
+        adopt(&server);
+        assert!(!playit_on(&server));
+        set_playit(&server, true).unwrap();
+        assert!(playit_on(&server));
+        assert!(!server.join("plugins").join(format!("{PLAYIT}.disabled")).exists());
+        unsafe { std::env::remove_var("HORIZON_HOST_PLUGINS") };
+        let _ = fs::remove_dir_all(&base);
+    }
+
+    #[test]
     fn java_layer_goes_in_with_a_jar() {
         let base = std::env::temp_dir().join(format!("hh-java-{}", std::process::id()));
         let _ = fs::remove_dir_all(&base);
@@ -774,6 +892,17 @@ mod tests {
         assert!(server.join("java-layer/runtime/bin").is_dir());
         // Again: nothing new to add.
         assert!(!ensure_java_layer(&server).unwrap());
+        // Off: the layer goes aside and stays out, even when something asks for it again.
+        set_java_layer(&server, false).unwrap();
+        assert!(!java_layer_on(&server));
+        assert!(schedule(&server).java_layer_off);
+        assert!(!ensure_java_layer(&server).unwrap());
+        assert!(!java_layer_on(&server));
+        // On again.
+        set_java_layer(&server, true).unwrap();
+        assert!(java_layer_on(&server));
+        assert!(!schedule(&server).java_layer_off);
+        assert!(!server.join("plugins").join(format!("{}.disabled", java_layer_file())).exists());
         unsafe { std::env::remove_var("HORIZON_HOST_JAVA") };
         let _ = fs::remove_dir(server.join("java-layer/lib"));
         let _ = fs::remove_dir(server.join("java-layer/runtime"));

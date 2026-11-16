@@ -1,9 +1,14 @@
 [package]
-name = "horizon-host"
-version = "0.2.1"
+name = "horizonx"
+version = "0.3.0"
 edition = "2021"
 license = "MIT"
 description = "Make a Minecraft server on HorizonsX in a few clicks; friends join from anywhere with no port forwarding"
+
+[[bin]]
+# HorizonX.exe
+name = "HorizonX"
+path = "src/main.rs"
 
 [workspace]
 
@@ -14,8 +19,10 @@ gpui_platform = { package = "gpui-fast-platform", version = "0.1.13", features =
 # The launcher's tokens, fonts and icons.
 horizon-theme = { path = "../vendor/horizon/crates/horizon-theme" }
 # Servers (horizon-server), versions, preparing, HorizonsX, playit, plugins: the forked launcher's library.
-horizon-host-core = { path = "../app" }
+horizonx-core = { path = "../app" }
 serde_json = "1"
+# `HorizonX mcp`: the Model Context Protocol, shared with horizon-server and the launcher.
+horizon-mcp = { path = "../vendor/horizon/crates/horizon-mcp" }
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
 

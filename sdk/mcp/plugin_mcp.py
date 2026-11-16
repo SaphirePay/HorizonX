@@ -319,11 +319,14 @@ def kit_doc(topic=''):
     """horizon-kit in brief: no topic = every module's one-line summary and the recipe (KIT.md); a module name
     (`gui`, `item`, `store`, `hooks`, `mini`, `yaml`, `wire`, `sync`, `time`...) = that module's doc and its
     public functions with signatures. Cheaper than reading the source."""
-    kit = TOOLS / 'kit' / 'horizon-kit' / 'src'
+    # This repository's own kit first (sdk/horizon-kit), a workspace checkout's otherwise.
+    here = pathlib.Path(__file__).resolve().parent.parent / 'horizon-kit'
+    kit = here / 'src' if (here / 'src').is_dir() else TOOLS / 'kit' / 'horizon-kit' / 'src'
+    guide = here / 'KIT.md' if (here / 'KIT.md').is_file() else TOOLS / 'kit' / 'KIT.md'
     if not topic:
         lib = (kit / 'lib.rs').read_text(encoding='utf-8')
         docs = '\n'.join(l[4:] for l in lib.splitlines() if l.startswith('//!'))
-        return docs + '\n\n' + (TOOLS / 'kit' / 'KIT.md').read_text(encoding='utf-8')
+        return docs + '\n\n' + guide.read_text(encoding='utf-8')
     f = kit / f'{topic.strip().lower()}.rs'
     if not f.exists():
         return {'error': f'no module {topic}', 'modules': sorted(x.stem for x in kit.glob('*.rs'))}

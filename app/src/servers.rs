@@ -735,7 +735,7 @@ pub fn create(spec: &NewServer, tag: Option<&str>, log: &dyn Fn(String)) -> Resu
         &settings.iter().map(String::as_str).collect::<Vec<_>>(),
     )
     .map_err(undo)?;
-    // Horizon Host: HorizonsX as the engine and the playit plugin in (public address, no port forwarding).
+    // HorizonX: HorizonsX as the engine and the playit plugin in (public address, no port forwarding).
     for line in crate::host::adopt(&dir) {
         log(line);
     }

@@ -1,5 +1,5 @@
 [package]
-name = "horizon-host-core"
+name = "horizonx-core"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
@@ -11,7 +11,7 @@ path = "src/lib.rs"
 
 [[bin]]
 # The forked launcher window + its CLI (servers create/run...), kept for tools and tests.
-name = "horizon-host-cli"
+name = "horizonx-cli"
 path = "src/main.rs"
 
 [workspace]

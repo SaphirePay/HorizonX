@@ -1,0 +1,21 @@
+[package]
+name = "network_rs"
+version = "1.0.0"
+edition = "2024"
+publish = false
+description = "Moves players between the servers of a HorizonX network: /server, /hub"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../../../sdk/horizon-kit" }
+serde_json = "1"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+codegen-units = 4
+
+[workspace]

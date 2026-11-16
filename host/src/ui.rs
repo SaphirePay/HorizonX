@@ -1,4 +1,4 @@
-//! Horizon Host's controls, in the Horizon launcher's glass style: its tokens (`horizon_theme::glass`),
+//! HorizonX's controls, in the Horizon launcher's glass style: its tokens (`horizon_theme::glass`),
 //! Geist for text and Bricolage for headings, white at a few opacities over frosted plates, one
 //! violet accent. Built here for this app's own layout.
 use gpui::{
@@ -192,7 +192,7 @@ pub fn scale() -> f32 {
     SCALE.get()
 }
 
-/// A length at the window's scale: every size in Horizon Host's own views goes through this.
+/// A length at the window's scale: every size in HorizonX's own views goes through this.
 pub fn px(v: f32) -> gpui::Pixels {
     gpui::px(v * SCALE.get())
 }

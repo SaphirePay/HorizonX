@@ -16,7 +16,7 @@ use std::path::{Path, PathBuf};
 mod glass_server_dialog;
 #[path = "glass_servers.rs"]
 mod glass_servers;
-/// Horizon Host: the public address and the Plugins, Files, Performance and Schedule tabs.
+/// HorizonX: the public address and the Plugins, Files, Performance and Schedule tabs.
 #[path = "host_page.rs"]
 mod host_page;
 use glass_servers::glass_setting_row;
@@ -107,7 +107,7 @@ pub(super) enum Tab {
     Players,
     Settings,
     Backups,
-    // Horizon Host's (host_page.rs).
+    // HorizonX's (host_page.rs).
     Plugins,
     Files,
     Performance,
@@ -159,7 +159,7 @@ pub(super) enum Event {
     Pvp(Option<bool>),
     UpdateCheck(Result<Value, Problem>),
     Failed(String),
-    /// Horizon Host's parts (host_page.rs).
+    /// HorizonX's parts (host_page.rs).
     Host(host_page::HostEvent),
 }
 
@@ -278,7 +278,7 @@ pub(super) struct Servers {
     invalid: Option<(Field, &'static str)>,
     copied: Option<Instant>,
     faces: HashMap<String, Option<Vec<[u8; 4]>>>,
-    /// Horizon Host's state (host_page.rs).
+    /// HorizonX's state (host_page.rs).
     pub(super) host: host_page::HostUi,
     pub(super) tx: Sender<Event>,
     rx: Receiver<Event>,
@@ -655,7 +655,7 @@ impl Launcher {
                         s.log.clear();
                         s.log_dir = Some(dir.clone());
                     }
-                    // Horizon Host: the engine's periodic region-thread report is noise in a console.
+                    // HorizonX: the engine's periodic region-thread report is noise in a console.
                     let lines: Vec<String> = lines
                         .into_iter()
                         .filter(|l| !l.starts_with("HorizonsX region threads:"))

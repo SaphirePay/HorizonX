@@ -536,7 +536,7 @@ impl HostApp {
         cx.notify();
     }
 
-    /// The plugins made for HorizonsX that come with Horizon Host: add or remove each.
+    /// The plugins made for HorizonsX that come with HorizonX: add or remove each.
     fn horizon_plugins(&mut self, dir: &Path, st: &Status) -> Div {
         let installed = self.installed.get(dir).cloned().unwrap_or_default();
         let mut list = div().flex().flex_col();
@@ -701,8 +701,8 @@ impl HostApp {
             move |v, _, cx| change_schedule(&e, &d, cx, move |s: &mut host::Schedule| s.restart_hour = Some(v))
         });
         let note = match mode {
-            6 | 12 => format!("Every {mode} hours the server has been up, while Horizon Host is open. A fresh start keeps a long-running server quick."),
-            24 => "Once a day at the time below, local time, while Horizon Host is open.".to_string(),
+            6 | 12 => format!("Every {mode} hours the server has been up, while HorizonX is open. A fresh start keeps a long-running server quick."),
+            24 => "Once a day at the time below, local time, while HorizonX is open.".to_string(),
             _ => "A fresh start now and then keeps a long-running server quick.".to_string(),
         };
         ui::panel()

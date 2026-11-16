@@ -278,7 +278,7 @@ impl Launcher {
         let t = self.theme;
         let soft = self.look.accent_soft;
         self.load_packs();
-        // Horizon Host: the sidebar is the servers; + makes one.
+        // HorizonX: the sidebar is the servers; + makes one.
         let add = ui::icon_button(
             "add-server",
             "plus-sign",
@@ -473,7 +473,7 @@ impl Launcher {
         // Sculk's card (not in the mockup, kept: a sponsor), where the old sidebar had it: at
         // the sidebar's foot above the links, on every page (Servers shows the wide banner too).
         // Tall where the sidebar has the height for it besides its rows, compact otherwise.
-        // Horizon Host shows no paid-hosting partner.
+        // HorizonX shows no paid-hosting partner.
         if false && !self.settings.partner_hidden {
             let rows = self.instances.list.len() + servers.len();
             let free = f32::from(window.viewport_size().height)
@@ -578,7 +578,7 @@ impl Launcher {
                 .id("launcher-version")
                 .px(px(8.))
                 .pt(px(8.))
-                .child(format!("Horizon Host {}", env!("CARGO_PKG_VERSION")))
+                .child(format!("HorizonX {}", env!("CARGO_PKG_VERSION")))
                 .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
                     this.version_clicked();
                     cx.notify();
@@ -762,7 +762,7 @@ impl Launcher {
                 &t,
             )
         });
-        // Horizon Host: no player or sign-in on the bar (hosting needs neither).
+        // HorizonX: no player or sign-in on the bar (hosting needs neither).
         let _ = (account, sign_in);
         div()
             .flex()
