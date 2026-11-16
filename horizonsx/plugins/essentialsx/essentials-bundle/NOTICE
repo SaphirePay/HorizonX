@@ -1,0 +1,19 @@
+Essentials for Horizon
+
+This is a port to Rust of EssentialsX 2.22.0, the Bukkit plugin. It is a derivative work and is
+distributed under the GNU General Public License, version 3: see LICENSE.
+
+EssentialsX is
+  Copyright (C) 2011 Essentials Team
+  and the EssentialsX team and contributors, https://essentialsx.net/
+
+Its plugin.yml names as authors: Zenexer, ementalo, Aelux, Brettflan, KimKandor, snowleo, ceulemans,
+Xeology, KHobbits, md_5, Iaccidentally, drtshock, vemacs, SupaHam, mdcfe, JRoy, pop4959.
+
+The files under resources/ (config.yml, kits.yml, worth.yml, items.json, items.csv, custom_items.yml,
+tpr.yml, motd.txt, rules.txt, book.txt, custom.txt, info.txt, messages/*.properties) and plugin-original.yml
+are the original's own, unchanged, including its translators' work.
+
+The Java source this was written from: https://github.com/EssentialsX/Essentials, tag 2.22.0.
+
+horizon-bukkit's fam_ess_transparent.txt is the list of materials in Bukkit's Material.isTransparent.

@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/SaphirePay/horizon-host/releases/latest"><b>Download</b></a> ·
+  <a href="https://github.com/SaphirePay/HorizonX/releases/latest"><b>Download</b></a> ·
   <a href="#horizon-host"><b>Horizon Host</b></a> ·
   <a href="#horizonsx"><b>HorizonsX</b></a> ·
   <a href="#sdk"><b>SDK</b></a> ·
@@ -28,7 +28,7 @@ This repository holds four parts that work together:
 
 ## Download
 
-1. Download **`Horizon-Host-0.2.1-windows-x64.zip`** from [the latest release](https://github.com/SaphirePay/horizon-host/releases/latest).
+1. Download **`Horizon-Host-0.2.1-windows-x64.zip`** from [the latest release](https://github.com/SaphirePay/HorizonX/releases/latest).
 2. Unzip it anywhere.
 3. Double-click **`horizon-host.exe`**.
 
@@ -167,9 +167,9 @@ bukkit_plugin!(on_enable, on_disable);
 loads at once. Start with [`sdk/horizon-bukkit/AI_GUIDE.md`](sdk/horizon-bukkit/AI_GUIDE.md); it walks through a
 plugin's files, events, commands, configs and menus.
 
-[`horizonsx/plugins/`](horizonsx/plugins) holds 25 larger plugins built on the SDK, among them LuckPerms, mcMMO,
-Multiverse, DeluxeMenus, Plan, TAB and Horizon's own jobs, SMP and scoreboard plugins. They build against their own
-copy of [`horizon-kit`](horizonsx/plugins/horizon-kit); new plugins should use [`sdk/horizon-kit`](sdk/horizon-kit).
+[`horizonsx/plugins/`](horizonsx/plugins) holds 22 larger plugins built on the SDK, among them
+[EssentialsX](horizonsx/plugins/essentialsx), LuckPerms, mcMMO, Multiverse, DeluxeMenus, Plan and TAB. They build
+against their own copy of [`horizon-kit`](horizonsx/plugins/horizon-kit); new plugins should use [`sdk/horizon-kit`](sdk/horizon-kit).
 
 **Documentation:** [`docs/`](docs/README.md) covers a first plugin ([GETTING-STARTED.md](docs/GETTING-STARTED.md)),
 every common job ([PLUGIN-GUIDE.md](docs/PLUGIN-GUIDE.md)), working code ([COOKBOOK.md](docs/COOKBOOK.md)), the AI
@@ -213,8 +213,8 @@ You need Git, Rust (rustup) and Python 3. HorizonsX builds with Rust 1.99.1 (`ru
 Java layer also needs JDK 25.
 
 ```bash
-git clone --recurse-submodules https://github.com/SaphirePay/horizon-host.git
-cd horizon-host
+git clone --recurse-submodules https://github.com/SaphirePay/HorizonX.git
+cd HorizonX
 
 # Horizon Host
 cargo build --release --manifest-path host/Cargo.toml

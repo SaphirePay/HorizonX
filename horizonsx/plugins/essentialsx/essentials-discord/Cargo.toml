@@ -1,0 +1,28 @@
+[package]
+name = "essentials-discord"
+version = "2.22.0"
+edition = "2024"
+publish = false
+# A port of part of EssentialsX 2.22.0, which is GPL-3.0: see ../essentials/NOTICE.
+license = "GPL-3.0-only"
+description = "Provides integration between Minecraft and Discord servers"
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+essentials = { path = "../essentials", default-features = false }
+horizon-bukkit = { path = "../../../../sdk/horizon-bukkit" }
+serde_json = "1"
+serde_yaml = "0.9"
+regex = "1"
+emojis = "0.6"
+tungstenite = { version = "0.26", default-features = false, features = ["handshake", "rustls-tls-webpki-roots"] }
+ureq = { version = "2.12", default-features = false, features = ["tls"] }
+rustls = { version = "0.23", default-features = false, features = ["std", "ring", "tls12"] }
+webpki-roots = "1"
+
+[dev-dependencies]
+rcgen = "0.13"
+
+[workspace]

@@ -34,7 +34,7 @@ for many players (region threads, multi-core sending, hot-reloaded plugins).
 | `crates/horizon-server/`, `horizon-world/`, `horizon-protocol/`... | The engine itself |
 | `crates/horizon-client*/` | The Horizon client (the same codebase plays and serves) |
 | `plugin-layer/` | The Paper API wired into the engine: `bundle/` (the bridge plugins talk to), `family/` (the hook patches that fire events) |
-| `plugins/` | Rust plugins built for HorizonsX (permissions, jobs, menus, auctions, warps, scoreboards...), each a crate, with their own copy of `horizon-kit` |
+| `plugins/` | 22 Rust plugins built for HorizonsX (EssentialsX in `essentialsx/`, LuckPerms, mcMMO, Multiverse, DeluxeMenus, TAB, Plan, jobs, auctions, vaults...), each a crate, with their own copy of `horizon-kit` |
 | `docs/v2/README.md` | Every HorizonsX change, how it differs from vanilla, and its switch |
 | `README.md` | Upstream Horizon's own README |
 | `tools/`, `xtask/`, `bench/`, `benchmarks/`, `tests/` | Engine tooling, benchmarks and tests |

@@ -1,0 +1,21 @@
+[package]
+name = "essentials-discordlink"
+version = "2.22.0"
+edition = "2024"
+publish = false
+# A port of part of EssentialsX 2.22.0, which is GPL-3.0: see ../essentials/NOTICE.
+license = "GPL-3.0-only"
+description = "EssentialsX Discord addon which allows you link your Minecraft and Discord accounts together"
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+essentials = { path = "../essentials", default-features = false }
+essentials-discord = { path = "../essentials-discord" }
+horizon-bukkit = { path = "../../../../sdk/horizon-bukkit" }
+serde_json = "1"
+serde_yaml = "0.9"
+rand = "0.9"
+
+[workspace]

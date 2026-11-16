@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "essentials",
+  "version": "2.22.0",
+  "name": "Essentials",
+  "description": "EssentialsX 2.22.0 and its modules, rewritten in Rust. GPL-3.0.",
+  "license": "GPL-3.0-only",
+  "depends": {
+    "fabric_api": ">=0.1.0"
+  }
+}

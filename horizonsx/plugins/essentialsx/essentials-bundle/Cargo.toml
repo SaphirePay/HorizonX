@@ -1,0 +1,46 @@
+[package]
+name = "essentials-bundle"
+version = "2.22.0"
+edition = "2024"
+publish = false
+# A port of EssentialsX 2.22.0, which is GPL-3.0: see ../essentials/NOTICE.
+license = "GPL-3.0-only"
+description = "EssentialsX and its modules as the one library a server loads"
+build = "build.rs"
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+default = ["chat", "spawn", "antibuild", "protect", "geoip", "xmpp", "discord", "discordlink"]
+chat = ["dep:essentials-chat"]
+spawn = ["dep:essentials-spawn"]
+antibuild = ["dep:essentials-antibuild"]
+protect = ["dep:essentials-protect"]
+geoip = ["dep:essentials-geoip"]
+xmpp = ["dep:essentials-xmpp"]
+discord = ["dep:essentials-discord"]
+discordlink = ["discord", "dep:essentials-discordlink"]
+
+[dependencies]
+essentials = { path = "../essentials", default-features = false }
+horizon-bukkit = { path = "../../../../sdk/horizon-bukkit" }
+essentials-chat = { path = "../essentials-chat", optional = true }
+essentials-spawn = { path = "../essentials-spawn", optional = true }
+essentials-antibuild = { path = "../essentials-antibuild", optional = true }
+essentials-protect = { path = "../essentials-protect", optional = true }
+essentials-geoip = { path = "../essentials-geoip", optional = true }
+essentials-xmpp = { path = "../essentials-xmpp", optional = true }
+essentials-discord = { path = "../essentials-discord", optional = true }
+essentials-discordlink = { path = "../essentials-discordlink", optional = true }
+
+[build-dependencies]
+serde_yaml = "0.9"
+
+[profile.release]
+panic = "unwind"
+lto = "fat"
+codegen-units = 1
+strip = true
+
+[workspace]
