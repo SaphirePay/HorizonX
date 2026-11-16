@@ -1085,6 +1085,26 @@ fn network_stack(
             horizon_protocol::item::Component::Ident(model),
         ));
     }
+    // An `equippable` a plugin or command set (an armour skin's asset on any item): what a client draws on
+    // the body when the stack is worn. Without it every client drew the item's own armour.
+    if let Some(eq) = s.data().and_then(|d| d.other("minecraft:equippable")) {
+        let slot = match crate::save::text(eq.get("slot")).as_deref() {
+            Some("mainhand") => 0,
+            Some("offhand") => 1,
+            Some("feet") => 2,
+            Some("legs") => 3,
+            Some("chest") => 4,
+            Some("body") => 6,
+            Some("saddle") => 7,
+            _ => 5,
+        };
+        let asset = crate::save::text(eq.get("asset_id"));
+        let overlay = crate::save::text(eq.get("camera_overlay"));
+        stack.added.push((
+            horizon_protocol::item::component::EQUIPPABLE,
+            horizon_protocol::item::Component::Raw(horizon_protocol::item::equippable_bytes(slot, asset.as_deref(), overlay.as_deref())),
+        ));
+    }
     // A player head's owner (`ResolvableProfile`: name, id and the signed skin): without it every head a plugin
     // made reached clients as the default face.
     if let Some(profile) = s.data().and_then(|d| d.other("minecraft:profile")).and_then(head_profile) {
@@ -1111,6 +1131,51 @@ fn network_stack(
             horizon_protocol::item::component::CUSTOM_MODEL_DATA,
             custom_model_data(t),
         ));
+    }
+    // A plugin's `use_cooldown` (a custom item's own cooldown group, so the recharge sweep a cooldown packet
+    // starts shows on that item alone), `max_stack_size` (an item that stacks to one) and `rarity`: without them
+    // they stayed on the server, and clients swept every item of the base type and stacked these to 64.
+    if let Some(d) = s.data() {
+        use horizon_world::nbt::Tag;
+        if let Some(Tag::Compound(t)) = d.other("minecraft:use_cooldown") {
+            let seconds = match t.get(&"seconds".into()) {
+                Some(Tag::Float(bits)) => f32::from_bits(*bits),
+                Some(Tag::Double(bits)) => f64::from_bits(*bits) as f32,
+                Some(Tag::Int(v)) => *v as f32,
+                Some(Tag::Long(v)) => *v as f32,
+                _ => 0.0,
+            };
+            let group = crate::save::text(t.get(&"cooldown_group".into()));
+            if seconds > 0.0 {
+                stack.added.push((
+                    horizon_protocol::item::component::USE_COOLDOWN,
+                    horizon_protocol::item::Component::Raw(horizon_protocol::item::use_cooldown_bytes(
+                        seconds,
+                        group.as_ref().map(AsRef::<str>::as_ref),
+                    )),
+                ));
+            }
+        }
+        if let Some(n) = crate::save::number(d.other("minecraft:max_stack_size"))
+            && (1..=99).contains(&n)
+        {
+            stack.added.push((
+                horizon_protocol::item::component::MAX_STACK_SIZE,
+                horizon_protocol::item::Component::Int(n as i32),
+            ));
+        }
+        if let Some(r) = crate::save::text(d.other("minecraft:rarity")) {
+            let id = match AsRef::<str>::as_ref(&r).trim_start_matches("minecraft:") {
+                "uncommon" => Some(1),
+                "rare" => Some(2),
+                "epic" => Some(3),
+                "common" => Some(0),
+                _ => None,
+            };
+            if let Some(id) = id {
+                stack.added.push((horizon_protocol::item::component::RARITY, horizon_protocol::item::Component::Int(id)));
+            }
+        }
     }
     Some(stack)
 }

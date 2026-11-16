@@ -15,6 +15,72 @@ mod skip;
 
 pub use hash::{Names, NoNames};
 
+/// `UseCooldown.STREAM_CODEC`: the seconds a use starts (a float), then the optional cooldown group.
+pub fn use_cooldown_bytes(seconds: f32, group: Option<&str>) -> Vec<u8> {
+    let mut w = Writer::new();
+    w.f32(seconds);
+    w.bool(group.is_some());
+    if let Some(g) = group {
+        w.string(g);
+    }
+    w.data
+}
+
+/// The seconds and the cooldown group a `use_cooldown` component's bytes hold.
+pub fn use_cooldown(bytes: &[u8]) -> Option<(f32, Option<String>)> {
+    let mut r = Reader::new(bytes);
+    let seconds = r.f32().ok()?;
+    let group = if r.bool().ok()? { Some(r.string(32767).ok()?) } else { None };
+    (r.remaining() == 0).then_some((seconds, group))
+}
+
+/// The equipment asset an equippable component's bytes name (`Equippable.assetId`), if any.
+pub fn equippable_asset(bytes: &[u8]) -> Option<String> {
+    skip::equippable_asset(bytes)
+}
+
+/// `Equippable.STREAM_CODEC` for an `equippable` a plugin or command put on a stack: its slot
+/// (`EquipmentSlot` ordinal) and asset, the rest `Equippable.builder`'s defaults (the generic equip
+/// sound, no camera overlay, any entity, dispensable, swappable, damaged when hurt, the shears' snip).
+pub fn equippable_bytes(slot: i32, asset_id: Option<&str>, camera_overlay: Option<&str>) -> Vec<u8> {
+    let mut w = Writer::new();
+    let sound = |w: &mut Writer, id: &str| {
+        w.varint(0); // a direct holder: the sound itself
+        w.string(id);
+        w.bool(false); // no fixed range
+    };
+    w.varint(slot);
+    sound(&mut w, "minecraft:item.armor.equip_generic");
+    w.bool(asset_id.is_some());
+    if let Some(a) = asset_id {
+        w.string(a);
+    }
+    w.bool(camera_overlay.is_some());
+    if let Some(c) = camera_overlay {
+        w.string(c);
+    }
+    w.bool(false); // allowedEntities: any
+    for v in [true, true, true, false, false] {
+        // dispensable, swappable, damageOnHurt, equipOnInteract, canBeSheared
+        w.bool(v);
+    }
+    sound(&mut w, "minecraft:item.shears.snip");
+    w.data
+}
+
+#[cfg(test)]
+mod equippable_tests {
+    #[test]
+    fn written_equippable_reads_back_its_asset_and_skips_exactly() {
+        let bytes = super::equippable_bytes(4, Some("hskins:emberforged"), None);
+        assert_eq!(super::equippable_asset(&bytes).as_deref(), Some("hskins:emberforged"));
+        let mut r = crate::buf::Reader::new(&bytes);
+        super::skip::component(super::component::EQUIPPABLE, &mut r).unwrap();
+        assert_eq!(r.remaining(), 0);
+        assert_eq!(super::equippable_asset(&super::equippable_bytes(5, None, None)), None);
+    }
+}
+
 /// minecraft:data_component_type registry ids (26.3).
 pub mod component {
     pub const CUSTOM_DATA: i32 = 0;
@@ -35,8 +101,11 @@ pub mod component {
     pub const REPAIR_COST: i32 = 19;
     pub const CREATIVE_SLOT_LOCK: i32 = 20;
     pub const ENCHANTMENT_GLINT_OVERRIDE: i32 = 21;
+    /// `UseCooldown`: seconds, then an optional cooldown group.
+    pub const USE_COOLDOWN: i32 = 26;
     /// `AttackRange`: six floats, in the record's field order.
     pub const ATTACK_RANGE: i32 = 30;
+    pub const EQUIPPABLE: i32 = 32;
     pub const STORED_ENCHANTMENTS: i32 = 45;
     pub const PROFILE: i32 = 72;
     pub const BANNER_PATTERNS: i32 = 74;

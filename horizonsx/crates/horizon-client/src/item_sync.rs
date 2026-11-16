@@ -85,6 +85,28 @@ fn components_tag(s: &Stack, builtin: &Builtin, synced: &Dynamic) -> Option<Tag>
                 };
                 data
             }
+            // `Equippable`: its asset id is what the worn piece draws (a server's armour
+            // skin on any item); the rest of it stays the prototype's.
+            Component::Raw(bytes) if *kind == component::EQUIPPABLE => {
+                let Some(asset) = horizon_protocol::item::equippable_asset(bytes) else {
+                    continue;
+                };
+                Tag::compound([("asset_id", Tag::String(asset.as_str().into()))])
+            }
+            // `UseCooldown`: a server's own cooldown group for its custom item, which the slot's recharge sweep
+            // looks up (otherwise every item of the base type swept with it).
+            Component::Raw(bytes) if *kind == component::USE_COOLDOWN => {
+                let Some((seconds, group)) = horizon_protocol::item::use_cooldown(bytes) else {
+                    continue;
+                };
+                match group {
+                    Some(g) => Tag::compound([
+                        ("seconds", Tag::Float(seconds.to_bits())),
+                        ("cooldown_group", Tag::String(g.as_str().into())),
+                    ]),
+                    None => Tag::compound([("seconds", Tag::Float(seconds.to_bits()))]),
+                }
+            }
             // Read past, not decoded: the item keeps its prototype's value.
             Component::Raw(_) => continue,
             // Trim materials and patterns are synced registries, as enchantments are.

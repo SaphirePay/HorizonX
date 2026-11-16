@@ -11,7 +11,9 @@ Edition 26.3. [README.md](README.md) is upstream Horizon's own page.
   and builds the engine.
 - **Plugins built on the SDK:** [plugins/](plugins).
 
-Snapshot of the `horizonsx` branch at `7f56ad069b`: the source of the engine in the HorizonX 0.2.1 release.
+Snapshot of the `horizonsx` branch at `5c5c267930`: the engine of the HorizonX 0.2.1 release (`7f56ad069b`)
+plus items over the wire: an `equippable` and a `use_cooldown` a plugin puts on an item now reach clients (a custom
+item's own cooldown group, so its recharge sweep shows on that item alone), with `max_stack_size` and `rarity`.
 
 ## Build
 
