@@ -1,0 +1,23 @@
+[package]
+name = "horizonjobs"
+version = "1.0.0"
+edition = "2024"
+publish = false
+description = "Jobs for Horizon servers: Miner, Lumberjack, Farmer, Fisher and Hunter, levels, pay and menus, native Rust"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+codegen-units = 4
+
+[workspace]

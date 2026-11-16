@@ -1,0 +1,19 @@
+name: LuckPerms
+main: dev.horizon.luckperms.LuckPerms
+version: 5.5.71-rs
+api-version: '1.21'
+author: Horizon
+description: LuckPerms for Horizon, written in Rust (same commands, same JSON storage).
+load: STARTUP
+folia-supported: true
+
+commands:
+  luckperms:
+    description: Manage permissions
+    usage: /lp help
+    aliases: [lp, perm, perms, permission, permissions, lpb]
+
+permissions:
+  luckperms.*:
+    description: Every LuckPerms command
+    default: op

@@ -1,0 +1,25 @@
+[package]
+name = "jobs_rs"
+version = "5.2.6"
+edition = "2024"
+publish = false
+license = "Apache-2.0"
+description = "Jobs Reborn (Zrips, Apache-2.0) rewritten natively in Rust for Horizon"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde_json = "1"
+serde_yaml = "0.9"
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[workspace]

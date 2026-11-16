@@ -1,0 +1,135 @@
+# HorizonSMP: the SMP core (claims, shop, crates, teams, rewards, combat, bounties, stats, menu).
+# Text takes MiniMessage (<gradient:#a:#b>, <bold>, <#hex>, <click:run_command:/x>) and & colours.
+# The shop's items are in shop.yml, the crates in crates.yml.
+
+server-name: "Nyxora"
+website: "play.nyxora.net"
+store: "store.nyxora.net"
+discord: "discord.gg/nyxora"
+
+# ---- Permissions and rank perks (LuckPerms) ----
+# Every command has a node (see plugin.yml): horizonsmp.player gives them all (default: everyone), so
+#   lp group default permission set horizonsmp.bounty.set false     takes one thing away,
+#   lp group admin permission set horizonsmp.admin true             gives staff everything.
+# Ranks get perks from LuckPerms meta (the highest value a player has counts):
+#   lp group vip meta set horizonsmp.claim-blocks 5000      extra claim blocks on top of what they earn
+#   lp group vip meta set horizonsmp.max-claims 40          more claims than claims.max-claims
+#   lp group vip meta set horizonsmp.team-size 12           a bigger team (for teams the player leads)
+
+# ---- Land claims ----
+claims:
+  enabled: true
+  # The item that selects claim corners (right-click a block, then the opposite corner).
+  tool: GOLDEN_SHOVEL
+  # The item that shows whose land a block is on.
+  inspect-tool: STICK
+  starting-blocks: 1000
+  # Earned per hour online (paid out every minute).
+  blocks-per-hour: 150
+  max-earned-blocks: 100000
+  # /claim buyblocks <n>: the price of one claim block (0 = can't buy).
+  block-price: 10.0
+  min-width: 5
+  min-area: 25
+  # A claim made with /claim create when no radius is given.
+  default-radius: 10
+  max-claims: 20
+  # Team members may build in each other's claims.
+  team-members-trusted: true
+  # PvP inside claims (each claim can turn it on in its menu).
+  pvp-default: false
+  # Worlds where nobody can claim.
+  disabled-worlds: []
+  # Claims show their border for this many seconds.
+  show-seconds: 15
+
+# ---- Combat ----
+combat:
+  enabled: true
+  # Seconds a PvP hit keeps both players in combat.
+  tag-seconds: 15
+  # Leaving while in combat kills the player (their items drop where they stood).
+  kill-on-logout: true
+  # Commands that can't be used while in combat.
+  blocked-commands: [spawn, home, homes, tpa, tpahere, tpaccept, tpyes, warp, warps, back, rtp, tpr, wild, team home, t home, ec, enderchest, menu home, fly, god, vanish]
+  # New players can't be hurt by (or hurt) other players for this long (minutes of play). /pvp enable drops it.
+  new-player-protection-minutes: 30
+
+# ---- Daily reward (a 7-day streak; missing a day starts again) ----
+daily:
+  enabled: true
+  days:
+    1: { money: 250, keys: { common: 1 } }
+    2: { money: 400, keys: { common: 1 } }
+    3: { money: 600, keys: { common: 2 } }
+    4: { money: 800, keys: { rare: 1 } }
+    5: { money: 1000, keys: { common: 2, rare: 1 } }
+    6: { money: 1500, keys: { rare: 2 } }
+    7: { money: 3000, keys: { legendary: 1 } }
+
+# ---- Playtime rewards ----
+playtime-rewards:
+  first-hour: { hours: 1, name: "First Steps", icon: LEATHER_BOOTS, money: 500, keys: { common: 1 } }
+  settler: { hours: 5, name: "Settler", icon: OAK_SAPLING, money: 1500, keys: { common: 2 }, claim-blocks: 500 }
+  adventurer: { hours: 12, name: "Adventurer", icon: IRON_SWORD, money: 3000, keys: { rare: 1 } }
+  veteran: { hours: 24, name: "Veteran", icon: DIAMOND, money: 6000, keys: { rare: 2 }, claim-blocks: 1500 }
+  champion: { hours: 48, name: "Champion", icon: NETHERITE_INGOT, money: 12000, keys: { legendary: 1 } }
+  legend: { hours: 100, name: "Legend", icon: NETHER_STAR, money: 30000, keys: { legendary: 2 }, claim-blocks: 5000 }
+
+# ---- First join ----
+first-join:
+  enabled: true
+  broadcast: true
+  # Given once. Material amount [name].
+  kit:
+    - "STONE_SWORD 1"
+    - "STONE_PICKAXE 1"
+    - "STONE_AXE 1"
+    - "STONE_SHOVEL 1"
+    - "BREAD 16"
+    - "TORCH 16"
+    - "OAK_LOG 16"
+    - "GOLDEN_SHOVEL 1 <gradient:#facc15:#fb923c><bold>Claim Shovel</bold></gradient>"
+  money: 500
+  keys: { common: 1 }
+
+# ---- Bounties ----
+bounty:
+  enabled: true
+  min: 100
+  max: 1000000
+
+# ---- Teams ----
+teams:
+  enabled: true
+  max-members: 8
+  name-min: 3
+  name-max: 12
+  # Seconds before /team home teleports (moving cancels it).
+  home-warmup: 3
+
+# ---- Messages every few minutes ----
+announcements:
+  enabled: true
+  minutes: 6
+  lines:
+    - "<#a855f7>✦ <white>Protect your builds! <#a1a1aa>Right-click two corners with a <#facc15>golden shovel</#facc15>, or type <click:run_command:/claim create><hover:show_text:'Claim the land around you'><#22d3ee><u>/claim create</u></#22d3ee></hover></click>."
+    - "<#a855f7>✦ <white>Claim your <#4ade80>daily reward</#4ade80> <#a1a1aa>every day for a bigger streak: <click:run_command:/daily><#22d3ee><u>/daily</u></#22d3ee></click>"
+    - "<#a855f7>✦ <white>Everything is one click away in <click:run_command:/menu><#22d3ee><u>/menu</u></#22d3ee></click><#a1a1aa>: shop, crates, teams, rewards and more."
+    - "<#a855f7>✦ <white>Sell what you farm and mine with <click:run_command:/sell all><#22d3ee><u>/sell all</u></#22d3ee></click> <#a1a1aa>or browse the <click:run_command:/shop><#22d3ee><u>/shop</u></#22d3ee></click>."
+    - "<#a855f7>✦ <white>Team up with friends: <click:suggest_command:/team create ><#22d3ee><u>/team create &lt;name&gt;</u></#22d3ee></click> <#a1a1aa>shares claims and turns off friendly fire."
+    - "<#a855f7>✦ <white>Got a rival? Put a price on their head with <click:suggest_command:/bounty set ><#22d3ee><u>/bounty set</u></#22d3ee></click>."
+
+# ---- The server list ----
+motd:
+  enabled: true
+  line1: "<gradient:#a855f7:#22d3ee><bold>      ✦ N Y X O R A ✦</bold></gradient>  <#71717a>Survival SMP"
+  line2: "<#a1a1aa>   Claims • Crates • Teams • Shop • <#4ade80>Daily rewards"
+
+rules:
+  - "<#a1a1aa>1. <white>Be respectful. No harassment, hate or spam."
+  - "<#a1a1aa>2. <white>No cheats, hacked clients, x-ray or dupes."
+  - "<#a1a1aa>3. <white>No griefing or stealing, even from unclaimed builds."
+  - "<#a1a1aa>4. <white>PvP is allowed in the wild; no spawn killing."
+  - "<#a1a1aa>5. <white>No lag machines or huge mob farms."
+  - "<#a1a1aa>6. <white>Staff decisions are final. Ask in chat if unsure."

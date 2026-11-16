@@ -1,0 +1,27 @@
+name: AnnouncerPlus
+version: 1.4.8-rs
+main: xyz.jpenilla.announcerplus.AnnouncerPlus
+description: Announcements, join/quit messages, titles, action bars, boss bars and toasts with MiniMessage (Horizon, Rust).
+authors:
+  - jmp
+website: https://github.com/jpenilla/AnnouncerPlus
+api-version: '1.21'
+softdepend:
+  - PlaceholderAPI
+  - Essentials
+folia-supported: true
+commands:
+  announcerplus:
+    description: AnnouncerPlus commands
+    aliases: [ap, announcer]
+permissions:
+  announcerplus.command.about:
+    default: true
+  announcerplus.command.help:
+    default: true
+  announcerplus.command.reload:
+    default: op
+  announcerplus.command.messageconfig:
+    default: op
+  announcerplus.command.parse.animation:
+    default: op

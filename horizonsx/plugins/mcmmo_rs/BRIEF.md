@@ -1,0 +1,1030 @@
+# mcMMO 2.3.003: rewrite brief
+
+Main class `com.gmail.nossr50.mcMMO`. 531 own classes, 2675 KB of Java (java/).
+
+## Commands
+
+- `/mmoxpbar` aliases xpbarsettings: Change XP bar settings
+- `/mmodebug` aliases ['mcmmodebugmode']: Toggles a debug mode which will print useful information to chat
+- `/mmoinfo` aliases ['mcinfo'], permission `mcmmo.commands.mmoinfo`: Info pages for mcMMO
+- `/xprate` aliases ['mcxprate'], permission `mcmmo.commands.xprate`: View or modify the xp rate or start an event
+- `/mcmmo`, permission `mcmmo.commands.mcmmo`: Shows a brief mod description
+- `/mctop`, permission `mcmmo.commands.mctop`: Show mcMMO leader boards
+- `/mcrank`, permission `mcmmo.commands.mcrank`: Show mcMMO ranking for a player
+- `/addxp`, permission `mcmmo.commands.addxp`: Add mcMMO XP to a user
+- `/addlevels`, permission `mcmmo.commands.addlevels`: Add mcMMO levels to a user
+- `/mcability`, permission `mcmmo.commands.mcability`: Toggle whether abilities get readied on right click
+- `/mcrefresh`, permission `mcmmo.commands.mcrefresh`: Refresh all cooldowns for mcMMO
+- `/mccooldown` aliases ['mccooldowns'], permission `mcmmo.commands.mccooldown`: Show the cooldowns on all your mcMMO abilities
+- `/mcchatspy`, permission `mcmmo.commands.mcchatspy`: Toggle mcMMO Party Chat spying on/off
+- `/mcgod`, permission `mcmmo.commands.mcgod`: Toggle mcMMO god-mode on/off
+- `/mcstats` aliases ['stats'], permission `mcmmo.commands.mcstats`: Shows your mcMMO stats and xp
+- `/mcremove`, permission `mcmmo.commands.mcremove`: Remove a user from the database
+- `/mmoedit`, permission `mcmmo.commands.mmoedit`: Edit the mcMMO skill values for a user
+- `/ptp`, permission `mcmmo.commands.ptp`: Teleport to a party member
+- `/party`, permission `mcmmo.commands.party`: Create/join a party
+- `/inspect` aliases ['mcinspect', 'mmoinspect'], permission `mcmmo.commands.inspect`: View detailed mcMMO info on another player
+- `/mmoshowdb`, permission `mcmmo.commands.mmoshowdb`: Show the name of the current database type (for later use with /mmoupdate)
+- `/mcconvert`, permission `mcmmo.commands.mcconvert`: Convert between different database and formula types
+- `/partychat` aliases ['pc', 'p'], permission `mcmmo.chat.partychat`: Toggle Party chat or send party chat messages
+- `/skillreset`, permission `mcmmo.commands.skillreset`: Reset the level of one or all of your skills
+- `/excavation`, permission `mcmmo.commands.excavation`: Detailed mcMMO skill info
+- `/herbalism`, permission `mcmmo.commands.herbalism`: Detailed mcMMO skill info
+- `/mining`, permission `mcmmo.commands.mining`: Detailed mcMMO skill info
+- `/woodcutting`, permission `mcmmo.commands.woodcutting`: Detailed mcMMO skill info
+- `/axes`, permission `mcmmo.commands.axes`: Detailed mcMMO skill info
+- `/archery`, permission `mcmmo.commands.archery`: Detailed mcMMO skill info
+- `/crossbows`, permission `mcmmo.commands.crossbows`: Detailed mcMMO skill info
+- `/swords`, permission `mcmmo.commands.swords`: Detailed mcMMO skill info
+- `/taming`, permission `mcmmo.commands.taming`: Detailed mcMMO skill info
+- `/tridents`, permission `mcmmo.commands.tridents`: Detailed mcMMO skill info
+- `/unarmed`, permission `mcmmo.commands.unarmed`: Detailed mcMMO skill info
+- `/acrobatics`, permission `mcmmo.commands.acrobatics`: Detailed mcMMO skill info
+- `/repair`, permission `mcmmo.commands.repair`: Detailed mcMMO skill info
+- `/fishing`, permission `mcmmo.commands.fishing`: Detailed mcMMO skill info
+- `/smelting`, permission `mcmmo.commands.smelting`: Detailed mcMMO skill info
+- `/spears`, permission `mcmmo.commands.spears`: Detailed mcMMO skill info
+- `/alchemy`, permission `mcmmo.commands.alchemy`: Detailed mcMMO skill info
+- `/salvage`, permission `mcmmo.commands.salvage`: Detailed mcMMO skill info
+- `/maces`, permission `mcmmo.commands.maces`: Detailed mcMMO skill info
+- `/mmopower` aliases ['mmopowerlevel', 'powerlevel'], permission `mcmmo.commands.mmopower`: Shows skill mastery and power level info
+- `/adminchat` aliases ['ac', 'a'], permission `mcmmo.chat.adminchat`: Toggle Admin chat or send admin chat messages
+- `/mcpurge`, permission `mcmmo.commands.mcpurge`: Purge users with 0 powerlevel and/or who haven't connected in several months from the server DB.
+- `/mcnotify` aliases ['notify'], permission `mcmmo.commands.mcnotify`: Toggle mcMMO abilities chat display notifications on/off
+- `/mclevelupsound` aliases ['levelupsound'], permission `mcmmo.commands.mclevelupsound`: Toggle the mcMMO level-up sound on/off
+- `/mcscoreboard` aliases ['mcsb'], permission `mcmmo.commands.mcscoreboard`: Manage your mcMMO Scoreboard
+- `/mcmmoreloadlocale` aliases ['mcreloadlocale'], permission `mcmmo.commands.reloadlocale`: Reloads locale
+
+## Sub-commands found in the source
+
+- `accept` (com/gmail/nossr50/commands/party/teleport/PtpCommand.java:168)
+- `acceptall` (com/gmail/nossr50/commands/party/teleport/PtpCommand.java:150)
+- `acceptany` (com/gmail/nossr50/commands/party/teleport/PtpCommand.java:150)
+- `all` (com/gmail/nossr50/commands/experience/ExperienceCommand.java:154)
+- `clear` (com/gmail/nossr50/commands/McscoreboardCommand.java:38)
+- `commands` (com/gmail/nossr50/commands/McmmoCommand.java:46)
+- `database` (com/gmail/nossr50/commands/McconvertCommand.java:59)
+- `db` (com/gmail/nossr50/commands/McconvertCommand.java:59)
+- `disable` (com/gmail/nossr50/commands/player/XPBarCommand.java:95)
+- `exp` (com/gmail/nossr50/commands/McconvertCommand.java:85)
+- `experience` (com/gmail/nossr50/commands/McconvertCommand.java:61)
+- `hide` (com/gmail/nossr50/commands/player/XPBarCommand.java:89)
+- `keep` (com/gmail/nossr50/commands/McscoreboardCommand.java:44)
+- `lock` (com/gmail/nossr50/commands/party/PartyLockCommand.java:20)
+- `reset` (com/gmail/nossr50/commands/McscoreboardCommand.java:38)
+- `show` (com/gmail/nossr50/commands/player/XPBarCommand.java:91)
+- `time` (com/gmail/nossr50/commands/McscoreboardCommand.java:64)
+- `timer` (com/gmail/nossr50/commands/McscoreboardCommand.java:64)
+- `toggle` (com/gmail/nossr50/commands/party/teleport/PtpCommand.java:146)
+- `unlock` (com/gmail/nossr50/commands/party/PartyLockCommand.java:22)
+- `xp` (com/gmail/nossr50/commands/McconvertCommand.java:61)
+
+## Permissions
+
+- `mcmmo.*`
+- `mcmmo.ability.*`
+- `mcmmo.ability.acrobatics.*`
+- `mcmmo.ability.acrobatics.all`
+- `mcmmo.ability.acrobatics.dodge`
+- `mcmmo.ability.acrobatics.gracefulroll`
+- `mcmmo.ability.acrobatics.roll`
+- `mcmmo.ability.alchemy.*`
+- `mcmmo.ability.alchemy.all`
+- `mcmmo.ability.alchemy.catalysis`
+- `mcmmo.ability.alchemy.concoctions`
+- `mcmmo.ability.all`
+- `mcmmo.ability.archery.*`
+- `mcmmo.ability.archery.all`
+- `mcmmo.ability.archery.archerylimitbreak`
+- `mcmmo.ability.archery.arrowretrieval`
+- `mcmmo.ability.archery.daze`
+- `mcmmo.ability.archery.explosiveshot`
+- `mcmmo.ability.archery.skillshot`
+- `mcmmo.ability.archery.trackarrows`
+- `mcmmo.ability.axes.*`
+- `mcmmo.ability.axes.all`
+- `mcmmo.ability.axes.armorimpact`
+- `mcmmo.ability.axes.axemastery`
+- `mcmmo.ability.axes.axeslimitbreak`
+- `mcmmo.ability.axes.criticalstrikes`
+- `mcmmo.ability.axes.greaterimpact`
+- `mcmmo.ability.axes.skullsplitter`
+- `mcmmo.ability.crossbows.*`
+- `mcmmo.ability.crossbows.all`
+- `mcmmo.ability.crossbows.crossbowslimitbreak`
+- `mcmmo.ability.crossbows.poweredshot`
+- `mcmmo.ability.crossbows.trickshot`
+- `mcmmo.ability.excavation.*`
+- `mcmmo.ability.excavation.all`
+- `mcmmo.ability.excavation.archaeology`
+- `mcmmo.ability.excavation.gigadrillbreaker`
+- `mcmmo.ability.fishing.*`
+- `mcmmo.ability.fishing.all`
+- `mcmmo.ability.fishing.fishermansdiet`
+- `mcmmo.ability.fishing.icefishing`
+- `mcmmo.ability.fishing.magichunter`
+- `mcmmo.ability.fishing.masterangler`
+- `mcmmo.ability.fishing.shake`
+- `mcmmo.ability.fishing.treasurehunter`
+- `mcmmo.ability.fishing.vanillaxpboost`
+- `mcmmo.ability.herbalism.*`
+- `mcmmo.ability.herbalism.all`
+- `mcmmo.ability.herbalism.doubledrops`
+- `mcmmo.ability.herbalism.farmersdiet`
+- `mcmmo.ability.herbalism.greenterra`
+- `mcmmo.ability.herbalism.greenthumb.*`
+- `mcmmo.ability.herbalism.greenthumb.all`
+- `mcmmo.ability.herbalism.greenthumb.blocks.*`
+- `mcmmo.ability.herbalism.greenthumb.blocks.all`
+- `mcmmo.ability.herbalism.greenthumb.blocks.cobblestone`
+- `mcmmo.ability.herbalism.greenthumb.blocks.cobblestone_wall`
+- `mcmmo.ability.herbalism.greenthumb.blocks.dirt`
+- `mcmmo.ability.herbalism.greenthumb.blocks.grasspath`
+- `mcmmo.ability.herbalism.greenthumb.blocks.stonebricks`
+- `mcmmo.ability.herbalism.greenthumb.plants.*`
+- `mcmmo.ability.herbalism.greenthumb.plants.all`
+- `mcmmo.ability.herbalism.greenthumb.plants.beetroots`
+- `mcmmo.ability.herbalism.greenthumb.plants.carrots`
+- `mcmmo.ability.herbalism.greenthumb.plants.cocoa`
+- `mcmmo.ability.herbalism.greenthumb.plants.netherwart`
+- `mcmmo.ability.herbalism.greenthumb.plants.potatoes`
+- `mcmmo.ability.herbalism.greenthumb.plants.wheat`
+- `mcmmo.ability.herbalism.hylianluck`
+- `mcmmo.ability.herbalism.shroomthumb`
+- `mcmmo.ability.herbalism.verdantbounty`
+- `mcmmo.ability.maces.*`
+- `mcmmo.ability.maces.all`
+- `mcmmo.ability.maces.cripple`
+- `mcmmo.ability.maces.crush`
+- `mcmmo.ability.maces.maceslimitbreak`
+- `mcmmo.ability.mining.*`
+- `mcmmo.ability.mining.all`
+- `mcmmo.ability.mining.blastmining.*`
+- `mcmmo.ability.mining.blastmining.all`
+- `mcmmo.ability.mining.blastmining.biggerbombs`
+- `mcmmo.ability.mining.blastmining.demolitionsexpertise`
+- `mcmmo.ability.mining.blastmining.detonate`
+- `mcmmo.ability.mining.doubledrops`
+- `mcmmo.ability.mining.motherlode`
+- `mcmmo.ability.mining.superbreaker`
+- `mcmmo.ability.repair.*`
+- `mcmmo.ability.repair.all`
+- `mcmmo.ability.repair.arcaneforging`
+- `mcmmo.ability.repair.armorrepair`
+- `mcmmo.ability.repair.copperrepair`
+- `mcmmo.ability.repair.diamondrepair`
+- `mcmmo.ability.repair.goldrepair`
+- `mcmmo.ability.repair.ironrepair`
+- `mcmmo.ability.repair.leatherrepair`
+- `mcmmo.ability.repair.netheriterepair`
+- `mcmmo.ability.repair.othermaterialrepair`
+- `mcmmo.ability.repair.otherrepair`
+- `mcmmo.ability.repair.repairmastery`
+- `mcmmo.ability.repair.stonerepair`
+- `mcmmo.ability.repair.stringrepair`
+- `mcmmo.ability.repair.superrepair`
+- `mcmmo.ability.repair.toolrepair`
+- `mcmmo.ability.repair.woodrepair`
+- `mcmmo.ability.salvage.*`
+- `mcmmo.ability.salvage.all`
+- `mcmmo.ability.salvage.arcanesalvage`
+- `mcmmo.ability.salvage.armorsalvage`
+- `mcmmo.ability.salvage.coppersalvage`
+- `mcmmo.ability.salvage.diamondsalvage`
+- `mcmmo.ability.salvage.goldsalvage`
+- `mcmmo.ability.salvage.ironsalvage`
+- `mcmmo.ability.salvage.leathersalvage`
+- `mcmmo.ability.salvage.netheritesalvage`
+- `mcmmo.ability.salvage.othermaterialsalvage`
+- `mcmmo.ability.salvage.othersalvage`
+- `mcmmo.ability.salvage.scrapcollector`
+- `mcmmo.ability.salvage.stonesalvage`
+- `mcmmo.ability.salvage.stringsalvage`
+- `mcmmo.ability.salvage.toolsalvage`
+- `mcmmo.ability.salvage.woodsalvage`
+- `mcmmo.ability.smelting.*`
+- `mcmmo.ability.smelting.all`
+- `mcmmo.ability.smelting.fluxmining`
+- `mcmmo.ability.smelting.fuelefficiency`
+- `mcmmo.ability.smelting.secondsmelt`
+- `mcmmo.ability.smelting.vanillaxpboost`
+- `mcmmo.ability.spears.*`
+- `mcmmo.ability.spears.all`
+- `mcmmo.ability.spears.momentum`
+- `mcmmo.ability.spears.spearmastery`
+- `mcmmo.ability.spears.spearslimitbreak`
+- `mcmmo.ability.swords.*`
+- `mcmmo.ability.swords.all`
+- `mcmmo.ability.swords.counterattack`
+- `mcmmo.ability.swords.rupture`
+- `mcmmo.ability.swords.serratedstrikes`
+- `mcmmo.ability.swords.stab`
+- `mcmmo.ability.swords.swordslimitbreak`
+- `mcmmo.ability.taming.*`
+- `mcmmo.ability.taming.all`
+- `mcmmo.ability.taming.beastlore`
+- `mcmmo.ability.taming.callofthewild`
+- `mcmmo.ability.taming.callofthewild.*`
+- `mcmmo.ability.taming.callofthewild.horse`
+- `mcmmo.ability.taming.callofthewild.ocelot`
+- `mcmmo.ability.taming.callofthewild.wolf`
+- `mcmmo.ability.taming.environmentallyaware`
+- `mcmmo.ability.taming.fastfoodservice`
+- `mcmmo.ability.taming.gore`
+- `mcmmo.ability.taming.holyhound`
+- `mcmmo.ability.taming.pummel`
+- `mcmmo.ability.taming.sharpenedclaws`
+- `mcmmo.ability.taming.shockproof`
+- `mcmmo.ability.taming.thickfur`
+- `mcmmo.ability.tridents.*`
+- `mcmmo.ability.tridents.all`
+- `mcmmo.ability.tridents.impale`
+- `mcmmo.ability.tridents.tridentslimitbreak`
+- `mcmmo.ability.unarmed.*`
+- `mcmmo.ability.unarmed.all`
+- `mcmmo.ability.unarmed.arrowdeflect`
+- `mcmmo.ability.unarmed.berserk`
+- `mcmmo.ability.unarmed.blockcracker`
+- `mcmmo.ability.unarmed.disarm`
+- `mcmmo.ability.unarmed.irongrip`
+- `mcmmo.ability.unarmed.steelarmstyle`
+- `mcmmo.ability.unarmed.unarmedlimitbreak`
+- `mcmmo.ability.woodcutting.*`
+- `mcmmo.ability.woodcutting.all`
+- `mcmmo.ability.woodcutting.barksurgeon`
+- `mcmmo.ability.woodcutting.cleancuts`
+- `mcmmo.ability.woodcutting.harvestlumber`
+- `mcmmo.ability.woodcutting.knockonwood`
+- `mcmmo.ability.woodcutting.leafblower`
+- `mcmmo.ability.woodcutting.naturesbounty`
+- `mcmmo.ability.woodcutting.splinter`
+- `mcmmo.ability.woodcutting.treefeller`
+- `mcmmo.admin`
+- `mcmmo.all`
+- `mcmmo.broadcast.levelup`
+- `mcmmo.bypass.*`
+- `mcmmo.bypass.all`
+- `mcmmo.bypass.arcanebypass`
+- `mcmmo.bypass.hardcoremode`
+- `mcmmo.bypass.partylimit`
+- `mcmmo.chat.*`
+- `mcmmo.chat.adminchat`
+- `mcmmo.chat.all`
+- `mcmmo.chat.colors`
+- `mcmmo.chat.partychat`
+- `mcmmo.commands.*`
+- `mcmmo.commands.acrobatics`
+- `mcmmo.commands.addlevels`
+- `mcmmo.commands.addlevels.others`
+- `mcmmo.commands.addxp`
+- `mcmmo.commands.addxp.others`
+- `mcmmo.commands.alchemy`
+- `mcmmo.commands.all`
+- `mcmmo.commands.archery`
+- `mcmmo.commands.axes`
+- `mcmmo.commands.crossbows`
+- `mcmmo.commands.defaults`
+- `mcmmo.commands.defaultsop`
+- `mcmmo.commands.excavation`
+- `mcmmo.commands.fishing`
+- `mcmmo.commands.hardcore.modify`
+- `mcmmo.commands.hardcore.toggle`
+- `mcmmo.commands.herbalism`
+- `mcmmo.commands.inspect`
+- `mcmmo.commands.inspect.*`
+- `mcmmo.commands.inspect.all`
+- `mcmmo.commands.inspect.far`
+- `mcmmo.commands.inspect.hidden`
+- `mcmmo.commands.mcability`
+- `mcmmo.commands.mcability.others`
+- `mcmmo.commands.mcchatspy`
+- `mcmmo.commands.mcchatspy.others`
+- `mcmmo.commands.mcconvert.*`
+- `mcmmo.commands.mcconvert.all`
+- `mcmmo.commands.mcconvert.database`
+- `mcmmo.commands.mcconvert.experience`
+- `mcmmo.commands.mccooldown`
+- `mcmmo.commands.mcgod`
+- `mcmmo.commands.mcgod.others`
+- `mcmmo.commands.mclevelupsound`
+- `mcmmo.commands.mcmmo.*`
+- `mcmmo.commands.mcmmo.all`
+- `mcmmo.commands.mcmmo.description`
+- `mcmmo.commands.mcmmo.help`
+- `mcmmo.commands.mcnotify`
+- `mcmmo.commands.mcpurge`
+- `mcmmo.commands.mcrank`
+- `mcmmo.commands.mcrank.others`
+- `mcmmo.commands.mcrank.others.*`
+- `mcmmo.commands.mcrank.others.all`
+- `mcmmo.commands.mcrank.others.far`
+- `mcmmo.commands.mcrank.others.offline`
+- `mcmmo.commands.mcrefresh`
+- `mcmmo.commands.mcrefresh.others`
+- `mcmmo.commands.mcremove`
+- `mcmmo.commands.mcscoreboard`
+- `mcmmo.commands.mcstats`
+- `mcmmo.commands.mctop`
+- `mcmmo.commands.mctop.*`
+- `mcmmo.commands.mctop.acrobatics`
+- `mcmmo.commands.mctop.alchemy`
+- `mcmmo.commands.mctop.all`
+- `mcmmo.commands.mctop.archery`
+- `mcmmo.commands.mctop.axes`
+- `mcmmo.commands.mctop.crossbows`
+- `mcmmo.commands.mctop.excavation`
+- `mcmmo.commands.mctop.fishing`
+- `mcmmo.commands.mctop.herbalism`
+- `mcmmo.commands.mctop.maces`
+- `mcmmo.commands.mctop.mining`
+- `mcmmo.commands.mctop.repair`
+- `mcmmo.commands.mctop.salvage`
+- `mcmmo.commands.mctop.smelting`
+- `mcmmo.commands.mctop.spears`
+- `mcmmo.commands.mctop.swords`
+- `mcmmo.commands.mctop.taming`
+- `mcmmo.commands.mctop.tridents`
+- `mcmmo.commands.mctop.unarmed`
+- `mcmmo.commands.mctop.woodcutting`
+- `mcmmo.commands.mhd`
+- `mcmmo.commands.mining`
+- `mcmmo.commands.mmoedit`
+- `mcmmo.commands.mmoedit.others`
+- `mcmmo.commands.mmoinfo`
+- `mcmmo.commands.mmoshowdb`
+- `mcmmo.commands.mmoupdate`
+- `mcmmo.commands.party`
+- `mcmmo.commands.party.*`
+- `mcmmo.commands.party.accept`
+- `mcmmo.commands.party.all`
+- `mcmmo.commands.party.alliance`
+- `mcmmo.commands.party.chat`
+- `mcmmo.commands.party.create`
+- `mcmmo.commands.party.disband`
+- `mcmmo.commands.party.help`
+- `mcmmo.commands.party.info`
+- `mcmmo.commands.party.invite`
+- `mcmmo.commands.party.itemshare`
+- `mcmmo.commands.party.join`
+- `mcmmo.commands.party.kick`
+- `mcmmo.commands.party.lock`
+- `mcmmo.commands.party.owner`
+- `mcmmo.commands.party.password`
+- `mcmmo.commands.party.quit`
+- `mcmmo.commands.party.rename`
+- `mcmmo.commands.party.teleport`
+- `mcmmo.commands.party.unlock`
+- `mcmmo.commands.party.xpshare`
+- `mcmmo.commands.ptp`
+- `mcmmo.commands.ptp.*`
+- `mcmmo.commands.ptp.accept`
+- `mcmmo.commands.ptp.acceptall`
+- `mcmmo.commands.ptp.all`
+- `mcmmo.commands.ptp.send`
+- `mcmmo.commands.ptp.toggle`
+- `mcmmo.commands.ptp.world.*`
+- `mcmmo.commands.ptp.world.all`
+- `mcmmo.commands.reloadlocale`
+- `mcmmo.commands.repair`
+- `mcmmo.commands.salvage`
+- `mcmmo.commands.skillreset`
+- `mcmmo.commands.skillreset.*`
+- `mcmmo.commands.skillreset.acrobatics`
+- `mcmmo.commands.skillreset.alchemy`
+- `mcmmo.commands.skillreset.all`
+- `mcmmo.commands.skillreset.archery`
+- `mcmmo.commands.skillreset.axes`
+- `mcmmo.commands.skillreset.crossbows`
+- `mcmmo.commands.skillreset.excavation`
+- `mcmmo.commands.skillreset.fishing`
+- `mcmmo.commands.skillreset.herbalism`
+- `mcmmo.commands.skillreset.maces`
+- `mcmmo.commands.skillreset.mining`
+- `mcmmo.commands.skillreset.others`
+- `mcmmo.commands.skillreset.others.*`
+- `mcmmo.commands.skillreset.others.acrobatics`
+- `mcmmo.commands.skillreset.others.alchemy`
+- `mcmmo.commands.skillreset.others.all`
+- `mcmmo.commands.skillreset.others.archery`
+- `mcmmo.commands.skillreset.others.axes`
+- `mcmmo.commands.skillreset.others.crossbows`
+- `mcmmo.commands.skillreset.others.excavation`
+- `mcmmo.commands.skillreset.others.fishing`
+- `mcmmo.commands.skillreset.others.herbalism`
+- `mcmmo.commands.skillreset.others.maces`
+- `mcmmo.commands.skillreset.others.mining`
+- `mcmmo.commands.skillreset.others.repair`
+- `mcmmo.commands.skillreset.others.salvage`
+- `mcmmo.commands.skillreset.others.smelting`
+- `mcmmo.commands.skillreset.others.spears`
+- `mcmmo.commands.skillreset.others.swords`
+- `mcmmo.commands.skillreset.others.taming`
+- `mcmmo.commands.skillreset.others.tridents`
+- `mcmmo.commands.skillreset.others.unarmed`
+- `mcmmo.commands.skillreset.others.woodcutting`
+- `mcmmo.commands.skillreset.repair`
+- `mcmmo.commands.skillreset.salvage`
+- `mcmmo.commands.skillreset.smelting`
+- `mcmmo.commands.skillreset.spears`
+- `mcmmo.commands.skillreset.swords`
+- `mcmmo.commands.skillreset.taming`
+- `mcmmo.commands.skillreset.tridents`
+- `mcmmo.commands.skillreset.unarmed`
+- `mcmmo.commands.skillreset.woodcutting`
+- `mcmmo.commands.smelting`
+- `mcmmo.commands.swords`
+- `mcmmo.commands.taming`
+- `mcmmo.commands.tridents`
+- `mcmmo.commands.unarmed`
+- `mcmmo.commands.woodcutting`
+- `mcmmo.commands.xprate`
+- `mcmmo.commands.xprate.*`
+- `mcmmo.commands.xprate.all`
+- `mcmmo.commands.xprate.reset`
+- `mcmmo.commands.xprate.set`
+- `mcmmo.commands.xprate.show`
+- `mcmmo.defaults`
+- `mcmmo.defaultsop`
+- `mcmmo.item.*`
+- `mcmmo.item.all`
+- `mcmmo.item.chimaerawing`
+- `mcmmo.motd`
+- `mcmmo.party.*`
+- `mcmmo.party.all`
+- `mcmmo.party.friendlyfire`
+- `mcmmo.perks.*`
+- `mcmmo.perks.activationtime.*`
+- `mcmmo.perks.activationtime.all`
+- `mcmmo.perks.activationtime.eightseconds`
+- `mcmmo.perks.activationtime.fourseconds`
+- `mcmmo.perks.activationtime.twelveseconds`
+- `mcmmo.perks.all`
+- `mcmmo.perks.bypass.*`
+- `mcmmo.perks.bypass.all`
+- `mcmmo.perks.bypass.repairenchant`
+- `mcmmo.perks.bypass.salvageenchant`
+- `mcmmo.perks.cooldowns.*`
+- `mcmmo.perks.cooldowns.all`
+- `mcmmo.perks.cooldowns.halved`
+- `mcmmo.perks.cooldowns.quartered`
+- `mcmmo.perks.cooldowns.thirded`
+- `mcmmo.perks.lucky.*`
+- `mcmmo.perks.lucky.acrobatics`
+- `mcmmo.perks.lucky.alchemy`
+- `mcmmo.perks.lucky.all`
+- `mcmmo.perks.lucky.archery`
+- `mcmmo.perks.lucky.axes`
+- `mcmmo.perks.lucky.crossbows`
+- `mcmmo.perks.lucky.excavation`
+- `mcmmo.perks.lucky.fishing`
+- `mcmmo.perks.lucky.herbalism`
+- `mcmmo.perks.lucky.maces`
+- `mcmmo.perks.lucky.mining`
+- `mcmmo.perks.lucky.repair`
+- `mcmmo.perks.lucky.salvage`
+- `mcmmo.perks.lucky.smelting`
+- `mcmmo.perks.lucky.spears`
+- `mcmmo.perks.lucky.swords`
+- `mcmmo.perks.lucky.taming`
+- `mcmmo.perks.lucky.tridents`
+- `mcmmo.perks.lucky.unarmed`
+- `mcmmo.perks.lucky.woodcutting`
+- `mcmmo.perks.xp.*`
+- `mcmmo.perks.xp.10percentboost`
+- `mcmmo.perks.xp.10percentboost.*`
+- `mcmmo.perks.xp.10percentboost.acrobatics`
+- `mcmmo.perks.xp.10percentboost.alchemy`
+- `mcmmo.perks.xp.10percentboost.all`
+- `mcmmo.perks.xp.10percentboost.archery`
+- `mcmmo.perks.xp.10percentboost.axes`
+- `mcmmo.perks.xp.10percentboost.crossbows`
+- `mcmmo.perks.xp.10percentboost.excavation`
+- `mcmmo.perks.xp.10percentboost.fishing`
+- `mcmmo.perks.xp.10percentboost.herbalism`
+- `mcmmo.perks.xp.10percentboost.maces`
+- `mcmmo.perks.xp.10percentboost.mining`
+- `mcmmo.perks.xp.10percentboost.repair`
+- `mcmmo.perks.xp.10percentboost.smelting`
+- `mcmmo.perks.xp.10percentboost.spears`
+- `mcmmo.perks.xp.10percentboost.swords`
+- `mcmmo.perks.xp.10percentboost.taming`
+- `mcmmo.perks.xp.10percentboost.tridents`
+- `mcmmo.perks.xp.10percentboost.unarmed`
+- `mcmmo.perks.xp.10percentboost.woodcutting`
+- `mcmmo.perks.xp.150percentboost`
+- `mcmmo.perks.xp.150percentboost.*`
+- `mcmmo.perks.xp.150percentboost.acrobatics`
+- `mcmmo.perks.xp.150percentboost.alchemy`
+- `mcmmo.perks.xp.150percentboost.all`
+- `mcmmo.perks.xp.150percentboost.archery`
+- `mcmmo.perks.xp.150percentboost.axes`
+- `mcmmo.perks.xp.150percentboost.crossbows`
+- `mcmmo.perks.xp.150percentboost.excavation`
+- `mcmmo.perks.xp.150percentboost.fishing`
+- `mcmmo.perks.xp.150percentboost.herbalism`
+- `mcmmo.perks.xp.150percentboost.maces`
+- `mcmmo.perks.xp.150percentboost.mining`
+- `mcmmo.perks.xp.150percentboost.repair`
+- `mcmmo.perks.xp.150percentboost.smelting`
+- `mcmmo.perks.xp.150percentboost.spears`
+- `mcmmo.perks.xp.150percentboost.swords`
+- `mcmmo.perks.xp.150percentboost.taming`
+- `mcmmo.perks.xp.150percentboost.tridents`
+- `mcmmo.perks.xp.150percentboost.unarmed`
+- `mcmmo.perks.xp.150percentboost.woodcutting`
+- `mcmmo.perks.xp.25percentboost`
+- `mcmmo.perks.xp.25percentboost.*`
+- `mcmmo.perks.xp.25percentboost.acrobatics`
+- `mcmmo.perks.xp.25percentboost.alchemy`
+- `mcmmo.perks.xp.25percentboost.all`
+- `mcmmo.perks.xp.25percentboost.archery`
+- `mcmmo.perks.xp.25percentboost.axes`
+- `mcmmo.perks.xp.25percentboost.crossbows`
+- `mcmmo.perks.xp.25percentboost.excavation`
+- `mcmmo.perks.xp.25percentboost.fishing`
+- `mcmmo.perks.xp.25percentboost.herbalism`
+- `mcmmo.perks.xp.25percentboost.maces`
+- `mcmmo.perks.xp.25percentboost.mining`
+- `mcmmo.perks.xp.25percentboost.repair`
+- `mcmmo.perks.xp.25percentboost.smelting`
+- `mcmmo.perks.xp.25percentboost.spears`
+- `mcmmo.perks.xp.25percentboost.swords`
+- `mcmmo.perks.xp.25percentboost.taming`
+- `mcmmo.perks.xp.25percentboost.tridents`
+- `mcmmo.perks.xp.25percentboost.unarmed`
+- `mcmmo.perks.xp.25percentboost.woodcutting`
+- `mcmmo.perks.xp.50percentboost`
+- `mcmmo.perks.xp.50percentboost.*`
+- `mcmmo.perks.xp.50percentboost.acrobatics`
+- `mcmmo.perks.xp.50percentboost.alchemy`
+- `mcmmo.perks.xp.50percentboost.all`
+- `mcmmo.perks.xp.50percentboost.archery`
+- `mcmmo.perks.xp.50percentboost.axes`
+- `mcmmo.perks.xp.50percentboost.crossbows`
+- `mcmmo.perks.xp.50percentboost.excavation`
+- `mcmmo.perks.xp.50percentboost.fishing`
+- `mcmmo.perks.xp.50percentboost.herbalism`
+- `mcmmo.perks.xp.50percentboost.maces`
+- `mcmmo.perks.xp.50percentboost.mining`
+- `mcmmo.perks.xp.50percentboost.repair`
+- `mcmmo.perks.xp.50percentboost.smelting`
+- `mcmmo.perks.xp.50percentboost.spears`
+- `mcmmo.perks.xp.50percentboost.swords`
+- `mcmmo.perks.xp.50percentboost.taming`
+- `mcmmo.perks.xp.50percentboost.tridents`
+- `mcmmo.perks.xp.50percentboost.unarmed`
+- `mcmmo.perks.xp.50percentboost.woodcutting`
+- `mcmmo.perks.xp.all`
+- `mcmmo.perks.xp.customboost`
+- `mcmmo.perks.xp.customboost.*`
+- `mcmmo.perks.xp.customboost.acrobatics`
+- `mcmmo.perks.xp.customboost.alchemy`
+- `mcmmo.perks.xp.customboost.all`
+- `mcmmo.perks.xp.customboost.archery`
+- `mcmmo.perks.xp.customboost.axes`
+- `mcmmo.perks.xp.customboost.crossbows`
+- `mcmmo.perks.xp.customboost.excavation`
+- `mcmmo.perks.xp.customboost.fishing`
+- `mcmmo.perks.xp.customboost.herbalism`
+- `mcmmo.perks.xp.customboost.maces`
+- `mcmmo.perks.xp.customboost.mining`
+- `mcmmo.perks.xp.customboost.repair`
+- `mcmmo.perks.xp.customboost.smelting`
+- `mcmmo.perks.xp.customboost.spears`
+- `mcmmo.perks.xp.customboost.swords`
+- `mcmmo.perks.xp.customboost.taming`
+- `mcmmo.perks.xp.customboost.tridents`
+- `mcmmo.perks.xp.customboost.unarmed`
+- `mcmmo.perks.xp.customboost.woodcutting`
+- `mcmmo.perks.xp.double`
+- `mcmmo.perks.xp.double.*`
+- `mcmmo.perks.xp.double.acrobatics`
+- `mcmmo.perks.xp.double.alchemy`
+- `mcmmo.perks.xp.double.all`
+- `mcmmo.perks.xp.double.archery`
+- `mcmmo.perks.xp.double.axes`
+- `mcmmo.perks.xp.double.crossbows`
+- `mcmmo.perks.xp.double.excavation`
+- `mcmmo.perks.xp.double.fishing`
+- `mcmmo.perks.xp.double.herbalism`
+- `mcmmo.perks.xp.double.maces`
+- `mcmmo.perks.xp.double.mining`
+- `mcmmo.perks.xp.double.repair`
+- `mcmmo.perks.xp.double.smelting`
+- `mcmmo.perks.xp.double.spears`
+- `mcmmo.perks.xp.double.swords`
+- `mcmmo.perks.xp.double.taming`
+- `mcmmo.perks.xp.double.tridents`
+- `mcmmo.perks.xp.double.unarmed`
+- `mcmmo.perks.xp.double.woodcutting`
+- `mcmmo.perks.xp.quadruple`
+- `mcmmo.perks.xp.quadruple.*`
+- `mcmmo.perks.xp.quadruple.acrobatics`
+- `mcmmo.perks.xp.quadruple.alchemy`
+- `mcmmo.perks.xp.quadruple.all`
+- `mcmmo.perks.xp.quadruple.archery`
+- `mcmmo.perks.xp.quadruple.axes`
+- `mcmmo.perks.xp.quadruple.crossbows`
+- `mcmmo.perks.xp.quadruple.excavation`
+- `mcmmo.perks.xp.quadruple.fishing`
+- `mcmmo.perks.xp.quadruple.herbalism`
+- `mcmmo.perks.xp.quadruple.maces`
+- `mcmmo.perks.xp.quadruple.mining`
+- `mcmmo.perks.xp.quadruple.repair`
+- `mcmmo.perks.xp.quadruple.smelting`
+- `mcmmo.perks.xp.quadruple.spears`
+- `mcmmo.perks.xp.quadruple.swords`
+- `mcmmo.perks.xp.quadruple.taming`
+- `mcmmo.perks.xp.quadruple.tridents`
+- `mcmmo.perks.xp.quadruple.unarmed`
+- `mcmmo.perks.xp.quadruple.woodcutting`
+- `mcmmo.perks.xp.triple`
+- `mcmmo.perks.xp.triple.*`
+- `mcmmo.perks.xp.triple.acrobatics`
+- `mcmmo.perks.xp.triple.alchemy`
+- `mcmmo.perks.xp.triple.all`
+- `mcmmo.perks.xp.triple.archery`
+- `mcmmo.perks.xp.triple.axes`
+- `mcmmo.perks.xp.triple.crossbows`
+- `mcmmo.perks.xp.triple.excavation`
+- `mcmmo.perks.xp.triple.fishing`
+- `mcmmo.perks.xp.triple.herbalism`
+- `mcmmo.perks.xp.triple.maces`
+- `mcmmo.perks.xp.triple.mining`
+- `mcmmo.perks.xp.triple.repair`
+- `mcmmo.perks.xp.triple.smelting`
+- `mcmmo.perks.xp.triple.spears`
+- `mcmmo.perks.xp.triple.swords`
+- `mcmmo.perks.xp.triple.taming`
+- `mcmmo.perks.xp.triple.tridents`
+- `mcmmo.perks.xp.triple.unarmed`
+- `mcmmo.perks.xp.triple.woodcutting`
+- `mcmmo.showversion`
+- `mcmmo.skillreset`
+- `mcmmo.skills.*`
+- `mcmmo.skills.acrobatics`
+- `mcmmo.skills.alchemy`
+- `mcmmo.skills.all`
+- `mcmmo.skills.archery`
+- `mcmmo.skills.axes`
+- `mcmmo.skills.crossbows`
+- `mcmmo.skills.excavation`
+- `mcmmo.skills.fishing`
+- `mcmmo.skills.herbalism`
+- `mcmmo.skills.maces`
+- `mcmmo.skills.mining`
+- `mcmmo.skills.repair`
+- `mcmmo.skills.salvage`
+- `mcmmo.skills.smelting`
+- `mcmmo.skills.spears`
+- `mcmmo.skills.swords`
+- `mcmmo.skills.taming`
+- `mcmmo.skills.tridents`
+- `mcmmo.skills.unarmed`
+- `mcmmo.skills.woodcutting`
+- `mcmmo.tools.updatecheck`
+
+## Events
+
+- AsyncPlayerChatEvent -> onPlayerChat (com/gmail/nossr50/listeners/PlayerListener.java)
+- BlockBreakEvent -> onBlockBreak (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockBreakEvent -> onBlockBreakHigher (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockDamageEvent -> onBlockDamageCleanup (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockDamageEvent -> onBlockDamageHigher (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockDropItemEvent -> onBlockDropItemEvent (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockFormEvent -> onBlockFormEvent (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockGrowEvent -> onBlockGrow (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockMultiPlaceEvent -> onBlockMultiPlace (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockPistonExtendEvent -> onBlockPistonExtend (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockPistonRetractEvent -> onBlockPistonRetract (com/gmail/nossr50/listeners/BlockListener.java)
+- BlockPlaceEvent -> onBlockPlace (com/gmail/nossr50/listeners/BlockListener.java)
+- BrewEvent -> onBrew (com/gmail/nossr50/listeners/InventoryListener.java)
+- ChunkUnloadEvent -> onChunkUnload (com/gmail/nossr50/listeners/ChunkListener.java)
+- ChunkUnloadEvent -> onChunkUnload (com/gmail/nossr50/listeners/WorldListener.java)
+- CreatureSpawnEvent -> onCreatureSpawn (com/gmail/nossr50/listeners/EntityListener.java)
+- EntitiesUnloadEvent -> onEntitiesUnload (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityBlockFormEvent -> onEntityBlockFormEvent (com/gmail/nossr50/listeners/BlockListener.java)
+- EntityBreedEvent -> onEntityBreed (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityChangeBlockEvent -> onEntityChangeBlock (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityCombustByEntityEvent -> onEntityCombustByEntityEvent (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityDamageByEntityEvent -> onEntityDamageByEntity (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityDamageByEntityEvent -> onEntityDamageByEntityHighest (com/gmail/nossr50/listeners/PlayerListener.java)
+- EntityDamageByEntityEvent -> onEntityDamageMonitor (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityDamageEvent -> onEntityDamage (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityDamageEvent -> onEntityDamageMonitor (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityDeathEvent -> onEntityDeath (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityDeathEvent -> onEntityDeathLowest (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityExplodeEvent -> onEntityExplode (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityPickupItemEvent -> onPlayerPickupItem (com/gmail/nossr50/listeners/PlayerListener.java)
+- EntityShootBowEvent -> onEntityShootBow (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityTameEvent -> onEntityTame (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityTargetEvent -> onEntityTarget (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityTargetLivingEntityEvent -> onEntityTargetEntity (com/gmail/nossr50/listeners/EntityListener.java)
+- EntityTransformEvent -> onEntityTransform (com/gmail/nossr50/listeners/EntityListener.java)
+- ExplosionPrimeEvent -> onExplosionPrime (com/gmail/nossr50/listeners/EntityListener.java)
+- FoodLevelChangeEvent -> onFoodLevelChange (com/gmail/nossr50/listeners/EntityListener.java)
+- FurnaceBurnEvent -> onFurnaceBurnEvent (com/gmail/nossr50/listeners/InventoryListener.java)
+- FurnaceExtractEvent -> onFurnaceExtractEvent (com/gmail/nossr50/listeners/InventoryListener.java)
+- FurnaceSmeltEvent -> onFurnaceSmeltEvent (com/gmail/nossr50/listeners/InventoryListener.java) **no SDK event of this name**
+- InventoryClickEvent -> onInventoryClickEvent (com/gmail/nossr50/listeners/InventoryListener.java)
+- InventoryClickEvent -> onInventoryClickEventNormal (com/gmail/nossr50/listeners/InventoryListener.java)
+- InventoryDragEvent -> onInventoryDragEvent (com/gmail/nossr50/listeners/InventoryListener.java)
+- InventoryMoveItemEvent -> onInventoryMoveItemEvent (com/gmail/nossr50/listeners/InventoryListener.java)
+- InventoryOpenEvent -> onInventoryOpenEvent (com/gmail/nossr50/listeners/InventoryListener.java)
+- McMMOPlayerAbilityActivateEvent -> onAbility (com/gmail/nossr50/listeners/SelfListener.java) **no SDK event of this name**
+- McMMOPlayerLevelUpEvent -> onPlayerLevelUp (com/gmail/nossr50/listeners/SelfListener.java) **no SDK event of this name**
+- McMMOPlayerXpGainEvent -> onPlayerXp (com/gmail/nossr50/listeners/SelfListener.java) **no SDK event of this name**
+- McMMOPlayerXpGainEvent -> onPlayerXpGain (com/gmail/nossr50/listeners/SelfListener.java) **no SDK event of this name**
+- PlayerChangedWorldEvent -> onPlayerWorldChange (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerCommandPreprocessEvent -> onPlayerCommandPreprocess (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerDeathEvent -> onPlayerDeathMonitor (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerDeathEvent -> onPlayerDeathNormal (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerDropItemEvent -> onPlayerDropItem (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerFishEvent -> onPlayerFishHighest (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerFishEvent -> onPlayerFishLowest (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerFishEvent -> onPlayerFishMonitor (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerInteractEntityEvent -> onPlayerInteractEntity (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerInteractEvent -> onPlayerInteractAnvilConfirmation (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerInteractEvent -> onPlayerInteractLowest (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerInteractEvent -> onPlayerInteractMonitor (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerJoinEvent -> onPlayerJoin (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerQuitEvent -> onPlayerQuit (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerRespawnEvent -> onPlayerRespawn (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerSwapHandItemsEvent -> onPlayerSwapHandItems (com/gmail/nossr50/listeners/PlayerListener.java)
+- PlayerTeleportEvent -> onPlayerTeleport (com/gmail/nossr50/listeners/PlayerListener.java)
+- PluginDisableEvent -> onPluginDisable (com/gmail/nossr50/listeners/SelfListener.java)
+- PotionSplashEvent -> onPotionSplash (com/gmail/nossr50/listeners/EntityListener.java)
+- ProjectileHitEvent -> onProjectileHitEvent (com/gmail/nossr50/listeners/EntityListener.java)
+- ProjectileLaunchEvent -> onProjectileLaunch (com/gmail/nossr50/listeners/EntityListener.java)
+- StructureGrowEvent -> onStructureGrow (com/gmail/nossr50/listeners/WorldListener.java)
+- WorldLoadEvent -> onWorldLoad (com/gmail/nossr50/listeners/WorldListener.java)
+- WorldUnloadEvent -> onWorldUnload (com/gmail/nossr50/listeners/WorldListener.java)
+
+## Timers
+
+
+## Files
+
+- data/advanced.yml
+- data/chat.yml
+- data/config.yml
+- data/coreskills.yml
+- data/custom_item_support.yml
+- data/experience.yml
+- data/fishing_treasures.yml
+- data/hidden.yml
+- data/itemweights.yml
+- data/level_up_commands.yml
+- data/party.yml
+- data/persistent_data.yml
+- data/potions.yml
+- data/repair.vanilla.yml
+- data/salvage.vanilla.yml
+- data/skillranks.yml
+- data/sounds.yml
+- data/treasures.yml
+- data/upgrades_overhaul.yml
+- data/mods/armor.default.yml
+- data/mods/blocks.default.yml
+- data/mods/entities.default.yml
+- data/mods/tools.default.yml
+
+## Keys read from config / messages
+
+- `Ability.Generic.Refresh`
+- `Ability.Generic.Template`
+- `Ability.Generic.Template.Custom`
+- `Ability.Generic.Template.Lock`
+- `Acrobatics.Effect.2`
+- `Acrobatics.Effect.3`
+- `Acrobatics.SubSkill.Roll.Chance`
+- `Acrobatics.SubSkill.Roll.GraceChance`
+- `Alchemy.Concoctions.Ingredients`
+- `Alchemy.Concoctions.Rank`
+- `Axes.Ability.Bonus.0`
+- `Axes.Ability.Bonus.1`
+- `Axes.Ability.Bonus.2`
+- `Axes.Ability.Bonus.3`
+- `Axes.Ability.Bonus.4`
+- `Axes.Ability.Bonus.5`
+- `Broadcasts.LevelUpMilestone`
+- `Broadcasts.PowerLevelUpMilestone`
+- `Chat.Identity.Console`
+- `Combat.BeastLore`
+- `Combat.BeastLoreHealth`
+- `Combat.BeastLoreHorseJumpStrength`
+- `Combat.BeastLoreHorseSpeed`
+- `Combat.BeastLoreOwner`
+- `Commands.Ability.Toggle`
+- `Commands.AdminChat.Off`
+- `Commands.AdminChat.On`
+- `Commands.AdminChatSpy.Toggle`
+- `Commands.AdminToggle`
+- `Commands.Cooldowns.Header`
+- `Commands.Cooldowns.Row.N`
+- `Commands.Cooldowns.Row.Y`
+- `Commands.Database.Cooldown`
+- `Commands.Database.CooldownMS`
+- `Commands.Database.Processing`
+- `Commands.Description.`
+- `Commands.Description.Skill`
+- `Commands.Description.mcpurge`
+- `Commands.Description.party`
+- `Commands.Description.ptp`
+- `Commands.Description.xprate`
+- `Commands.Disabled`
+- `Commands.DoesNotExist`
+- `Commands.Event.Start`
+- `Commands.Event.Stop`
+- `Commands.Event.Stop.Subtitle`
+- `Commands.Event.XP`
+- `Commands.Event.XP.Skill`
+- `Commands.GodMode.Forbidden`
+- `Commands.GodMode.Toggle`
+- `Commands.Inspect`
+- `Commands.Invite.Success`
+- `Commands.Leaderboards`
+- `Commands.MmoInfo.DetailsHeader`
+- `Commands.MmoInfo.Header`
+- `Commands.MmoInfo.Mystery`
+- `Commands.MmoInfo.NoMatch`
+- `Commands.MmoInfo.SubSkillHeader`
+- `Commands.NegativeNumberWarn`
+- `Commands.NoConsole`
+- `Commands.NotLoaded`
+- `Commands.Offline`
+- `Commands.Other`
+- `Commands.Party.Accept`
+- `Commands.Party.Alliance.Ally`
+- `Commands.Party.Alliance.AlreadyAllies`
+- `Commands.Party.Alliance.Header`
+- `Commands.Party.Alliance.Help.0`
+- `Commands.Party.Alliance.Help.1`
+- `Commands.Party.Alliance.Invite.0`
+- `Commands.Party.Alliance.Invite.1`
+- `Commands.Party.Alliance.Invite.Accepted`
+- `Commands.Party.Alliance.Members.Header`
+- `Commands.Party.Alliance.None`
+- `Commands.Party.AlreadyExists`
+- `Commands.Party.Chat.Off`
+- `Commands.Party.Chat.On`
+- `Commands.Party.Commands`
+- `Commands.Party.Create`
+- `Commands.Party.ExpShare`
+- `Commands.Party.Features.Header`
+- `Commands.Party.Header`
+- `Commands.Party.Invite`
+- `Commands.Party.Invite.0`
+- `Commands.Party.Invite.1`
+- `Commands.Party.ItemShare`
+- `Commands.Party.ItemShareCategories`
+- `Commands.Party.Join`
+- `Commands.Party.Kick`
+- `Commands.Party.Leave`
+- `Commands.Party.Members.Header`
+- `Commands.Party.MembersNear`
+- `Commands.Party.None`
+- `Commands.Party.PartyFull`
+- `Commands.Party.PartyFull.Invite`
+- `Commands.Party.Quit`
+- `Commands.Party.Rename`
+- `Commands.Party.SetSharing`
+- `Commands.Party.ShareMode`
+- `Commands.Party.Status`
+- `Commands.Party.Teleport`
+- `Commands.Party.Toggle`
+- `Commands.Party.ToggleShareCategory`
+- `Commands.Party.UnlockedFeatures`
+- `Commands.Party1`
+- `Commands.Party2`
+- `Commands.PowerLevel`
+- `Commands.PowerLevel.Capped`
+- `Commands.PowerLevel.Leaderboard`
+- `Commands.Reset`
+- `Commands.Reset.All`
+- `Commands.Reset.Single`
+- `Commands.Scoreboard.Clear`
+- `Commands.Scoreboard.Help.0`
+- `Commands.Scoreboard.Help.1`
+- `Commands.Scoreboard.Help.2`
+- `Commands.Scoreboard.Help.3`
+- `Commands.Scoreboard.Keep`
+- `Commands.Scoreboard.NoBoard`
+- `Commands.Scoreboard.Timer`
+- `Commands.Scoreboard.Tip.Clear`
+- `Commands.Scoreboard.Tip.Keep`
+- `Commands.Skill.ChildSkill`
+- `Commands.Skill.Invalid`
+- `Commands.Skill.Leaderboard`
+- `Commands.SkillInfo`
+- `Commands.Stats`
+- `Commands.Stats.Self`
+- `Commands.Stats.Self.Overhaul`
+- `Commands.ToggleAbility`
+- `Commands.Usage.0`
+- `Commands.Usage.1`
+- `Commands.Usage.2`
+- `Commands.Usage.3`
+- `Commands.Usage.3.XP`
+- `Commands.Usage.Level`
+- `Commands.Usage.Page`
+- `Commands.Usage.PartyName`
+- `Commands.Usage.Password`
+- `Commands.Usage.Player`
+- `Commands.Usage.Rate`
+- `Commands.Usage.Skill`
+- `Commands.Usage.SubSkill`
+- `Commands.Usage.XP`
+- `Commands.XPGain`
+- `Commands.XPGain.Child`
+- `Commands.XPGain.Overhaul`
+- `Commands.addlevels.AwardAll.1`
+- `Commands.addlevels.AwardAll.2`
+- `Commands.addlevels.AwardSkill.1`
+- `Commands.addlevels.AwardSkill.2`
+- `Commands.addxp.AwardAll`
+- `Commands.addxp.AwardSkill`
+- `Commands.mcc.Header`
+- `Commands.mcconvert.Database.Finish`
+- `Commands.mcconvert.Database.InvalidType`
+- `Commands.mcconvert.Database.Same`
+- `Commands.mcconvert.Database.Start`
+- `Commands.mcconvert.Experience.Finish`
+- `Commands.mcconvert.Experience.Invalid`
+- `Commands.mcconvert.Experience.Same`
+- `Commands.mcconvert.Experience.Start`
+- `Commands.mcgod`
+- `Commands.mcpurge.Success`
+- `Commands.mcrank.Heading`
+- `Commands.mcrank.Overall`
+- `Commands.mcrank.Player`
+- `Commands.mcrank.Skill`
+- `Commands.mcrank.Unranked`
+- `Commands.mcrefresh.Success`
+- `Commands.mcremove.Success`
+- `Commands.mctop.Tip`
+- `Commands.mmoedit`
+- `Commands.mmoedit.AllSkills.1`
+- `Commands.mmoedit.Modified.1`
+- `Commands.mmoshowdb`
+- `Commands.ptp.AcceptAny.Disabled`
+- `Commands.ptp.AcceptAny.Enabled`
+- `Commands.ptp.Disabled`
+- `Commands.ptp.Enabled`
+- `Commands.ptp.NoRequests`
+- `Commands.ptp.NoWorldPermissions`
+- `Commands.ptp.Request1`
+- `Commands.ptp.Request2`
+- `Commands.ptp.RequestExpired`
+- `Commands.xprate.current`
+- `Commands.xprate.current.skill`
+- `Commands.xprate.duration`
+- `Commands.xprate.invalid`
+- `Commands.xprate.none`
+- `Commands.xprate.skill.cleared`
+- `Commands.xprate.skill.globalApplies`
+- `Commands.xprate.tooLow`
+- `Effects.Child.Overhaul`
+- `Effects.Child.ParentList`
+- `Effects.Effects`
+- `Effects.Level`
+- `Effects.Level.Overhaul`
+- `Effects.SubSkills.Overhaul`
+- `Effects.Template`
+
+## Biggest classes (write these first, they are most of the work)
+
+- 102 KB com/gmail/nossr50/database/SQLDatabaseManager.java
+- 64 KB com/gmail/nossr50/database/FlatFileDatabaseManager.java
+- 61 KB com/gmail/nossr50/util/MaterialMapStore.java
+- 54 KB com/gmail/nossr50/util/blockmeta/McMMORegionBackupStore.java
+- 51 KB com/gmail/nossr50/api/ExperienceAPI.java
+- 51 KB com/gmail/nossr50/util/skills/CombatUtils.java
+- 49 KB com/gmail/nossr50/listeners/PlayerListener.java
+- 46 KB com/gmail/nossr50/datatypes/player/McMMOPlayer.java
+- 43 KB com/gmail/nossr50/listeners/EntityListener.java
+- 40 KB com/gmail/nossr50/skills/herbalism/HerbalismManager.java
+- 40 KB com/gmail/nossr50/config/GeneralConfig.java
+- 39 KB com/gmail/nossr50/util/ItemUtils.java
+- 39 KB com/gmail/nossr50/mcMMO.java
+- 34 KB com/gmail/nossr50/config/AdvancedConfig.java
+- 34 KB com/gmail/nossr50/listeners/BlockListener.java
+- 32 KB com/gmail/nossr50/party/PartyManager.java
+- 30 KB com/gmail/nossr50/skills/fishing/FishingManager.java
+- 27 KB com/gmail/nossr50/util/scoreboards/ScoreboardManager.java
+- 27 KB com/gmail/nossr50/config/experience/ExperienceConfig.java
+- 26 KB com/gmail/nossr50/locale/LocaleLoader.java
+- 26 KB com/gmail/nossr50/config/skills/alchemy/PotionConfig.java
+- 25 KB com/gmail/nossr50/util/EventUtils.java
+- 24 KB com/gmail/nossr50/util/Permissions.java
+- 24 KB com/gmail/nossr50/util/skills/SkillTools.java
+- 22 KB com/gmail/nossr50/skills/taming/TamingManager.java
+
+## Kit map
+
+- messages: `msg("key", &[args])` (Lang: {prefix}, %s, {0}); settings: `config(|c| c.int("path", default))`
+- commands: the Router above; a sub = `fn(&Ctx) -> Res` (`c.player()?`, `c.int(0, "amount")?`, `c.online(0)?`, `c.tell(..)`)
+- client-only entities (holograms, markers, NPCs): `horizon_kit::packets` (+ `wire` for raw bytes)
+- per-tick work: `horizon_kit::worker` (server-thread cost ~0, as Java async)
+- a `/x profiler`: `horizon_kit::stats::{set_running, report, timed}`
+- any Bukkit call: `mcp plugin-port api_lookup <Class.method>` / `sdk_search`

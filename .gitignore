@@ -1,0 +1,6 @@
+target/
+/crates
+dist/
+video/
+
+/build/

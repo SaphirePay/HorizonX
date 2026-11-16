@@ -1,0 +1,22 @@
+[package]
+name = "horizon-proxy"
+version = "0.1.0"
+edition = "2024"
+description = "HorizonsX's proxy: one address in front of many HorizonsX servers (Velocity modern forwarding), passing the game's bytes through untouched"
+publish = false
+
+[[bin]]
+name = "horizon-proxy"
+path = "src/main.rs"
+
+[dependencies]
+horizon-protocol = { path = "../horizon-protocol" }
+horizon-world = { path = "../horizon-world" }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "io-util", "time", "signal", "sync"] }
+hmac = "0.12"
+sha2 = "0.10"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0.151"
+toml = "1.1"
+aes = "0.8"
+ureq = { version = "2", default-features = false, features = ["tls"] }

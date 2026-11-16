@@ -1,0 +1,4 @@
+time: '${timestamp}'
+profile: 'dev'
+version: '7.1.1'
+buildnumber: 'NOTSET'

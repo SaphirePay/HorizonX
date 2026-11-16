@@ -1,0 +1,25 @@
+[package]
+name = "playervaults_rs"
+version = "4.4.14"
+edition = "2024"
+publish = false
+license = "GPL-3.0-or-later"
+description = "PlayerVaultsX for Horizon, written in Rust: same commands, config.conf/lang.conf and vault files."
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde_json = "1"
+serde_yaml = "0.9"
+base64 = "0.22"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[workspace]

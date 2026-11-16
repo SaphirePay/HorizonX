@@ -1,0 +1,4 @@
+name: JavaLayer
+version: 0.1.0
+main: horizon_java
+description: Runs Java (Bukkit/Spigot/Paper) plugins from plugins/*.jar. Java starts only when there is a jar.

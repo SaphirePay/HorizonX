@@ -1,0 +1,288 @@
+locale-language: en
+save-period: 10
+save-on-disconnect: false
+selectionTool: golden_hoe
+MultiServerCompatability: false
+Optimizations:
+  NewVersion: true
+  InformDuplicates: false
+  DecimalPlaces:
+    Money: 2
+    Exp: 2
+    Points: 2
+  DBCleaning:
+    Jobs:
+      Use: false
+      Level: 1
+    Users:
+      Use: false
+      Days: 60
+  AutoJobJoin:
+    Use: false
+    Delay: 15
+  AllowDelevel: false
+  RomanNumbers: false
+  DisabledWorlds:
+    Use: false
+    UseAsWhiteList: false
+    List:
+    - Example
+    - Worlds
+  Explore:
+    NewMethod: true
+    Compact: true
+    SaveIntoDatabase: false
+Logging:
+  Use: false
+broadcast:
+  on-skill-up:
+    use: false
+  on-level-up:
+    use: false
+DailyQuests:
+  Enabled: true
+  ResetTime:
+    Hour: 4
+    Minute: 0
+  useGUI: true
+  Skips: 1
+  SkipQuestCost: 0.0
+ScheduleManager:
+  Use: true
+JobExpirationTime: 0
+max-jobs: 3
+disable-payment-if-max-level-reached: false
+hide-jobs-without-permission: false
+hide-jobsinfo-without-permission: false
+prevent-shop-item-enchanting: true
+jobs-shop-enabled: true
+enable-pay-near-spawner: true
+enable-pay-creative: true
+enable-pay-for-exploring-when-flying: true
+enable-pay-for-exploring-when-gliding: true
+enable-reset-exploring-data: false
+disablePaymentIfRiding: false
+add-xp-player: false
+enable-boosted-items-in-offhand: true
+enable-boosted-items-in-mainhand: true
+enable-boosted-armor-items: true
+boosted-items-slot-specific: true
+multiply-boosted-extra-values: false
+highest-permission-boost: false
+add-permission-boost: false
+pay-for-above: false
+pay-for-stacked-entities: false
+allow-pay-for-durability-loss:
+  Use: true
+  WhiteListedItems:
+  - wooden_pickaxe=DURABILITY-1
+  - fishing_rod
+modify-chat:
+  use: false
+  prefix: '&c['
+  suffix: '&c]&r '
+  separator: ' '
+UseCustomNames: true
+economy-batch-delay: 5
+economy-async: true
+Economy:
+  ApplyToNegativeIncome: false
+  MinimumOveralPayment:
+    use: true
+    limit: 0.1
+  MinimumOveralPoints:
+    use: true
+    limit: 0.1
+  MinimumOveralExp:
+    use: true
+    limit: 0.1
+  DynamicPayment:
+    use: false
+    equation: totalworkers / totaljobs / jobstotalplayers - 1
+    MaxPenalty: 50.0
+    MaxBonus: 300.0
+  MaxPayment:
+    curve:
+      use: false
+      factor: 10
+  UseServerAccount: false
+  AccountName: Server
+  Taxes:
+    use: false
+    AccountName: Server
+    Amount: 15.0
+    TransferToServerAccount: true
+    TakeFromPlayersPayment: false
+  Limit:
+    Money:
+      Use: false
+      StopWithExp: false
+      StopWithPoint: false
+      MoneyLimit: 500+500*(totallevel/100)
+      TimeLimit: 3600
+      ResetTime: ''
+      AnnouncementDelay: 30
+    Point:
+      Use: false
+      StopWithExp: false
+      StopWithMoney: false
+      Limit: 500+500*(totallevel/100)
+      TimeLimit: 3600
+      ResetTime: ''
+      AnnouncementDelay: 30
+    Exp:
+      Use: false
+      StopWithMoney: false
+      StopWithPoint: false
+      Limit: 5000+5000*(totallevel/100)
+      TimeLimit: 3600
+      ResetTime: ''
+      AnnouncementDelay: 30
+  Repair:
+    PayForRenaming: true
+  Enchant:
+    PayForEnchantingOnAnvil: true
+    AllowEnchantingBoostedItems: true
+  Crafting:
+    PayForEachCraft: false
+    PayForCombiningItems: true
+  VTrade:
+    payForEachTradeItem: false
+  MilkingCow:
+    CancelMilking: false
+    Timer: 30
+ExploitProtections:
+  Furnaces:
+    Reassign: true
+    MaxDefaultAvailable: 20
+  BlastFurnaces:
+    Reassign: true
+    MaxDefaultAvailable: 15
+  Smokers:
+    Reassign: true
+    MaxDefaultAvailable: 15
+  BrewingStands:
+    Reassign: true
+    MaxDefaultAvailable: 20
+  General:
+    PlaceAndBreak:
+      NewMethod: true
+      BlockTracker:
+        Enabled: false
+      IgnoreOreGenerators: true
+      GlobalBlockTimer:
+        Break:
+          Use: true
+          Timer: 3
+      SilkTouchProtection: false
+    MonsterDamage:
+      Use: false
+      Percentage: 60
+      IgnoreBosses: true
+    TameablesPayout: true
+  McMMO:
+    TreeFellerMultiplier: 0.2
+    gigaDrillMultiplier: 0.2
+    superBreakerMultiplier: 0.2
+  MythicMobs:
+    enabled: true
+  CustomFishing:
+    Use-CustomFishing-Only: false
+  Spawner:
+    PreventSlimeSplit: true
+    PreventMagmaCubeSplit: true
+  Smelt:
+    PreventHopperFillUps: false
+  Brew:
+    PreventBrewingStandFillUps: false
+  informOnPaymentDisable: true
+use-breeder-finder: true
+old-job:
+  level-loss-percentage: 30
+  fix-at-max-level: true
+ActionBars:
+  Enabled: true
+  Messages:
+    KeepFor: 5
+BossBar:
+  Enabled: true
+  SegmentCount: 1
+  Timer: 5
+ShowActionBars:
+  OnTitleChange: true
+  OnLevelChange: true
+  OnEmptyServerAccount: true
+ShowChatMessage:
+  OnTitleChange: true
+  OnLevelChange: true
+  OnEmptyServerAccount: true
+Sounds:
+  LevelUp:
+    use: true
+    volume: 1.0
+    pitch: 3.0
+  TitleChange:
+    use: true
+    volume: 1.0
+    pitch: 3.0
+Fireworks:
+  LevelUp:
+    use: false
+    Random: true
+    flicker: true
+    trail: true
+    type: STAR
+    colors:
+    - 230,0,0
+    - 0,90,0
+    - 0,0,104
+    power: 1
+    ShootTime: 20
+Signs:
+  Enable: true
+  Colors:
+    ColorizeJobName: true
+  InfoUpdateInterval: 5
+Scoreboard:
+  ShowToplist: true
+  interval: 10
+JobsBrowse:
+  ShowTotalWorkers: true
+  ShowPenaltyBonus: true
+  UseNewLook: true
+  AmountToShow: 5
+JobsGUI:
+  OpenOnBrowse: true
+  ShowChatBrowse: true
+  SwitcheButtons: false
+  DisableJoiningJobThroughGui: false
+  ShowActionNames: true
+  HideItemAttributes: true
+  AddEdge: true
+  RowCount: 0
+  InfoButton:
+    Slot: 9
+    Commands:
+    - closeinv!
+Commands:
+  Jobs:
+  - Default
+  PageRow:
+    JobsTop:
+      AmountToShow: 15
+      HiddenPlayers:
+      - Zrips
+    Placeholders:
+      AmountToShow: 10
+  JobsLeave:
+    UsePerPermissionLeave: false
+    EnableConfirmation: false
+    ConfirmExpiryTime: 10
+  JobsInfo:
+    open-browse: false
+  Stats:
+    BarCount: 50
+BlockOwnership:
+  Range: 0
+  TakeOver: false
+  Disabled: false

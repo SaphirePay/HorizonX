@@ -1,0 +1,35 @@
+# DOCUMENTATION: https://docs.artillex-studios.com/axdarkauctions.html
+# ITEM BUILDER: https://docs.artillex-studios.com/item-builder.html
+
+title: "&0&lDark Auction > &0Next Bid"
+# a gui can have 1-6 rows
+rows: 3
+
+# ----- ITEMS -----
+
+filler:
+  material: BLACK_STAINED_GLASS_PANE
+  name: " "
+  slot:
+    - "0-26"
+
+gray:
+  material: GRAY_STAINED_GLASS_PANE
+  name: " "
+  slot:
+    - "10-12"
+    - "14-16"
+
+item:
+  slot: 11
+
+clock:
+  slot: 15
+  material: CLOCK
+  name: "&#D200FF&lBidding"
+  lore:
+    - " "
+    - " &#DDDDDD- &fStarts in: &#D200FF%time% seconds"
+    - " "
+    - "&#D200FF&l> &#D200FFGet ready!"
+#ETazQHd6ZXYQZTUkNmUNhFUkJjThZleUNzYyMlbG52VzMXbXNUQntUc380aaNUQntUc3UTc

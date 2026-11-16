@@ -1,0 +1,14 @@
+name: Tebex
+version: '2.4.2-rs'
+main: io.tebex.plugin.TebexBukkitPlugin
+api-version: '1.13'
+author: Horizon
+description: Tebex for Horizon, written in Rust (same commands, same config.yml, same store API).
+folia-supported: true
+softdepend:
+  - BuycraftX
+commands:
+  tebex:
+    description: The main command
+    aliases:
+      - buycraft

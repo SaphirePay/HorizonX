@@ -1,0 +1,56 @@
+# Crates. Place one with /crate set <crate> and right-click a block (a chest, an ender chest, anything).
+# Right-click a crate with its key to open it, left-click to see what's inside.
+#
+# A reward is one of:
+#   item: "MATERIAL amount [enchant:level,enchant:level]"     (an item)
+#   money: 500                                                (server money)
+#   keys: { rare: 1 }                                         (crate keys)
+#   command: "lp user %player% parent add vip"                (a console command)
+# with chance (a weight: bigger = more often), and optional name, icon and broadcast (tell everyone).
+crates:
+  common:
+    name: "Common"
+    colour: "#a1a1aa"
+    key: TRIPWIRE_HOOK
+    rewards:
+      - { item: "IRON_INGOT 16", chance: 18 }
+      - { item: "GOLD_INGOT 8", chance: 12 }
+      - { item: "COOKED_BEEF 32", chance: 14 }
+      - { item: "EXPERIENCE_BOTTLE 16", chance: 10 }
+      - { item: "OAK_LOG 64", chance: 12 }
+      - { money: 750, chance: 14, icon: GOLD_NUGGET }
+      - { item: "DIAMOND 3", chance: 6 }
+      - { item: "IRON_PICKAXE 1 efficiency:3,unbreaking:2", chance: 6 }
+      - { item: "GOLDEN_APPLE 2", chance: 5 }
+      - { keys: { rare: 1 }, chance: 3, name: "Rare Key", icon: TRIPWIRE_HOOK, broadcast: true }
+  rare:
+    name: "Rare"
+    colour: "#22d3ee"
+    key: TRIPWIRE_HOOK
+    rewards:
+      - { item: "DIAMOND 8", chance: 15 }
+      - { item: "EMERALD 16", chance: 12 }
+      - { money: 3000, chance: 14, icon: GOLD_INGOT }
+      - { item: "DIAMOND_PICKAXE 1 efficiency:4,unbreaking:3,fortune:2", chance: 8 }
+      - { item: "DIAMOND_SWORD 1 sharpness:4,unbreaking:3,looting:2", chance: 8 }
+      - { item: "DIAMOND_CHESTPLATE 1 protection:3,unbreaking:3", chance: 7 }
+      - { item: "ENCHANTED_GOLDEN_APPLE 1", chance: 4, broadcast: true }
+      - { item: "SHULKER_BOX 1", chance: 6 }
+      - { item: "EXPERIENCE_BOTTLE 64", chance: 10 }
+      - { item: "ELYTRA 1", chance: 2, broadcast: true }
+      - { keys: { legendary: 1 }, chance: 3, name: "Legendary Key", icon: TRIPWIRE_HOOK, broadcast: true }
+  legendary:
+    name: "Legendary"
+    colour: "#facc15"
+    key: TRIPWIRE_HOOK
+    rewards:
+      - { item: "NETHERITE_INGOT 2", chance: 14, broadcast: true }
+      - { money: 15000, chance: 16, icon: GOLD_BLOCK }
+      - { item: "DIAMOND_BLOCK 8", chance: 14 }
+      - { item: "NETHERITE_PICKAXE 1 efficiency:5,unbreaking:3,fortune:3,mending:1", chance: 7, broadcast: true }
+      - { item: "NETHERITE_SWORD 1 sharpness:5,unbreaking:3,looting:3,mending:1", chance: 7, broadcast: true }
+      - { item: "ELYTRA 1", chance: 8, broadcast: true }
+      - { item: "TOTEM_OF_UNDYING 2", chance: 10 }
+      - { item: "ENCHANTED_GOLDEN_APPLE 3", chance: 10, broadcast: true }
+      - { item: "BEACON 1", chance: 6, broadcast: true }
+      - { item: "SHULKER_BOX 3", chance: 8 }

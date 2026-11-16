@@ -1,0 +1,26 @@
+[package]
+name = "zauctionhouse_rs"
+version = "4.0.1"
+edition = "2024"
+publish = false
+license = "MIT"
+description = "zAuctionHouse for Horizon, written in Rust: same commands, config, messages and inventory files."
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+base64 = "0.22"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[workspace]

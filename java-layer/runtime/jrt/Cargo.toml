@@ -1,0 +1,33 @@
+[package]
+name = "jrt"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+serde_json = "1"
+fancy-regex = "0.14"
+stacker = "0.1"
+md-5 = "0.10"
+# java.security.MessageDigest: SHA-1 and the SHA-2 family, beside md-5.
+sha1 = "0.10"
+sha2 = "0.10"
+# java.sql on SQLite, built in: no sqlite3.dll beside the plugin.
+rusqlite = { version = "0.32", features = ["bundled"] }
+# java.math: BigDecimal and BigInteger, exact.
+bigdecimal = "0.4"
+num-bigint = "0.4"
+num-traits = "0.2"
+num-integer = "0.1"
+# java.awt / javax.imageio: pictures plugins read, scale and write.
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "bmp"] }
+# java.net: HttpURLConnection and HttpClient over real HTTP(S), as a plugin has on Paper.
+ureq = { version = "2", default-features = false, features = ["tls"] }
+# java.sql over MySQL / MariaDB (`jdbc:mysql://`, `jdbc:mariadb://`): only for plugins that name one (feature `mysql`,
+# which jport turns on), so the rest don't carry it.
+mysql = { version = "25", optional = true, default-features = false, features = ["minimal-rust", "rustls-tls"] }
+
+[features]
+mysql = ["dep:mysql"]
+
+[workspace]

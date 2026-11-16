@@ -1,0 +1,61 @@
+VoteSites:
+  ExampleVoteSite:
+    Enabled: false
+    Name: ExampleVoteSite
+    Priority: 5
+    Hidden: false
+    ServiceSite: PlanetMinecraft.com
+    VoteURL: link to vote URL here, used in /vote
+    VoteDelay: 24h
+    WaitUntilVoteDelay: false
+    VoteDelayDaily: false
+    ForceOffline: false
+    DisplayItem:
+      Material: DIAMOND
+      Amount: 1
+    Rewards:
+      Commands:
+      - say hello
+      Messages:
+        Player: You voted
+  Site2:
+    Enabled: false
+    Name: Site2
+    ServiceSite: Crafty.gg
+    VoteURL: link to vote URL here, used in /vote
+    VoteDelay: 24h
+    DisplayItem:
+      Material: DIAMOND
+      Amount: 1
+    Rewards:
+      Commands:
+      - say hello
+      AdvancedPriority:
+        Reward1:
+          Chance: 50
+          Messages:
+            Player: You got first reward
+        Reward2:
+          Chance: 20
+          Messages:
+            Player: You got second reward
+        Fallback:
+          Messages:
+            Player: You got unlucky
+      Items:
+        item1:
+          Material: DIAMOND
+          Amount: 1
+      Messages:
+        Player: You voted
+  TestSite:
+    Enabled: true
+    Name: TestSite
+    ServiceSite: TestSite
+    VoteURL: VoteURL
+    VoteDelay: 24h
+    Priority: 0
+    Rewards:
+      Messages:
+        Player: '&aThanks for voting on %ServiceSite%!'
+EverySiteReward: {}

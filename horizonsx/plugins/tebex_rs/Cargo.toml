@@ -1,0 +1,22 @@
+[package]
+name = "tebex_rs"
+version = "2.4.2"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+serde_json = "1"
+serde_yaml = "0.9"
+ureq = { version = "2.12", default-features = false, features = ["tls", "gzip"] }
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[workspace]

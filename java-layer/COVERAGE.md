@@ -1,0 +1,324 @@
+# Java layer: SDK reach
+
+9345 of 9576 tagged Bukkit methods reached (97.6%).
+
+Of what Java hands to the server (server objects' interfaces, events, ItemStack, Bukkit/Server): 6974 of 6974 (100.0%).
+
+## Why the rest is not
+
+- 82: dropped by the compile repair
+- 80: static not routed
+- 23: generic function
+- 8: parameter type &mut JavaRandom
+- 4: return type BoundOptions<'_>
+- 2: return type Option<std::borrow::Cow<'static, [u8]>>
+- 2: parameter type impl FnOnce(&RegistryBuilderFactory<B>) -> B
+- 2: parameter type impl Fn(&str, &Player, &[u8]) + Send + Sync + 'static
+- 1: return type &[[f64; 6]]
+- 1: parameter type Vec<bool>
+- 1: parameter type impl MapColorCache + 'static
+- 1: return type impl Fn(Box<dyn FnOnce() + Send>)
+- 1: parameter type impl Fn() -> Value + Send + Sync + 'static
+- 1: parameter type impl Fn() -> Box<dyn crate::pure::Prompt> + Send + Sync + 'static
+- 1: parameter type impl ConversationCanceller + 'static
+- 1: parameter type &[(&str, &str)]
+- 1: return type &[Box<dyn ConversationCanceller>]
+- 1: parameter type &mut impl std::io::Write
+- 1: parameter type Option<Box<dyn PermissionManagerOverride>>
+- 1: parameter type impl crate::fam_paper::BasicCommand
+- 1: parameter type impl HelpTopicFactory + Send + Sync + 'static
+- 1: return type impl Iterator<Item = crate::fam_entity::MemoryKey>
+- 1: parameter type &mut crate::worlds::JavaRandom
+- 1: return type std::slice::Iter<'_, RegistryTypedKey>
+- 1: return type std::slice::Iter<'_, T>
+- 1: return type RegistryValueSet<B>
+- 1: parameter type impl Fn(&CommandSender) -> bool + Send + Sync + 'static) -> impl Fn(&CommandSender
+- 1: return type &[u8]
+- 1: parameter type impl Fn(&mut E) + Send + Sync + 'static
+- 1: parameter type impl FnOnce(B) -> B
+- 1: return type &WritableRegistry<B>
+- 1: return type &mut B
+- 1: return type impl Fn(&ItemStack) -> bool + '_
+- 1: parameter type impl Fn(&CommandSender, &str, &[&str]) -> Vec<String> + Send + Sync + 'static
+- 1: parameter type impl Fn(&str, &horizon_mod::Value) -> horizon_mod::Value + Send + Sync + 'static
+- 1: return type Option<Box<dyn Prompt>>
+
+## Most gaps by class
+
+- 35: io/papermc/paper/command/brigadier/argument/ArgumentTypes
+- 18: org/bukkit/generator/ChunkGenerator
+- 9: org/bukkit/conversations/ConversationFactory
+- 7: org/bukkit/plugin/java/JavaPlugin
+- 5: org/bukkit/event/HandlerList
+- 4: org/bukkit/configuration/serialization/ConfigurationSerialization
+- 4: org/bukkit/configuration/ConfigurationSection
+- 4: org/bukkit/plugin/Plugin
+- 4: io/papermc/paper/command/brigadier/argument/CustomArgumentType
+- 4: io/papermc/paper/command/brigadier/BasicCommand
+- 3: org/bukkit/plugin/PluginManager
+- 3: org/bukkit/map/MapRenderer
+- 3: org/bukkit/conversations/Conversation
+- 3: io/papermc/paper/registry/set/RegistryValueSet
+- 3: io/papermc/paper/registry/event/RegistryEntryAddEvent
+- 3: io/papermc/paper/registry/event/type/RegistryEntryAddConfiguration
+- 3: io/papermc/paper/util/Tick
+- 3: io/papermc/paper/util/BoundChecker
+- 3: org/bukkit/NamespacedKey
+- 3: org/bukkit/conversations/Prompt
+- 3: org/bukkit/util/Vector
+- 2: org/bukkit/configuration/file/YamlConfiguration
+- 2: org/bukkit/scheduler/BukkitScheduler
+- 2: org/bukkit/configuration/MemorySection
+- 2: org/bukkit/conversations/ExactMatchConversationCanceller
+- 2: com/destroystokyo/paper/event/block/AnvilDamagedEvent$DamageState
+- 2: io/papermc/paper/registry/RegistryBuilderFactory
+- 2: io/papermc/paper/registry/set/RegistryValueSetBuilder
+- 2: io/papermc/paper/command/brigadier/argument/CustomArgumentType$Converted
+- 2: com/destroystokyo/paper/exception/ServerEventException
+- 2: io/papermc/paper/plugin/lifecycle/event/types/LifecycleEventType
+- 2: io/papermc/paper/plugin/lifecycle/event/handler/configuration/PrioritizedLifecycleEventHandlerConfiguration
+- 2: io/papermc/paper/registry/event/WritableRegistry
+- 2: io/papermc/paper/registry/event/RegistryComposeEvent
+- 2: io/papermc/paper/plugin/bootstrap/PluginBootstrap
+- 2: com/destroystokyo/paper/NamespacedTag
+- 2: org/bukkit/ChatColor
+- 2: org/bukkit/generator/BiomeProvider
+- 1: org/bukkit/permissions/Permission
+- 1: org/bukkit/inventory/MerchantRecipe
+
+## Gaps in what Java hands to the server
+
+
+## Every gap
+
+- com/destroystokyo/paper/NamespacedTag.getKey: dropped by the compile repair
+- com/destroystokyo/paper/NamespacedTag.getNamespace: dropped by the compile repair
+- com/destroystokyo/paper/entity/TargetEntityInfo.<init>: static not routed
+- com/destroystokyo/paper/event/block/AnvilDamagedEvent$DamageState.getMaterial: static not routed
+- com/destroystokyo/paper/event/block/AnvilDamagedEvent$DamageState.getState: static not routed
+- com/destroystokyo/paper/exception/ServerEventException.getEvent: dropped by the compile repair
+- com/destroystokyo/paper/exception/ServerEventException.getListener: dropped by the compile repair
+- com/destroystokyo/paper/exception/ServerPluginMessageException.getData: return type &[u8]
+- com/destroystokyo/paper/profile/ProfileProperty.<init>: static not routed
+- io/papermc/paper/command/brigadier/BasicCommand.canUse: dropped by the compile repair
+- io/papermc/paper/command/brigadier/BasicCommand.execute: dropped by the compile repair
+- io/papermc/paper/command/brigadier/BasicCommand.permission: dropped by the compile repair
+- io/papermc/paper/command/brigadier/BasicCommand.suggest: dropped by the compile repair
+- io/papermc/paper/command/brigadier/Commands.unrestricted: parameter type impl Fn(&CommandSender) -> bool + Send + Sync + 'static) -> impl Fn(&CommandSender
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.angle: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.axes: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.blockInWorldPredicate: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.blockPosition: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.blockState: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.columnBlockPosition: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.columnFinePosition: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.component: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.doubleRange: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.entities: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.entity: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.entityAnchor: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.finePosition: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.gameMode: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.heightMap: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.hexColor: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.integerRange: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.itemPredicate: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.itemStack: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.key: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.namedColor: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.namespacedKey: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.objectiveCriteria: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.playerProfiles: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.resource: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.resourceKey: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.rotation: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.scoreboardDisplaySlot: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.signedMessage: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.style: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.templateMirror: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.templateRotation: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.time: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.uuid: static not routed
+- io/papermc/paper/command/brigadier/argument/ArgumentTypes.world: static not routed
+- io/papermc/paper/command/brigadier/argument/CustomArgumentType$Converted.convert: dropped by the compile repair
+- io/papermc/paper/command/brigadier/argument/CustomArgumentType$Converted.parse: dropped by the compile repair
+- io/papermc/paper/command/brigadier/argument/CustomArgumentType.getExamples: dropped by the compile repair
+- io/papermc/paper/command/brigadier/argument/CustomArgumentType.getNativeType: dropped by the compile repair
+- io/papermc/paper/command/brigadier/argument/CustomArgumentType.listSuggestions: dropped by the compile repair
+- io/papermc/paper/command/brigadier/argument/CustomArgumentType.parse: dropped by the compile repair
+- io/papermc/paper/plugin/bootstrap/PluginBootstrap.bootstrap: dropped by the compile repair
+- io/papermc/paper/plugin/bootstrap/PluginBootstrap.createPlugin: dropped by the compile repair
+- io/papermc/paper/plugin/lifecycle/event/handler/configuration/MonitorLifecycleEventHandlerConfiguration.monitor: dropped by the compile repair
+- io/papermc/paper/plugin/lifecycle/event/handler/configuration/PrioritizedLifecycleEventHandlerConfiguration.monitor: dropped by the compile repair
+- io/papermc/paper/plugin/lifecycle/event/handler/configuration/PrioritizedLifecycleEventHandlerConfiguration.priority: dropped by the compile repair
+- io/papermc/paper/plugin/lifecycle/event/registrar/RegistrarEvent.registrar: dropped by the compile repair
+- io/papermc/paper/plugin/lifecycle/event/registrar/ReloadableRegistrarEvent.cause: dropped by the compile repair
+- io/papermc/paper/plugin/lifecycle/event/types/LifecycleEventType.name: dropped by the compile repair
+- io/papermc/paper/plugin/lifecycle/event/types/LifecycleEventType.newHandler: parameter type impl Fn(&mut E) + Send + Sync + 'static
+- io/papermc/paper/potion/PotionMix.<init>: static not routed
+- io/papermc/paper/potion/PredicateRecipeChoice.itemStackPredicate: return type impl Fn(&ItemStack) -> bool + '_
+- io/papermc/paper/registry/RegistryBuilderFactory.copyFrom: dropped by the compile repair
+- io/papermc/paper/registry/RegistryBuilderFactory.empty: dropped by the compile repair
+- io/papermc/paper/registry/data/dialog/action/DialogActionCallback.accept: dropped by the compile repair
+- io/papermc/paper/registry/event/RegistryComposeEvent.getOrCreateTag: dropped by the compile repair
+- io/papermc/paper/registry/event/RegistryComposeEvent.registry: return type &WritableRegistry<B>
+- io/papermc/paper/registry/event/RegistryEntryAddEvent.builder: return type &mut B
+- io/papermc/paper/registry/event/RegistryEntryAddEvent.getOrCreateTag: dropped by the compile repair
+- io/papermc/paper/registry/event/RegistryEntryAddEvent.key: dropped by the compile repair
+- io/papermc/paper/registry/event/RegistryEvent.registryKey: dropped by the compile repair
+- io/papermc/paper/registry/event/WritableRegistry.register: parameter type impl FnOnce(B) -> B
+- io/papermc/paper/registry/event/WritableRegistry.registerWith: parameter type impl FnOnce(&RegistryBuilderFactory<B>) -> B
+- io/papermc/paper/registry/event/type/RegistryEntryAddConfiguration.filter: dropped by the compile repair
+- io/papermc/paper/registry/event/type/RegistryEntryAddConfiguration.monitor: dropped by the compile repair
+- io/papermc/paper/registry/event/type/RegistryEntryAddConfiguration.priority: dropped by the compile repair
+- io/papermc/paper/registry/holder/RegistryHolder$Inlined.entry: dropped by the compile repair
+- io/papermc/paper/registry/set/RegistryKeySet.iterator: return type std::slice::Iter<'_, RegistryTypedKey>
+- io/papermc/paper/registry/set/RegistrySet.valueSet: static not routed
+- io/papermc/paper/registry/set/RegistryValueSet.iterator: return type std::slice::Iter<'_, T>
+- io/papermc/paper/registry/set/RegistryValueSet.size: dropped by the compile repair
+- io/papermc/paper/registry/set/RegistryValueSet.values: dropped by the compile repair
+- io/papermc/paper/registry/set/RegistryValueSetBuilder.add: parameter type impl FnOnce(&RegistryBuilderFactory<B>) -> B
+- io/papermc/paper/registry/set/RegistryValueSetBuilder.build: return type RegistryValueSet<B>
+- io/papermc/paper/util/BoundChecker.requireNonNegative: generic function
+- io/papermc/paper/util/BoundChecker.requirePositive: generic function
+- io/papermc/paper/util/BoundChecker.requireRange: generic function
+- io/papermc/paper/util/Tick.addTo: dropped by the compile repair
+- io/papermc/paper/util/Tick.between: dropped by the compile repair
+- io/papermc/paper/util/Tick.fromDuration: dropped by the compile repair
+- org/bukkit/ChatColor.stripColor: static not routed
+- org/bukkit/ChatColor.translateAlternateColorCodes: static not routed
+- org/bukkit/Location.<init>: static not routed
+- org/bukkit/NamespacedKey.<init>: static not routed
+- org/bukkit/NamespacedKey.getKey: dropped by the compile repair
+- org/bukkit/NamespacedKey.getNamespace: dropped by the compile repair
+- org/bukkit/Particle$DustOptions.<init>: static not routed
+- org/bukkit/Particle$DustTransition.<init>: static not routed
+- org/bukkit/Particle$Geyser.<init>: static not routed
+- org/bukkit/Particle$GeyserBase.<init>: static not routed
+- org/bukkit/Particle$Spell.<init>: static not routed
+- org/bukkit/Particle$Trail.<init>: static not routed
+- org/bukkit/Registry$3.iterator: return type impl Iterator<Item = crate::fam_entity::MemoryKey>
+- org/bukkit/Vibration.<init>: static not routed
+- org/bukkit/attribute/AttributeModifier.<init>: static not routed
+- org/bukkit/block/spawner/SpawnRule.<init>: static not routed
+- org/bukkit/command/PluginCommand.setTabCompleter: parameter type impl Fn(&CommandSender, &str, &[&str]) -> Vec<String> + Send + Sync + 'static
+- org/bukkit/configuration/Configuration.options: return type BoundOptions<'_>
+- org/bukkit/configuration/ConfigurationSection.getComponent: generic function
+- org/bukkit/configuration/ConfigurationSection.getObject: generic function
+- org/bukkit/configuration/ConfigurationSection.getSerializable: generic function
+- org/bukkit/configuration/ConfigurationSection.setComponent: generic function
+- org/bukkit/configuration/MemoryConfiguration.options: return type BoundOptions<'_>
+- org/bukkit/configuration/MemorySection.getObject: generic function
+- org/bukkit/configuration/MemorySection.getSerializable: generic function
+- org/bukkit/configuration/file/FileConfiguration.options: return type BoundOptions<'_>
+- org/bukkit/configuration/file/YamlConfiguration.<init>: static not routed
+- org/bukkit/configuration/file/YamlConfiguration.options: return type BoundOptions<'_>
+- org/bukkit/configuration/serialization/ConfigurationSerialization.deserialize: generic function
+- org/bukkit/configuration/serialization/ConfigurationSerialization.deserializeObject: generic function
+- org/bukkit/configuration/serialization/ConfigurationSerialization.getAlias: generic function
+- org/bukkit/configuration/serialization/ConfigurationSerialization.registerClass: generic function
+- org/bukkit/conversations/Conversable.beginConversation: dropped by the compile repair
+- org/bukkit/conversations/Conversation.begin: dropped by the compile repair
+- org/bukkit/conversations/Conversation.getCancellers: return type &[Box<dyn ConversationCanceller>]
+- org/bukkit/conversations/Conversation.getContext: dropped by the compile repair
+- org/bukkit/conversations/ConversationCanceller.cancelBasedOnInput: dropped by the compile repair
+- org/bukkit/conversations/ConversationContext.getPlugin: generic function
+- org/bukkit/conversations/ConversationFactory$NotPlayerMessagePrompt.getPromptText: dropped by the compile repair
+- org/bukkit/conversations/ConversationFactory.addConversationAbandonedListener: dropped by the compile repair
+- org/bukkit/conversations/ConversationFactory.buildConversation: dropped by the compile repair
+- org/bukkit/conversations/ConversationFactory.thatExcludesNonPlayersWithMessage: dropped by the compile repair
+- org/bukkit/conversations/ConversationFactory.withConversationCanceller: parameter type impl ConversationCanceller + 'static
+- org/bukkit/conversations/ConversationFactory.withEscapeSequence: dropped by the compile repair
+- org/bukkit/conversations/ConversationFactory.withFirstPrompt: parameter type impl Fn() -> Box<dyn crate::pure::Prompt> + Send + Sync + 'static
+- org/bukkit/conversations/ConversationFactory.withInitialSessionData: parameter type &[(&str, &str)]
+- org/bukkit/conversations/ConversationFactory.withPrefix: dropped by the compile repair
+- org/bukkit/conversations/ConversationFactory.withTimeout: dropped by the compile repair
+- org/bukkit/conversations/ConversationPrefix.getPrefix: dropped by the compile repair
+- org/bukkit/conversations/ExactMatchConversationCanceller.<init>: static not routed
+- org/bukkit/conversations/ExactMatchConversationCanceller.cancelBasedOnInput: dropped by the compile repair
+- org/bukkit/conversations/InactivityConversationCanceller.<init>: static not routed
+- org/bukkit/conversations/PluginNameConversationPrefix.<init>: static not routed
+- org/bukkit/conversations/Prompt.acceptInput: return type Option<Box<dyn Prompt>>
+- org/bukkit/conversations/Prompt.blocksForInput: dropped by the compile repair
+- org/bukkit/conversations/Prompt.getPromptText: dropped by the compile repair
+- org/bukkit/conversations/StringPrompt.blocksForInput: dropped by the compile repair
+- org/bukkit/enchantments/EnchantmentOffer.<init>: static not routed
+- org/bukkit/entity/Display$Brightness.<init>: static not routed
+- org/bukkit/event/HandlerList.getRegisteredListeners: generic function
+- org/bukkit/event/HandlerList.hasListeners: generic function
+- org/bukkit/event/HandlerList.register: generic function
+- org/bukkit/event/HandlerList.registerAll: generic function
+- org/bukkit/event/HandlerList.unregister: generic function
+- org/bukkit/generator/BiomeProvider.getBiome: dropped by the compile repair
+- org/bukkit/generator/BiomeProvider.getBiomes: dropped by the compile repair
+- org/bukkit/generator/BlockPopulator.populate: parameter type &mut JavaRandom
+- org/bukkit/generator/ChunkGenerator.canSpawn: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.generateBedrock: parameter type &mut JavaRandom
+- org/bukkit/generator/ChunkGenerator.generateCaves: parameter type &mut JavaRandom
+- org/bukkit/generator/ChunkGenerator.generateChunkData: parameter type &mut JavaRandom
+- org/bukkit/generator/ChunkGenerator.generateNoise: parameter type &mut JavaRandom
+- org/bukkit/generator/ChunkGenerator.generateSurface: parameter type &mut JavaRandom
+- org/bukkit/generator/ChunkGenerator.getBaseHeight: parameter type &mut JavaRandom
+- org/bukkit/generator/ChunkGenerator.getDefaultBiomeProvider: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.getDefaultPopulators: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.getFixedSpawnLocation: parameter type &mut JavaRandom
+- org/bukkit/generator/ChunkGenerator.isParallelCapable: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.shouldGenerateBedrock: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.shouldGenerateCaves: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.shouldGenerateDecorations: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.shouldGenerateMobs: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.shouldGenerateNoise: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.shouldGenerateStructures: dropped by the compile repair
+- org/bukkit/generator/ChunkGenerator.shouldGenerateSurface: dropped by the compile repair
+- org/bukkit/help/HelpMap.registerHelpTopicFactory: parameter type impl HelpTopicFactory + Send + Sync + 'static
+- org/bukkit/inventory/BlastingRecipe.<init>: static not routed
+- org/bukkit/inventory/BrewingRecipe.<init>: static not routed
+- org/bukkit/inventory/CampfireRecipe.<init>: static not routed
+- org/bukkit/inventory/FurnaceRecipe.<init>: static not routed
+- org/bukkit/inventory/MerchantRecipe.<init>: static not routed
+- org/bukkit/inventory/ShapedRecipe.<init>: static not routed
+- org/bukkit/inventory/ShapelessRecipe.<init>: static not routed
+- org/bukkit/inventory/SmokingRecipe.<init>: static not routed
+- org/bukkit/inventory/StonecuttingRecipe.<init>: static not routed
+- org/bukkit/map/MapCursor.<init>: static not routed
+- org/bukkit/map/MapFont$CharacterSprite.<init>: parameter type Vec<bool>
+- org/bukkit/map/MapPalette.setMapColorCache: parameter type impl MapColorCache + 'static
+- org/bukkit/map/MapRenderer.initialize: dropped by the compile repair
+- org/bukkit/map/MapRenderer.isContextual: dropped by the compile repair
+- org/bukkit/map/MapRenderer.render: dropped by the compile repair
+- org/bukkit/metadata/FixedMetadataValue.<init>: static not routed
+- org/bukkit/metadata/LazyMetadataValue.<init>: parameter type impl Fn() -> Value + Send + Sync + 'static
+- org/bukkit/permissions/Permission.<init>: static not routed
+- org/bukkit/plugin/Plugin.getResource: return type Option<std::borrow::Cow<'static, [u8]>>
+- org/bukkit/plugin/Plugin.onDisable: dropped by the compile repair
+- org/bukkit/plugin/Plugin.onEnable: dropped by the compile repair
+- org/bukkit/plugin/Plugin.onLoad: dropped by the compile repair
+- org/bukkit/plugin/PluginDescriptionFile.save: parameter type &mut impl std::io::Write
+- org/bukkit/plugin/PluginManager.overridePermissionManager: parameter type Option<Box<dyn PermissionManagerOverride>>
+- org/bukkit/plugin/PluginManager.registerEvent: generic function
+- org/bukkit/plugin/PluginManager.registerEvents: generic function
+- org/bukkit/plugin/RegisteredListener.callEvent: generic function
+- org/bukkit/plugin/ServicesManager.register: parameter type impl Fn(&str, &horizon_mod::Value) -> horizon_mod::Value + Send + Sync + 'static
+- org/bukkit/plugin/java/JavaPlugin.getResource: return type Option<std::borrow::Cow<'static, [u8]>>
+- org/bukkit/plugin/java/JavaPlugin.onCommand: dropped by the compile repair
+- org/bukkit/plugin/java/JavaPlugin.onDisable: dropped by the compile repair
+- org/bukkit/plugin/java/JavaPlugin.onEnable: dropped by the compile repair
+- org/bukkit/plugin/java/JavaPlugin.onLoad: dropped by the compile repair
+- org/bukkit/plugin/java/JavaPlugin.onTabComplete: dropped by the compile repair
+- org/bukkit/plugin/java/JavaPlugin.registerCommand: parameter type impl crate::fam_paper::BasicCommand
+- org/bukkit/plugin/messaging/Messenger.registerIncomingPluginChannel: parameter type impl Fn(&str, &Player, &[u8]) + Send + Sync + 'static
+- org/bukkit/plugin/messaging/PluginMessageListener.onPluginMessageReceived: parameter type impl Fn(&str, &Player, &[u8]) + Send + Sync + 'static
+- org/bukkit/potion/PotionEffect.<init>: static not routed
+- org/bukkit/scheduler/BukkitScheduler.callSyncMethod: generic function
+- org/bukkit/scheduler/BukkitScheduler.getMainThreadExecutor: return type impl Fn(Box<dyn FnOnce() + Send>)
+- org/bukkit/util/BlockIterator.<init>: static not routed
+- org/bukkit/util/BlockTransformer.transform: dropped by the compile repair
+- org/bukkit/util/BlockVector.<init>: static not routed
+- org/bukkit/util/EntityTransformer.transform: dropped by the compile repair
+- org/bukkit/util/EulerAngle.<init>: static not routed
+- org/bukkit/util/Vector.<init>: static not routed
+- org/bukkit/util/Vector.getMaximum: static not routed
+- org/bukkit/util/Vector.getMinimum: static not routed
+- org/bukkit/util/VoxelShape.getBoundingBoxes: return type &[[f64; 6]]
+- org/bukkit/util/noise/PerlinNoiseGenerator.<init>: parameter type &mut crate::worlds::JavaRandom
+- org/bukkit/util/noise/PerlinOctaveGenerator.<init>: static not routed

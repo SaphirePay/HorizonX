@@ -1,0 +1,164 @@
+{
+  "mirrors": [
+    {
+      "mirroring": "https://repo-mirror.ajg0702.us/mirror",
+      "original": "https://repo.papermc.io/repository/maven-public/"
+    },
+    {
+      "mirroring": "https://repo-mirror.ajg0702.us/mirror",
+      "original": "https://repo.maven.apache.org/maven2/"
+    },
+    {
+      "mirroring": "https://repo-mirror.ajg0702.us/mirror",
+      "original": "https://repo1.maven.org/maven2/"
+    },
+    {
+      "mirroring": "https://repo-mirror.ajg0702.us/mirror",
+      "original": "https://oss.sonatype.org/content/groups/public/"
+    },
+    {
+      "mirroring": "https://repo-mirror.ajg0702.us/mirror",
+      "original": "https://repo.vshnv.tech/"
+    }
+  ],
+  "repositories": [
+    {
+      "url": "https://repo.maven.apache.org/maven2/"
+    },
+    {
+      "url": "https://jitpack.io"
+    },
+    {
+      "url": "https://repo.ajg0702.us/releases/"
+    },
+    {
+      "url": "https://repo.codemc.io/repository/nms/"
+    },
+    {
+      "url": "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    },
+    {
+      "url": "https://repo.extendedclip.com/content/repositories/placeholderapi/"
+    },
+    {
+      "url": "https://repo.codemc.org/repository/maven-public"
+    },
+    {
+      "url": "https://repo.citizensnpcs.co/"
+    },
+    {
+      "url": "https://oss.sonatype.org/content/groups/public/"
+    },
+    {
+      "url": "https://repo.papermc.io/repository/maven-public/"
+    },
+    {
+      "url": "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+    },
+    {
+      "url": "https://repo.vshnv.tech/"
+    }
+  ],
+  "dependencies": [
+    {
+      "groupId": "com.zaxxer",
+      "artifactId": "HikariCP",
+      "version": "3.4.5",
+      "transitive": [
+        {
+          "groupId": "org.slf4j",
+          "artifactId": "slf4j-api",
+          "version": "1.7.25",
+          "transitive": []
+        }
+      ]
+    },
+    {
+      "groupId": "com.h2database",
+      "artifactId": "h2",
+      "version": "2.1.214",
+      "transitive": []
+    },
+    {
+      "groupId": "com.squareup.okhttp3",
+      "artifactId": "okhttp",
+      "version": "4.12.0",
+      "transitive": [
+        {
+          "groupId": "com.squareup.okio",
+          "artifactId": "okio",
+          "version": "3.6.0",
+          "transitive": []
+        },
+        {
+          "groupId": "com.squareup.okio",
+          "artifactId": "okio-jvm",
+          "version": "3.6.0",
+          "transitive": []
+        },
+        {
+          "groupId": "org.jetbrains.kotlin",
+          "artifactId": "kotlin-stdlib-jdk8",
+          "version": "1.9.10",
+          "transitive": []
+        },
+        {
+          "groupId": "org.jetbrains.kotlin",
+          "artifactId": "kotlin-stdlib",
+          "version": "1.9.10",
+          "transitive": []
+        },
+        {
+          "groupId": "org.jetbrains.kotlin",
+          "artifactId": "kotlin-stdlib-common",
+          "version": "1.9.10",
+          "transitive": []
+        },
+        {
+          "groupId": "org.jetbrains",
+          "artifactId": "annotations",
+          "version": "13.0",
+          "transitive": []
+        },
+        {
+          "groupId": "org.jetbrains.kotlin",
+          "artifactId": "kotlin-stdlib-jdk7",
+          "version": "1.9.10",
+          "transitive": []
+        }
+      ]
+    }
+  ],
+  "relocations": [
+    {
+      "originalPackagePattern": "org.h2",
+      "relocatedPackagePattern": "us.ajg0702.leaderboards.libs.h2",
+      "exclusions": [],
+      "inclusions": []
+    },
+    {
+      "originalPackagePattern": "com.zaxxer.hikari",
+      "relocatedPackagePattern": "us.ajg0702.leaderboards.libs.hikari",
+      "exclusions": [],
+      "inclusions": []
+    },
+    {
+      "originalPackagePattern": "com.squareup",
+      "relocatedPackagePattern": "us.ajg0702.leaderboards.libs",
+      "exclusions": [],
+      "inclusions": []
+    },
+    {
+      "originalPackagePattern": "okhttp3",
+      "relocatedPackagePattern": "us.ajg0702.leaderboards.libs.okhttp3",
+      "exclusions": [],
+      "inclusions": []
+    },
+    {
+      "originalPackagePattern": "okio",
+      "relocatedPackagePattern": "us.ajg0702.leaderboards.libs.okio",
+      "exclusions": [],
+      "inclusions": []
+    }
+  ]
+}

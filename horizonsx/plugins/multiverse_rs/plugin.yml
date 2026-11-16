@@ -1,0 +1,109 @@
+name: Multiverse-Core
+main: org.mvplugins.multiverse.core.MultiverseCore
+authors: ['dumptruckman', 'Rigby', 'fernferret', 'lithium3141', 'main--', 'benwoo1110', 'Zax71']
+website: 'https://modrinth.com/plugin/multiverse-core'
+description: 'The original Bukkit Multi-World Plugin!'
+softdepend: ['Vault', 'PlaceholderAPI']
+api-version: 1.13
+version: 5.8.2
+commands:
+  mv:
+    description: Multiverse-Core commands
+    usage: /mv help
+  mvcreate: {description: Creates a new world and loads it., aliases: [mvc]}
+  mvimport: {description: Imports an existing world folder., aliases: [mvim]}
+  mvload: {description: Loads a world.}
+  mvunload: {description: Unloads a world from Multiverse.}
+  mvremove: {description: Removes a world from worlds.yml.}
+  mvdelete: {description: Deletes a world on your server PERMANENTLY.}
+  mvlist: {description: Displays a listing of all worlds that you can enter., aliases: [mvl]}
+  mvinfo: {description: Displays all properties configured for a world., aliases: [mvi]}
+  mvtp: {description: Allows you to teleport to a location on your server!}
+  mvspawn: {description: Teleports the specified player to the spawn of the world they are in}
+  mvsetspawn: {description: Sets the spawn location of the specified world, aliases: [mvss]}
+  mvmodify: {description: Modifies a world property of a given world., aliases: [mvm]}
+  mvgamerule: {description: Changes a gamerule in one or more worlds., aliases: [mvrule]}
+  mvgamerules: {description: Lists gamerules for the specified world., aliases: [mvrules]}
+  mvclone: {description: Clones a world., aliases: [mvcl]}
+  mvregen: {description: Regenerates a world on your server.}
+  mvreload: {description: Reloads config files for all Multiverse modules., aliases: [mvr]}
+  mvwho: {description: Lists the players in the world specified, aliases: [mvw]}
+  mvwhoall: {description: Lists the players in all worlds}
+  mvconfirm: {description: Confirms dangerous commands before executing them.}
+  mvversion: {description: Multiverse-Core version}
+  mvhelp: {description: Multiverse-Core help}
+  mvcoord: {description: Detailed information on the player's where abouts., aliases: [mvco]}
+  mvconfig: {description: Show or modify the config., aliases: [mvconf]}
+  mvcheck: {description: Checks if a player can teleport to a destination.}
+  mvanchor: {description: Anchors.}
+permissions:
+  multiverse.core.*:
+    default: op
+    children:
+      multiverse.core.create: true
+      multiverse.core.import: true
+      multiverse.core.load: true
+      multiverse.core.unload: true
+      multiverse.core.remove: true
+      multiverse.core.delete: true
+      multiverse.core.list.worlds: true
+      multiverse.core.list.who: true
+      multiverse.core.list.who.all: true
+      multiverse.core.info: true
+      multiverse.core.spawn: true
+      multiverse.core.spawn.set: true
+      multiverse.core.modify: true
+      multiverse.core.gamerule.set: true
+      multiverse.core.gamerule.list: true
+      multiverse.core.clone: true
+      multiverse.core.regen: true
+      multiverse.core.reload: true
+      multiverse.core.confirm: true
+      multiverse.core.version: true
+      multiverse.core.help: true
+      multiverse.core.coord: true
+      multiverse.core.config: true
+      multiverse.core.check: true
+      multiverse.core.anchor.create: true
+      multiverse.core.anchor.delete: true
+      multiverse.core.anchor.list: true
+  multiverse.core.create: {default: op}
+  multiverse.core.import: {default: op}
+  multiverse.core.load: {default: op}
+  multiverse.core.unload: {default: op}
+  multiverse.core.remove: {default: op}
+  multiverse.core.delete: {default: op}
+  multiverse.core.list.worlds: {default: op}
+  multiverse.core.list.who: {default: op}
+  multiverse.core.list.who.all: {default: op}
+  multiverse.core.info: {default: op}
+  multiverse.core.spawn: {default: op}
+  multiverse.core.spawn.self: {default: op}
+  multiverse.core.spawn.other: {default: op}
+  multiverse.core.spawn.set: {default: op}
+  multiverse.core.modify: {default: op}
+  multiverse.core.gamerule.set: {default: op}
+  multiverse.core.gamerule.list: {default: op}
+  multiverse.core.clone: {default: op}
+  multiverse.core.regen: {default: op}
+  multiverse.core.reload: {default: op}
+  multiverse.core.confirm: {default: op}
+  multiverse.core.version: {default: op}
+  multiverse.core.help: {default: op}
+  multiverse.core.coord: {default: op}
+  multiverse.core.config: {default: op}
+  multiverse.core.check: {default: op}
+  multiverse.core.anchor.create: {default: op}
+  multiverse.core.anchor.delete: {default: op}
+  multiverse.core.anchor.list: {default: op}
+  multiverse.teleport.self.w: {default: op}
+  multiverse.teleport.self.e: {default: op}
+  multiverse.teleport.self.pl: {default: op}
+  multiverse.teleport.self.a: {default: op}
+  multiverse.teleport.self.b: {default: op}
+  multiverse.teleport.other.w: {default: op}
+  multiverse.teleport.other.e: {default: op}
+  multiverse.teleport.other.pl: {default: op}
+  multiverse.teleport.other.a: {default: op}
+  multiverse.teleport.other.b: {default: op}
+  mv.bypass.joinlocation: {default: false}

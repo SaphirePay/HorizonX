@@ -1,0 +1,23 @@
+[package]
+name = "multiverse_core"
+version = "5.8.2"
+edition = "2024"
+publish = false
+license = "BSD-3-Clause"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde_json = "1"
+serde_yaml = "0.9"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[workspace]

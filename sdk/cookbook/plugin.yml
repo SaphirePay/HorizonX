@@ -1,0 +1,7 @@
+name: Cookbook
+version: '1.0.0'
+main: dev.horizon.cookbook.Cookbook
+api-version: '1.21'
+commands:
+  example:
+    description: Recipe example

@@ -1,0 +1,29 @@
+[package]
+name = "axdarkauctions"
+version = "1.12.1"
+edition = "2024"
+publish = false
+license = "Apache-2.0"
+description = "AxDarkAuctions (Artillex Studios) rewritten natively in Rust for Horizon"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+# schedulers.yml: CRON times in the server's or a named time zone.
+chrono = "0.4"
+chrono-tz = "0.10"
+# Item names in the configured language (the game's lang file, fetched once and kept).
+ureq = { version = "2", default-features = false, features = ["tls"] }
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+codegen-units = 4
+
+[workspace]

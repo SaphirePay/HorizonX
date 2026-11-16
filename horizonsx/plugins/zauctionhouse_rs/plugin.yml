@@ -1,0 +1,40 @@
+name: zAuctionHouse
+version: '4.0.1.6-rs'
+main: fr.maxlego08.zauctionhouse.ZAuctionPlugin
+api-version: '1.20'
+authors: [ Maxlego08 ]
+description: Buy and resell your items! (Horizon, written in Rust)
+website: https://groupez.dev/
+folia-supported: true
+softdepend:
+  - PlaceholderAPI
+  - Essentials
+  - LuckPerms
+commands:
+  zauctionhouse:
+    description: Open auction house
+    aliases: [ ah, hdv, auction, zauction ]
+permissions:
+  zauctionhouse.use:
+    description: Open the auction house
+    default: true
+  zauctionhouse.sell:
+    description: Sell items
+    default: true
+  zauctionhouse.option:
+    description: Change your options
+    default: true
+  zauctionhouse.selling:
+    default: true
+  zauctionhouse.expired:
+    default: true
+  zauctionhouse.purchased:
+    default: true
+  zauctionhouse.history:
+    default: true
+  zauctionhouse.reload:
+    default: op
+  zauctionhouse.admin:
+    default: op
+  zauctionhouse.admin.items:
+    default: op

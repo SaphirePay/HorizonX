@@ -1,0 +1,49 @@
+name: PlayerVaults
+authors: [drtshock, kashike, mbaxter]
+website: https://www.spigotmc.org/resources/51204/
+version: '4.4.14-rs'
+main: com.drtshock.playervaults.PlayerVaults
+description: PlayerVaultsX for Horizon, written in Rust (same commands, config.conf, lang.conf and vault files).
+softdepend: [Vault, Essentials, LuckPerms, PlaceholderAPI]
+api-version: 1.21.11
+
+commands:
+  pv:
+    description: Open a vault.
+    aliases: [vault, chest, playervaults, vc]
+    permission: playervaults.commands.use
+  pvdel:
+    description: Delete a vault.
+    aliases: [vaultdel]
+    permission: playervaults.delete
+  pvsign:
+    description: Manage vault signs.
+    aliases: [vaultsign]
+    permission: playervaults.sign.set
+  pvconvert:
+    description: Convert other plugins to PlayerVaultsX.
+    aliases: [vaultconvert]
+    permission: playervaults.convert
+  pvreload:
+    description: Reload the configuration and language files.
+    permission: playervaults.admin
+  pvhelpme:
+    description: Pastes debug info to get better assistance.
+    permission: playervaults.admin
+  pvconsole:
+    description: Console-only commands
+    permission: playervaults.console
+
+permissions:
+  playervaults.admin:
+    description: Grants access to admin commands for vaults.
+    default: op
+  playervaults.bypassblockeditems:
+    description: Grants access to bypass blocked vault items.
+    default: op
+  playervaults.commands.use:
+    description: Use the command
+    default: true
+  playervaults.console:
+    description: Just a permission to gate the console-only command, hidden from players
+    default: op

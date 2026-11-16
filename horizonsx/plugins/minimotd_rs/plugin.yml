@@ -1,0 +1,15 @@
+name: MiniMOTD
+version: 2.2.5-rs
+main: xyz.jpenilla.minimotd.paper.MiniMOTDPaper
+api-version: '1.21'
+description: Use MiniMessage text formatting in the server list MOTD (Horizon, Rust).
+authors:
+- jmp
+website: https://github.com/jpenilla/MiniMOTD
+folia-supported: true
+commands:
+  minimotd:
+    description: MiniMOTD commands
+permissions:
+  minimotd.admin:
+    default: op

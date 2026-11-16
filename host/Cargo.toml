@@ -1,0 +1,29 @@
+[package]
+name = "horizon-host"
+version = "0.2.1"
+edition = "2021"
+license = "MIT"
+description = "Make a Minecraft server on HorizonsX in a few clicks; friends join from anywhere with no port forwarding"
+
+[workspace]
+
+[dependencies]
+# The launcher's GPUI (GPUI Fast), so the lifted scene, glass and sky draw the same.
+gpui = { package = "gpui-fast", version = "0.1.13" }
+gpui_platform = { package = "gpui-fast-platform", version = "0.1.13", features = ["wayland", "x11", "font-kit"] }
+# The launcher's tokens, fonts and icons.
+horizon-theme = { path = "../vendor/horizon/crates/horizon-theme" }
+# Servers (horizon-server), versions, preparing, HorizonsX, playit, plugins: the forked launcher's library.
+horizon-host-core = { path = "../app" }
+serde_json = "1"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-app-kit = { version = "0.3", default-features = false, features = ["NSAccessibility", "NSAppearance", "NSView", "NSWindow", "NSWorkspace"] }
+
+[target.'cfg(windows)'.build-dependencies]
+winresource = "0.1"
+
+[profile.release]
+strip = true

@@ -1,0 +1,96 @@
+####################################################################################################
+#                                                                                                  #
+#                    █▀▄▀█ █░█ █░░ ▀█▀ █ █░█ █▀▀ █▀█ █▀ █▀▀   █▀▀ █▀█ █▀█ █▀▀                      #
+#                    █░▀░█ █▄█ █▄▄ ░█░ █ ▀▄▀ ██▄ █▀▄ ▄█ ██▄   █▄▄ █▄█ █▀▄ ██▄                      #
+#                                                                                                  #
+#                                                                                                  #
+#                       WIKI:        https://mvplugins.org/core/fundamentals/basic-usage           #
+#                       DISCORD:     https://discord.gg/NZtfKky                                    #
+#                       BUG REPORTS: https://github.com/Multiverse/Multiverse-Core/issues          #
+#                                                                                                  #
+#                                                                                                  #
+#              Each option in this file is documented and explained here:                         #
+#               ==>  https://mvplugins.org/core/reference/config-options/                          #
+#                                                                                                  #
+#                                                                                                  #
+#                 New options are added to this file automatically. If you manually made           #
+#                 changes to this file while your server is running, please run `/mv reload`.      #
+#                                                                                                  #
+####################################################################################################
+
+world:
+  # Automatically import the server's default worlds (overworld, nether, end).
+  auto-import-default-worlds: true
+  # Automatically import worlds that another plugin made.
+  auto-import-3rd-party-worlds: true
+  # This setting will prevent players from entering worlds they don't have access to.
+  # If this is set to false, players will be able to enter any world they want.
+  # If this is set to true, players will only be able to enter worlds they have
+  # the `multiverse.access.<worldname>` permission.
+  enforce-access: false
+  # Sets whether Multiverse will set a player's gamemode when entering a world.
+  enforce-gamemode: true
+  # Sets whether Multiverse will set a player's flight ability when entering a world.
+  enforce-flight: true
+  # Sets whether Multiverse will purge mobs and entities automatically.
+  auto-purge-entities: false
+  world-name-format:
+    nether: '%overworld%_nether'
+    end: '%overworld%_the_end'
+  # Sets whether Multiverse warns about worlds whose alias is another world's name or alias.
+  warn-alias-conflicts: true
+
+teleport:
+  # The maximum number of players `/mv tp` moves at once.
+  concurrent-teleport-limit: 50
+  # Sets whether Multiverse checks (access, entry fee, player limit) teleports made by other plugins.
+  teleport-intercept: true
+
+spawn:
+  # Sets whether Multiverse sends new players to first-spawn-location.
+  first-spawn-override: false
+  # The destination new players are sent to. Empty = the default world's spawn.
+  first-spawn-location: ''
+  # Sets whether players are sent to join-destination every time they join.
+  enable-join-destination: false
+  # The destination players are sent to when they join (`mv.bypass.joinlocation` skips it).
+  join-destination: ''
+  # Players who die without a bed or anchor respawn in the overworld of their world.
+  default-respawn-in-overworld: true
+  # Players who die without a bed or anchor respawn at the spawn of the world they died in.
+  default-respawn-within-same-world: true
+
+portal:
+  use-custom-portal-search: false
+  custom-portal-search-radius: 128
+
+messaging:
+  # Puts the world's name or alias in front of chat messages.
+  enable-chat-prefix: false
+  # The format of the chat prefix: %world% is the world, %chat% the rest of the message.
+  chat-prefix-format: '[%world%]%chat%'
+  register-papi-hook: true
+  warn-invalid-papi-format: true
+  default-locale: en
+  per-player-locale: true
+
+command:
+  # When a world's alias is typed for a world name, use the world it is the alias of.
+  resolve-alias-name: true
+  # Dangerous commands (delete, regen) ask for `/mv confirm` first.
+  confirm-mode: enable
+  # `/mv confirm` takes a number (one-time password) as well.
+  use-confirm-otp: true
+  # Seconds to type `/mv confirm` in.
+  confirm-timeout: 30
+  show-legacy-aliases: false
+
+misc:
+  bukkit-yml-path: bukkit.yml
+  server-properties-path: server.properties
+  global-debug: 0
+  debug-permissions: false
+  silent-start: false
+  show-donation-message: true
+
+version: 5.0

@@ -1,0 +1,92 @@
+# DOCUMENTATION: https://docs.artillex-studios.com/axdarkauctions.html
+
+# you can create your own currencies by using placeholders
+# make sure that none of the placeholders have any formatting on them
+# requires PlaceholderAPI
+placeholder-currencies:
+  Example-Currency:
+    register: false
+    # if the currency uses whole numbers, then disable this
+    # 100.5 - true
+    # 100 - false
+    uses-double: true
+    # if the placeholder gets parsed even for offline players, enable this
+    works-offline: false
+    name: "&f%price% &#AAFFFFmoney"
+    settings:
+      raw-placeholder: "%vault_eco_balance_fixed%"
+      give-command: "eco give %player% %amount%"
+      take-command: "eco take %player% %amount%"
+
+# supported currencies
+currencies:
+  Experience:
+    register: true
+    name: "&f%price% &#AAFFFFexperience"
+  Vault:
+    register: true
+    name: "&f%price% &#AAFFFFcoins"
+  PlayerPoints:
+    register: true
+    name: "&f%price% &#AAFFFFpoints"
+  RoyaleEconomy:
+    register: true
+    name: "&f%price% &#AAFFFFcoins"
+  KingdomsX:
+    register: true
+    name: "&f%price% &#AAFFFFnexus points"
+  RivalHarvesterHoes:
+    register: true
+    name: "&f%price% &#AAFFFFessence"
+  SuperMobCoins:
+    register: true
+    name: "&f%price% &#AAFFFFmobcoin"
+  TheOnly-MobCoins:
+    register: true
+    name: "&f%price% &#AAFFFFmobcoin"
+  TokenManager:
+    register: true
+    name: "&f%price% &#AAFFFFtoken"
+  AxQuestBoard:
+    register: true
+    name: "&f%price% &#AAFFFFquest points"
+  BeastTokens:
+    register: true
+    name: "&f%price% &#AAFFFFtokens"
+  AxMobCoins: # this plugin is unreleased, so don't search for it!
+    register: true
+    name: "&f%price% &#AAFFFFmobcoin"
+  CoinsEngine:
+    register: true
+    # CoinsEngine supports multiple currencies, so you can also add multiple here
+    # "coins" is the name of the currency
+    coins:
+      name: "&f%price% &#AAFFFFcoins"
+  ExcellentEconomy:
+    register: true
+    # ExcellentEconomy supports multiple currencies, so you can also add multiple here
+    # "coins" is the name of the currency
+    coins:
+      name: "&f%price% &#AAFFFFcoins"
+  EcoBits:
+    register: true
+    # EcoBits supports multiple currencies, so you can also add multiple here
+    # "crystals" is the name of the currency
+    crystals:
+      name: "&f%price% &#AAFFFFcrystals"
+  RedisEconomy:
+    register: true
+    # RedisEconomy supports multiple currencies, so you can also add multiple here
+    # "coins" is the name of the currency
+    coins:
+      name: "&f%price% &#AAFFFFcoins"
+  UltraEconomy:
+    register: true
+    # UltraEconomy supports multiple currencies, so you can also add multiple here
+    # "coins" is the name of the currency
+    coins:
+      name: "&f%price% &#AAFFFFcoins"
+
+# do not change this
+version: 2
+#UTYwZnWZhEV1QjWqlXZNFWTkRUYzUEWZ9mTEVme3JjTvZESVxmVzgHboFGT3AlVzgHboFXc

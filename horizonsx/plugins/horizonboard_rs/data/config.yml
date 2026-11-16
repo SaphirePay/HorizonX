@@ -1,0 +1,75 @@
+# HorizonBoard: the sidebar, the tab list and the chat format.
+# Text takes MiniMessage (<gradient:#a:#b>, <bold>, <#hex>) and & colours.
+# A sidebar line "Label||Value" shows the value right-aligned.
+#
+# Placeholders: %server% %player% %rank% %name% (the player's name in their rank colour) %balance% %ping%
+#               %online% %max% %tps% %world% %date% %time% %website% %store%
+
+server-name: "Nyxora"
+website: "play.nyxora.net"
+store: "store.nyxora.net"
+
+# Seconds between refreshes. Only what changed is sent to each player.
+update-seconds: 1
+
+sidebar:
+  enabled: true
+  title: "<gradient:#a855f7:#22d3ee><bold>  NYXORA  </bold></gradient>"
+  lines:
+    - "<#71717a>%date%"
+    - "<#27272a><strikethrough>                                  </strikethrough>"
+    - "<#a855f7>▍ <white><bold>ᴘʟᴀʏᴇʀ"
+    - " <#a1a1aa>Rank||%rank%"
+    - " <#a1a1aa>Balance||<#4ade80>%balance%"
+    - " <#a1a1aa>Ping||%ping%"
+    - " "
+    - "<#22d3ee>▍ <white><bold>ꜱᴇʀᴠᴇʀ"
+    - " <#a1a1aa>Online||<white>%online%<#52525b> / %max%"
+    - " <#a1a1aa>TPS||%tps%"
+    - "<#27272a><strikethrough>                                  </strikethrough>"
+    - "<gradient:#a855f7:#22d3ee>%website%</gradient>"
+
+tablist:
+  enabled: true
+  header:
+    - " "
+    - "<gradient:#a855f7:#22d3ee><bold>N Y X O R A</bold></gradient>"
+    - "<#71717a>ɴᴇᴛᴡᴏʀᴋ"
+    - " "
+  footer:
+    - " "
+    - "<#a1a1aa>Online <white>%online%   <#3f3f46>┃   <#a1a1aa>Ping %ping%   <#3f3f46>┃   <#a1a1aa>TPS %tps%"
+    - " "
+    - "<gradient:#a855f7:#22d3ee>%website%</gradient>   <#3f3f46>•   <#22d3ee>%store%"
+    - " "
+  # How each player is named in the tab list; above their head they get the rank badge before the name.
+  name: "%rank%  %name%"
+
+chat:
+  enabled: true
+  # %message% is what they typed (colour codes in it are not applied).
+  format: "%rank%  %name% <#52525b>» <#e4e4e7>%message%"
+
+# Ranks by LuckPerms group (lower case), the first sorting to the top of the tab list: the badge, and the colour
+# of the player's name.
+ranks:
+  owner:
+    badge: "<#f87171><bold>OWNER</bold>"
+    name: "<#fca5a5>"
+  admin:
+    badge: "<#fb923c><bold>ADMIN</bold>"
+    name: "<#fdba74>"
+  mod:
+    badge: "<#60a5fa><bold>MOD</bold>"
+    name: "<#93c5fd>"
+  helper:
+    badge: "<#34d399><bold>HELPER</bold>"
+    name: "<#6ee7b7>"
+  vip:
+    badge: "<#facc15><bold>VIP</bold>"
+    name: "<#fde68a>"
+  default:
+    badge: "<#71717a><bold>MEMBER</bold>"
+    name: "<#d4d4d8>"
+# Operators whose group is `default` show as this rank.
+operator-rank: owner

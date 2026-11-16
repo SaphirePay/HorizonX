@@ -1,0 +1,12 @@
+# Which plugin answers a command several plugins have (the others don't; the console's `plugin:command` still reaches them),
+# and commands a plugin is kept off. Changed live with /commands; read at start.
+owners:
+  playtime: HorizonSMP
+  pt: HorizonSMP
+  rules: HorizonSMP
+  sell: HorizonSMP
+  stats: HorizonSMP
+  t: HorizonSMP
+  top: HorizonSMP
+  worth: HorizonSMP
+disabled:

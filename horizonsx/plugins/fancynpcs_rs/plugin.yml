@@ -1,0 +1,32 @@
+api-version: "1.19"
+name: FancyNpcs
+version: 2.12.1+382
+main: de.oliver.fancynpcs.FancyNpcs
+description: "Simple, lightweight and fast NPC plugin using packets"
+folia-supported: true
+softdepend: [PlaceholderAPI, MiniPlaceholders, DeluxeMenus]
+commands:
+  npc:
+    description: Manage NPCs
+    usage: /npc help
+  fancynpcs:
+    description: FancyNpcs plugin commands
+    usage: /fancynpcs (version | reload | save | feature_flags)
+permissions:
+  fancynpcs.admin:
+    default: op
+    children:
+      fancynpcs.command.npc: true
+      fancynpcs.command.npc.*: true
+      fancynpcs.command.fancynpcs: true
+      fancynpcs.command.npc.action.add.*: true
+  fancynpcs.command.npc:
+    default: op
+  fancynpcs.command.npc.*:
+    default: op
+  fancynpcs.command.fancynpcs:
+    default: op
+  fancynpcs.command.npc.action.add.*:
+    default: op
+  fancynpcs.bypass.cooldown:
+    default: false

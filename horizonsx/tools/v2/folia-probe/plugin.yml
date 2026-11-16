@@ -1,0 +1,9 @@
+name: HXTickProbe
+version: 1.0
+main: hx.TickProbe
+api-version: '26.3'
+folia-supported: true
+description: HorizonsX bench probe - Folia's per-region tick times (read-only)
+commands:
+  hxtick:
+    description: Folia's per-region tick times over the last 15 s

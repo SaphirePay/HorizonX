@@ -1,0 +1,1890 @@
+[
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"ItemStack\" && name == \"serializeItemsAsBytes\" && a.len() == 1 && !matches!(a[0], V::Null | V::Str(_) | V::Sb(_) | V::Int(_) | V::Long(_) | V::Double(_) | V::Bool(_) | V::Char(_)) { let p0: Vec<Option<horizon_bukkit::fam_items::Self>> = a[0].items().ok()?.iter().map(|x_| if x_.is_null() { Some(None) } else { jbridge::held::<horizon_bukkit::fam_items::Self>(x_).map(|h_| Some(h_.clone())) }).collect::<Option<Vec<_>>>()?; return Some(Ok(jrt::list(horizon_bukkit::ItemStack::serialize_items_as_bytes(&p0).into_iter().map(|x_| V::Int(x_ as i32)).collect()))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"ItemStack\" && name == \"serializeItemsAsBytes\" && a.len() == 1 && !matches!(a[0], V::Null | V::Str(_) | V::Sb(_) | V::Int(_) | V::Long(_) | V::Double(_) | V::Bool(_) | V::Char(_)) { let p0: Vec<Option<horizon_bukkit::fam_items::Self>> = a[0].items().ok()?.iter().map(|x_| if x_.is_null() { Some(None) } else { jbridge::held::<horizon_bukkit::fam_items::Self>(x_).map(|h_| Some(h_.clone())) }).collect::<Option<Vec<_>>>()?; return Some(Ok(jrt::list(horizon_bukkit::ItemStack::serialize_items_as_bytes(&p0).into_iter().map(|x_| V::Int(x_ as i32)).collect()))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"Vector\" && name == \"getMaximum\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::util::Self>>().is_some() && a[1].native::<Mutex<horizon_bukkit::util::Self>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Self>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::util::Self>(&a[1])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::util::Vector::get_maximum(&p0, &p1)))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"Vector\" && name == \"getMaximum\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::util::Self>>().is_some() && a[1].native::<Mutex<horizon_bukkit::util::Self>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Self>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::util::Self>(&a[1])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::util::Vector::get_maximum(&p0, &p1)))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"Vector\" && name == \"getMaximum\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::util::Self>>().is_some() && a[1].native::<Mutex<horizon_bukkit::util::Self>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Self>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::util::Self>(&a[1])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::util::Vector::get_maximum(&p0, &p1)))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"Vector\" && name == \"getMaximum\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::util::Self>>().is_some() && a[1].native::<Mutex<horizon_bukkit::util::Self>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Self>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::util::Self>(&a[1])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::util::Vector::get_maximum(&p0, &p1)))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"Vector\" && name == \"getMinimum\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::util::Self>>().is_some() && a[1].native::<Mutex<horizon_bukkit::util::Self>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Self>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::util::Self>(&a[1])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::util::Vector::get_minimum(&p0, &p1)))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"Vector\" && name == \"getMinimum\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::util::Self>>().is_some() && a[1].native::<Mutex<horizon_bukkit::util::Self>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Self>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::util::Self>(&a[1])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::util::Vector::get_minimum(&p0, &p1)))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"Vector\" && name == \"getMinimum\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::util::Self>>().is_some() && a[1].native::<Mutex<horizon_bukkit::util::Self>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Self>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::util::Self>(&a[1])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::util::Vector::get_minimum(&p0, &p1)))); }"
+ },
+ {
+  "message": "`Self` in paths can only be used in start position",
+  "line": "if class == \"Vector\" && name == \"getMinimum\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::util::Self>>().is_some() && a[1].native::<Mutex<horizon_bukkit::util::Self>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Self>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::util::Self>(&a[1])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::util::Vector::get_minimum(&p0, &p1)))); }"
+ },
+ {
+  "message": "cannot find type `bool` in crate `horizon_bukkit`",
+  "line": "(91, || std::any::TypeId::of::<Mutex<horizon_bukkit::bool>>()),"
+ },
+ {
+  "message": "cannot find type `CookieAnswer` in module `horizon_bukkit::event`",
+  "line": "(331, || std::any::TypeId::of::<Mutex<horizon_bukkit::event::CookieAnswer>>()),"
+ },
+ {
+  "message": "cannot find type `SignableLine` in module `horizon_bukkit::event`",
+  "line": "(338, || std::any::TypeId::of::<Mutex<horizon_bukkit::event::SignableLine>>()),"
+ },
+ {
+  "message": "cannot find type `f32` in crate `horizon_bukkit`",
+  "line": "(380, || std::any::TypeId::of::<Mutex<horizon_bukkit::f32>>()),"
+ },
+ {
+  "message": "cannot find type `components` in module `horizon_bukkit::fam_items`",
+  "line": "(1006, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_items::components>>()),"
+ },
+ {
+  "message": "cannot find type `C` in module `horizon_bukkit::fam_paper`",
+  "line": "(1017, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::C>>()),"
+ },
+ {
+  "message": "cannot find type `F` in module `horizon_bukkit::fam_paper`",
+  "line": "(1038, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::F>>()),"
+ },
+ {
+  "message": "cannot find type `registry_data` in module `horizon_bukkit::fam_paper`",
+  "line": "(1102, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::registry_data>>()),"
+ },
+ {
+  "message": "cannot find type `bool` in crate `horizon_bukkit`",
+  "line": "fn nc_91(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::bool>>()?;"
+ },
+ {
+  "message": "cannot find `std` in `horizon_bukkit`",
+  "line": "if name == \"runDelayed\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::std::time::Duration>>().is_some() && matches!(a[1], V::Obj(_) | V::Func(_)) { let p0 = jbridge::held::<horizon_bukkit::std::time::Duration>(&a[0])?.clone(); let p1 = a[1].clone(); let mut t = jrt::lock(held_); return Some(Ok({ t.run_delayed(p0, move || { let _ = jrt::report(\"task\", jrt::call(&p1, \"run\", &[])); }); V::Null })); }"
+ },
+ {
+  "message": "cannot find `std` in `horizon_bukkit`",
+  "line": "if name == \"runDelayed\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::std::time::Duration>>().is_some() && matches!(a[1], V::Obj(_) | V::Func(_)) { let p0 = jbridge::held::<horizon_bukkit::std::time::Duration>(&a[0])?.clone(); let p1 = a[1].clone(); let mut t = jrt::lock(held_); return Some(Ok({ t.run_delayed(p0, move || { let _ = jrt::report(\"task\", jrt::call(&p1, \"run\", &[])); }); V::Null })); }"
+ },
+ {
+  "message": "cannot find type `CookieAnswer` in module `horizon_bukkit::event`",
+  "line": "fn nc_331(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::event::CookieAnswer>>()?;"
+ },
+ {
+  "message": "cannot find type `SignableLine` in module `horizon_bukkit::event`",
+  "line": "fn nc_338(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::event::SignableLine>>()?;"
+ },
+ {
+  "message": "cannot find type `f32` in crate `horizon_bukkit`",
+  "line": "fn nc_380(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::f32>>()?;"
+ },
+ {
+  "message": "cannot find type `components` in module `horizon_bukkit::fam_items`",
+  "line": "fn nc_1006(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_items::components>>()?;"
+ },
+ {
+  "message": "cannot find type `C` in module `horizon_bukkit::fam_paper`",
+  "line": "fn nc_1017(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::C>>()?;"
+ },
+ {
+  "message": "cannot find type `F` in module `horizon_bukkit::fam_paper`",
+  "line": "fn nc_1038(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::F>>()?;"
+ },
+ {
+  "message": "cannot find type `registry_data` in module `horizon_bukkit::fam_paper`",
+  "line": "fn nc_1102(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::registry_data>>()?;"
+ },
+ {
+  "message": "cannot find function `angle` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"angle\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::angle()))); }"
+ },
+ {
+  "message": "cannot find function `axes` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"axes\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::axes()))); }"
+ },
+ {
+  "message": "cannot find function `block_in_world_predicate` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"blockInWorldPredicate\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::block_in_world_predicate()))); }"
+ },
+ {
+  "message": "cannot find function `block_position` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"blockPosition\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::block_position()))); }"
+ },
+ {
+  "message": "cannot find function `block_state` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"blockState\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::block_state()))); }"
+ },
+ {
+  "message": "cannot find function `column_block_position` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"columnBlockPosition\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::column_block_position()))); }"
+ },
+ {
+  "message": "cannot find function `column_fine_position` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"columnFinePosition\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::column_fine_position()))); }"
+ },
+ {
+  "message": "cannot find function `component` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"component\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::component()))); }"
+ },
+ {
+  "message": "cannot find function `double_range` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"doubleRange\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::double_range()))); }"
+ },
+ {
+  "message": "cannot find function `entities` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"entities\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::entities()))); }"
+ },
+ {
+  "message": "cannot find function `entity` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"entity\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::entity()))); }"
+ },
+ {
+  "message": "cannot find function `entity_anchor` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"entityAnchor\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::entity_anchor()))); }"
+ },
+ {
+  "message": "cannot find function `fine_position` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"finePosition\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::fine_position()))); }"
+ },
+ {
+  "message": "cannot find function `game_mode` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"gameMode\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::game_mode()))); }"
+ },
+ {
+  "message": "cannot find function `height_map` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"heightMap\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::height_map()))); }"
+ },
+ {
+  "message": "cannot find function `integer_range` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"integerRange\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::integer_range()))); }"
+ },
+ {
+  "message": "cannot find function `item_predicate` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"itemPredicate\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::item_predicate()))); }"
+ },
+ {
+  "message": "cannot find function `item_stack` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"itemStack\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::item_stack()))); }"
+ },
+ {
+  "message": "cannot find function `key` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"key\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::key()))); }"
+ },
+ {
+  "message": "cannot find function `named_color` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"namedColor\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::named_color()))); }"
+ },
+ {
+  "message": "cannot find function `namespaced_key` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"namespacedKey\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::namespaced_key()))); }"
+ },
+ {
+  "message": "cannot find function `objective_criteria` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"objectiveCriteria\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::objective_criteria()))); }"
+ },
+ {
+  "message": "cannot find function `player_profiles` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"playerProfiles\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::player_profiles()))); }"
+ },
+ {
+  "message": "cannot find function `resource` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"resource\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::fam_paper::RegistryKey>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::RegistryKey>(&a[0])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::resource(p0)))); }"
+ },
+ {
+  "message": "cannot find function `resource` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"resourceKey\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::fam_paper::RegistryKey>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::RegistryKey>(&a[0])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::resource(p0)))); }"
+ },
+ {
+  "message": "cannot find function `rotation` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"rotation\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::rotation()))); }"
+ },
+ {
+  "message": "cannot find function `scoreboard_display_slot` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"scoreboardDisplaySlot\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::scoreboard_display_slot()))); }"
+ },
+ {
+  "message": "cannot find function `signed_message` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"signedMessage\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::signed_message()))); }"
+ },
+ {
+  "message": "cannot find function `style` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"style\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::style()))); }"
+ },
+ {
+  "message": "cannot find function `template_mirror` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"templateMirror\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::template_mirror()))); }"
+ },
+ {
+  "message": "cannot find function `template_rotation` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"templateRotation\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::template_rotation()))); }"
+ },
+ {
+  "message": "cannot find function `time` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"time\" && a.len() == 1 && matches!(a[0], V::Int(_) | V::Long(_) | V::Char(_)) {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::time(a[0].long() as i32)))); }"
+ },
+ {
+  "message": "cannot find function `uuid` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"uuid\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::uuid()))); }"
+ },
+ {
+  "message": "cannot find function `world` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ArgumentTypes\" && name == \"world\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::world()))); }"
+ },
+ {
+  "message": "cannot find function `strip_color` in crate `horizon_bukkit`",
+  "line": "if class == \"ChatColor\" && name == \"stripColor\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); return Some(Ok(jrt::s(&horizon_bukkit::strip_color(&p0)))); }"
+ },
+ {
+  "message": "cannot find function `translate_alternate_color_codes` in crate `horizon_bukkit`",
+  "line": "if class == \"ChatColor\" && name == \"translateAlternateColorCodes\" && a.len() == 2 && matches!(a[0], V::Char(_)) && jbridge::text_like(&a[1]) { let p1 = jbridge::text_arg(&a[1]); return Some(Ok(jrt::s(&horizon_bukkit::translate_alternate_color_codes(a[0].text().chars().next().unwrap_or(' '), &p1)))); }"
+ },
+ {
+  "message": "cannot find function `get_material` in module `horizon_bukkit::fam_ev_world`",
+  "line": "if class == \"DamageState\" && name == \"getMaterial\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_ev_world::get_material(&p0)))); }"
+ },
+ {
+  "message": "cannot find function `get_state` in module `horizon_bukkit::fam_ev_world`",
+  "line": "if class == \"DamageState\" && name == \"getState\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); return Some(Ok(match horizon_bukkit::fam_ev_world::get_state(&p0) { Some(x_) => jrt::s(&x_), None => V::Null })); }"
+ },
+ {
+  "message": "cannot find type `T` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"Filtered\" && name == \"of\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::T>>().is_some() && (a[1].is_null() || a[1].native::<Mutex<horizon_bukkit::fam_paper::T>>().is_some()) { let p0 = jbridge::held::<horizon_bukkit::fam_paper::T>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::T>(&a[1]).map(|x_| x_.clone()); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::Filtered::of(p0, p1)))); }"
+ },
+ {
+  "message": "cannot find type `T` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"Filtered\" && name == \"of\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::T>>().is_some() && (a[1].is_null() || a[1].native::<Mutex<horizon_bukkit::fam_paper::T>>().is_some()) { let p0 = jbridge::held::<horizon_bukkit::fam_paper::T>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::T>(&a[1]).map(|x_| x_.clone()); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::Filtered::of(p0, p1)))); }"
+ },
+ {
+  "message": "cannot find type `T` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"Filtered\" && name == \"of\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::T>>().is_some() && (a[1].is_null() || a[1].native::<Mutex<horizon_bukkit::fam_paper::T>>().is_some()) { let p0 = jbridge::held::<horizon_bukkit::fam_paper::T>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::T>(&a[1]).map(|x_| x_.clone()); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::Filtered::of(p0, p1)))); }"
+ },
+ {
+  "message": "cannot find type `T` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"Filtered\" && name == \"of\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::T>>().is_some() && (a[1].is_null() || a[1].native::<Mutex<horizon_bukkit::fam_paper::T>>().is_some()) { let p0 = jbridge::held::<horizon_bukkit::fam_paper::T>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::T>(&a[1]).map(|x_| x_.clone()); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::Filtered::of(p0, p1)))); }"
+ },
+ {
+  "message": "cannot find type `T` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"RegistrySet\" && name == \"valueSet\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::RegistryKey>>().is_some() && !matches!(a[1], V::Null | V::Str(_) | V::Sb(_) | V::Int(_) | V::Long(_) | V::Double(_) | V::Bool(_) | V::Char(_)) { let p0 = jbridge::held::<horizon_bukkit::fam_paper::RegistryKey>(&a[0])?.clone(); let p1: Vec<horizon_bukkit::fam_paper::T> = a[1].items().ok()?.iter().map(|x_| jbridge::held::<horizon_bukkit::fam_paper::T>(x_).map(|h_| h_.clone())).collect::<Option<Vec<_>>>()?; return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::RegistryValueSet::valu"
+ },
+ {
+  "message": "cannot find type `T` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"RegistrySet\" && name == \"valueSet\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::RegistryKey>>().is_some() && !matches!(a[1], V::Null | V::Str(_) | V::Sb(_) | V::Int(_) | V::Long(_) | V::Double(_) | V::Bool(_) | V::Char(_)) { let p0 = jbridge::held::<horizon_bukkit::fam_paper::RegistryKey>(&a[0])?.clone(); let p1: Vec<horizon_bukkit::fam_paper::T> = a[1].items().ok()?.iter().map(|x_| jbridge::held::<horizon_bukkit::fam_paper::T>(x_).map(|h_| h_.clone())).collect::<Option<Vec<_>>>()?; return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::RegistryValueSet::valu"
+ },
+ {
+  "message": "cannot find type `C` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"PotionMix\" && a.len() == 4 && a[0].native::<Mutex<horizon_bukkit::persistence::NamespacedKey>>().is_some() && a[1].native::<Mutex<horizon_bukkit::ItemStack>>().is_some() && a[2].native::<Mutex<horizon_bukkit::fam_paper::C>>().is_some() && a[3].native::<Mutex<horizon_bukkit::fam_paper::C>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::persistence::NamespacedKey>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::ItemStack>(&a[1])?.clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::C>(&a[2])?.clone(); let p3 = jbridge::held::<horizon_bukkit::fam_paper::C>(&"
+ },
+ {
+  "message": "cannot find type `C` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"PotionMix\" && a.len() == 4 && a[0].native::<Mutex<horizon_bukkit::persistence::NamespacedKey>>().is_some() && a[1].native::<Mutex<horizon_bukkit::ItemStack>>().is_some() && a[2].native::<Mutex<horizon_bukkit::fam_paper::C>>().is_some() && a[3].native::<Mutex<horizon_bukkit::fam_paper::C>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::persistence::NamespacedKey>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::ItemStack>(&a[1])?.clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::C>(&a[2])?.clone(); let p3 = jbridge::held::<horizon_bukkit::fam_paper::C>(&"
+ },
+ {
+  "message": "cannot find type `C` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"PotionMix\" && a.len() == 4 && a[0].native::<Mutex<horizon_bukkit::persistence::NamespacedKey>>().is_some() && a[1].native::<Mutex<horizon_bukkit::ItemStack>>().is_some() && a[2].native::<Mutex<horizon_bukkit::fam_paper::C>>().is_some() && a[3].native::<Mutex<horizon_bukkit::fam_paper::C>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::persistence::NamespacedKey>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::ItemStack>(&a[1])?.clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::C>(&a[2])?.clone(); let p3 = jbridge::held::<horizon_bukkit::fam_paper::C>(&"
+ },
+ {
+  "message": "cannot find type `C` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"PotionMix\" && a.len() == 4 && a[0].native::<Mutex<horizon_bukkit::persistence::NamespacedKey>>().is_some() && a[1].native::<Mutex<horizon_bukkit::ItemStack>>().is_some() && a[2].native::<Mutex<horizon_bukkit::fam_paper::C>>().is_some() && a[3].native::<Mutex<horizon_bukkit::fam_paper::C>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::persistence::NamespacedKey>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::ItemStack>(&a[1])?.clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::C>(&a[2])?.clone(); let p3 = jbridge::held::<horizon_bukkit::fam_paper::C>(&"
+ },
+ {
+  "message": "cannot find type `L` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ServerEventException\" && a.len() == 3 && a[0].native::<Mutex<horizon_bukkit::fam_paper::ServerPluginException>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_paper::L>>().is_some() && a[2].native::<Mutex<horizon_bukkit::fam_paper::E>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::ServerPluginException>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::L>(&a[1])?.clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::E>(&a[2])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::ServerEventException::new(p0, p1, p2)"
+ },
+ {
+  "message": "cannot find type `E` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ServerEventException\" && a.len() == 3 && a[0].native::<Mutex<horizon_bukkit::fam_paper::ServerPluginException>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_paper::L>>().is_some() && a[2].native::<Mutex<horizon_bukkit::fam_paper::E>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::ServerPluginException>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::L>(&a[1])?.clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::E>(&a[2])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::ServerEventException::new(p0, p1, p2)"
+ },
+ {
+  "message": "cannot find type `L` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ServerEventException\" && a.len() == 3 && a[0].native::<Mutex<horizon_bukkit::fam_paper::ServerPluginException>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_paper::L>>().is_some() && a[2].native::<Mutex<horizon_bukkit::fam_paper::E>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::ServerPluginException>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::L>(&a[1])?.clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::E>(&a[2])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::ServerEventException::new(p0, p1, p2)"
+ },
+ {
+  "message": "cannot find type `E` in module `horizon_bukkit::fam_paper`",
+  "line": "if class == \"ServerEventException\" && a.len() == 3 && a[0].native::<Mutex<horizon_bukkit::fam_paper::ServerPluginException>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_paper::L>>().is_some() && a[2].native::<Mutex<horizon_bukkit::fam_paper::E>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::ServerPluginException>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::L>(&a[1])?.clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::E>(&a[2])?.clone(); return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::ServerEventException::new(p0, p1, p2)"
+ },
+ {
+  "message": "struct `ForeignRenderer` is private",
+  "line": "(403, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_core::ForeignRenderer>>()),"
+ },
+ {
+  "message": "struct `GameMapRenderer` is private",
+  "line": "(408, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_core::GameMapRenderer>>()),"
+ },
+ {
+  "message": "struct `NamedGenerator` is private",
+  "line": "(1227, || std::any::TypeId::of::<Mutex<horizon_bukkit::worlds::NamedGenerator>>()),"
+ },
+ {
+  "message": "struct `NamedProvider` is private",
+  "line": "(1228, || std::any::TypeId::of::<Mutex<horizon_bukkit::worlds::NamedProvider>>()),"
+ },
+ {
+  "message": "struct `NoTerrain` is private",
+  "line": "(1229, || std::any::TypeId::of::<Mutex<horizon_bukkit::worlds::NoTerrain>>()),"
+ },
+ {
+  "message": "struct `VanillaBiomes` is private",
+  "line": "(1230, || std::any::TypeId::of::<Mutex<horizon_bukkit::worlds::VanillaBiomes>>()),"
+ },
+ {
+  "message": "struct `Duration` is private",
+  "line": "if name == \"runAtFixedRate\" && a.len() == 4 && matches!(a[1], V::Native(_) | V::Obj(_) | V::Func(_)) && a[2].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() && a[3].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() { let plugin_ = jbridge::the_plugin(); let p1 = a[1].clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[2])?.clone(); let p3 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[3])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.run_at_fixed_rate(&plugin_, move |c0_| { let _ = jrt::report(\"callback\","
+ },
+ {
+  "message": "struct `Duration` is private",
+  "line": "if name == \"runAtFixedRate\" && a.len() == 4 && matches!(a[1], V::Native(_) | V::Obj(_) | V::Func(_)) && a[2].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() && a[3].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() { let plugin_ = jbridge::the_plugin(); let p1 = a[1].clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[2])?.clone(); let p3 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[3])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.run_at_fixed_rate(&plugin_, move |c0_| { let _ = jrt::report(\"callback\","
+ },
+ {
+  "message": "struct `Duration` is private",
+  "line": "if name == \"runAtFixedRate\" && a.len() == 4 && matches!(a[1], V::Native(_) | V::Obj(_) | V::Func(_)) && a[2].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() && a[3].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() { let plugin_ = jbridge::the_plugin(); let p1 = a[1].clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[2])?.clone(); let p3 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[3])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.run_at_fixed_rate(&plugin_, move |c0_| { let _ = jrt::report(\"callback\","
+ },
+ {
+  "message": "struct `Duration` is private",
+  "line": "if name == \"runAtFixedRate\" && a.len() == 4 && matches!(a[1], V::Native(_) | V::Obj(_) | V::Func(_)) && a[2].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() && a[3].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() { let plugin_ = jbridge::the_plugin(); let p1 = a[1].clone(); let p2 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[2])?.clone(); let p3 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[3])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.run_at_fixed_rate(&plugin_, move |c0_| { let _ = jrt::report(\"callback\","
+ },
+ {
+  "message": "struct `ForeignRenderer` is private",
+  "line": "fn nc_403(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_core::ForeignRenderer>>()?;"
+ },
+ {
+  "message": "struct `GameMapRenderer` is private",
+  "line": "fn nc_408(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_core::GameMapRenderer>>()?;"
+ },
+ {
+  "message": "struct `SystemTime` is private",
+  "line": "if name == \"addTo\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() && matches!(a[1], V::Int(_) | V::Long(_)) { let p0 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap((*t).clone().add_to(p0, a[1].long() as u64)))); }"
+ },
+ {
+  "message": "struct `SystemTime` is private",
+  "line": "if name == \"addTo\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() && matches!(a[1], V::Int(_) | V::Long(_)) { let p0 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap((*t).clone().add_to(p0, a[1].long() as u64)))); }"
+ },
+ {
+  "message": "struct `SystemTime` is private",
+  "line": "if name == \"between\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(V::Long((*t).clone().between(p0, p1) as i64))); }"
+ },
+ {
+  "message": "struct `SystemTime` is private",
+  "line": "if name == \"between\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(V::Long((*t).clone().between(p0, p1) as i64))); }"
+ },
+ {
+  "message": "struct `SystemTime` is private",
+  "line": "if name == \"between\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(V::Long((*t).clone().between(p0, p1) as i64))); }"
+ },
+ {
+  "message": "struct `SystemTime` is private",
+  "line": "if name == \"between\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_paper::SystemTime>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_paper::SystemTime>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(V::Long((*t).clone().between(p0, p1) as i64))); }"
+ },
+ {
+  "message": "struct `Duration` is private",
+  "line": "if name == \"fromDuration\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(V::Int((*t).clone().from_duration(p0) as i32))); }"
+ },
+ {
+  "message": "struct `Duration` is private",
+  "line": "if name == \"fromDuration\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::fam_paper::Duration>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_paper::Duration>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(V::Int((*t).clone().from_duration(p0) as i32))); }"
+ },
+ {
+  "message": "struct `NamedGenerator` is private",
+  "line": "fn nc_1227(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::worlds::NamedGenerator>>()?;"
+ },
+ {
+  "message": "struct `NamedProvider` is private",
+  "line": "fn nc_1228(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::worlds::NamedProvider>>()?;"
+ },
+ {
+  "message": "struct `NoTerrain` is private",
+  "line": "fn nc_1229(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::worlds::NoTerrain>>()?;"
+ },
+ {
+  "message": "struct `VanillaBiomes` is private",
+  "line": "fn nc_1230(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::worlds::VanillaBiomes>>()?;"
+ },
+ {
+  "message": "function `hex_color` is private",
+  "line": "if class == \"ArgumentTypes\" && name == \"hexColor\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::hex_color()))); }"
+ },
+ {
+  "message": "missing generics for struct `ListPersistentDataType`",
+  "line": "(416, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_core::ListPersistentDataType>>()),"
+ },
+ {
+  "message": "missing generics for struct `PrimitiveTagType`",
+  "line": "(965, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_items::PrimitiveTagType>>()),"
+ },
+ {
+  "message": "missing generics for struct `Filtered`",
+  "line": "(1039, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::Filtered>>()),"
+ },
+ {
+  "message": "missing generics for struct `LifecycleEventType`",
+  "line": "(1045, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::LifecycleEventType>>()),"
+ },
+ {
+  "message": "missing generics for struct `horizon_bukkit::fam_paper::PotionMix`",
+  "line": "(1064, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::PotionMix>>()),"
+ },
+ {
+  "message": "missing generics for struct `PrioritizedLifecycleEventHandlerConfiguration`",
+  "line": "(1067, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::PrioritizedLifecycleEventHandlerConfiguration>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistrarEvent`",
+  "line": "(1069, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::RegistrarEvent>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryBuilderFactory`",
+  "line": "(1071, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::RegistryBuilderFactory>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryComposeEvent`",
+  "line": "(1072, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::RegistryComposeEvent>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryEntryAddConfiguration`",
+  "line": "(1073, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::RegistryEntryAddConfiguration>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryEntryAddEvent`",
+  "line": "(1074, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::RegistryEntryAddEvent>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryEventProvider`",
+  "line": "(1075, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::RegistryEventProvider>>()),"
+ },
+ {
+  "message": "missing generics for enum `RegistryHolder`",
+  "line": "(1076, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::RegistryHolder>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryValueSet`",
+  "line": "(1081, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::RegistryValueSet>>()),"
+ },
+ {
+  "message": "missing generics for struct `ServerEventException`",
+  "line": "(1086, || std::any::TypeId::of::<Mutex<horizon_bukkit::fam_paper::ServerEventException>>()),"
+ },
+ {
+  "message": "missing generics for struct `Filtered`",
+  "line": "if let Some(_) = r.native::<Mutex<horizon_bukkit::fam_paper::Filtered>>() {"
+ },
+ {
+  "message": "missing generics for struct `Filtered`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::Filtered>>().is_some() && matches!(name, \"Filtered\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `LifecycleEventType`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::LifecycleEventType>>().is_some() && matches!(name, \"LifecycleEventType\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `ListPersistentDataType`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_core::ListPersistentDataType>>().is_some() && matches!(name, \"ListPersistentDataType\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `PrioritizedLifecycleEventHandlerConfiguration`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::PrioritizedLifecycleEventHandlerConfiguration>>().is_some() && matches!(name, \"MonitorLifecycleEventHandlerConfiguration\" | \"PrioritizedLifecycleEventHandlerConfiguration\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `RegistrarEvent`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::RegistrarEvent>>().is_some() && matches!(name, \"RegistrarEvent\" | \"ReloadableRegistrarEvent\") { return true; }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, Recipe>` in the current scope",
+  "line": "if class == \"Server\" && name == \"addRecipe\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::extra::Recipe>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::extra::Recipe>(&a[0])?.clone(); return Some(Ok(V::Bool(horizon_bukkit::extra::add_recipe(&p0)))); }"
+ },
+ {
+  "message": "missing generics for struct `RegistryBuilderFactory`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::RegistryBuilderFactory>>().is_some() && matches!(name, \"RegistryBuilderFactory\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `RegistryComposeEvent`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::RegistryComposeEvent>>().is_some() && matches!(name, \"RegistryComposeEvent\" | \"RegistryEvent\") { return true; }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, Recipe>` in the current scope",
+  "line": "if class == \"Server\" && name == \"addRecipes\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::extra::Recipe>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::extra::Recipe>(&a[0])?.clone(); return Some(Ok(V::Bool(horizon_bukkit::extra::add_recipe(&p0)))); }"
+ },
+ {
+  "message": "missing generics for struct `RegistryEntryAddConfiguration`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::RegistryEntryAddConfiguration>>().is_some() && matches!(name, \"RegistryEntryAddConfiguration\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `RegistryEntryAddEvent`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::RegistryEntryAddEvent>>().is_some() && matches!(name, \"RegistryEntryAddEvent\") { return true; }"
+ },
+ {
+  "message": "missing generics for enum `RegistryHolder`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::RegistryHolder>>().is_some() && matches!(name, \"Inlined\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `RegistryValueSet`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::RegistryValueSet>>().is_some() && matches!(name, \"RegistryValueSet\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `RegistryValueSetBuilder`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::RegistryValueSetBuilder>>().is_some() && matches!(name, \"RegistryValueSetBuilder\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `ServerEventException`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::ServerEventException>>().is_some() && matches!(name, \"ServerEventException\") { return true; }"
+ },
+ {
+  "message": "missing generics for struct `WritableRegistry`",
+  "line": "if v.native::<Mutex<horizon_bukkit::fam_paper::WritableRegistry>>().is_some() && matches!(name, \"WritableRegistry\") { return true; }"
+ },
+ {
+  "message": "mismatched types",
+  "line": "if name == \"key\" && a.len() == 0 {  let mut t = jrt::lock(held_); return Some(Ok(match t.key() { Some(x_) => jbridge::wrap(x_), None => V::Null })); }"
+ },
+ {
+  "message": "mismatched types",
+  "line": "if name == \"key\" && a.len() == 0 {  let mut t = jrt::lock(held_); return Some(Ok(match t.key() { Some(x_) => jbridge::wrap(x_), None => V::Null })); }"
+ },
+ {
+  "message": "missing generics for struct `ListPersistentDataType`",
+  "line": "(\"org.bukkit.persistence.ListPersistentDataType\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_core::ListPersistentDataType>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryValueSet`",
+  "line": "(\"io.papermc.paper.registry.set.RegistryValueSet\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::RegistryValueSet>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryBuilderFactory`",
+  "line": "(\"io.papermc.paper.registry.RegistryBuilderFactory\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::RegistryBuilderFactory>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryValueSetBuilder`",
+  "line": "(\"io.papermc.paper.registry.set.RegistryValueSetBuilder\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::RegistryValueSetBuilder>>()),"
+ },
+ {
+  "message": "missing generics for enum `RegistryHolder`",
+  "line": "(\"io.papermc.paper.registry.holder.RegistryHolder$Inlined\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::RegistryHolder>>()),"
+ },
+ {
+  "message": "missing generics for struct `Filtered`",
+  "line": "(\"io.papermc.paper.text.Filtered\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::Filtered>>()),"
+ },
+ {
+  "message": "missing generics for struct `ServerEventException`",
+  "line": "(\"com.destroystokyo.paper.exception.ServerEventException\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::ServerEventException>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistrarEvent`",
+  "line": "(\"io.papermc.paper.plugin.lifecycle.event.registrar.RegistrarEvent\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::RegistrarEvent>>()),"
+ },
+ {
+  "message": "missing generics for struct `LifecycleEventType`",
+  "line": "(\"io.papermc.paper.plugin.lifecycle.event.types.LifecycleEventType\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::LifecycleEventType>>()),"
+ },
+ {
+  "message": "missing generics for struct `PrioritizedLifecycleEventHandlerConfiguration`",
+  "line": "(\"io.papermc.paper.plugin.lifecycle.event.handler.configuration.PrioritizedLifecycleEventHandlerConfiguration\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::PrioritizedLifecycleEventHandlerConfiguration>>()),"
+ },
+ {
+  "message": "missing generics for struct `WritableRegistry`",
+  "line": "(\"io.papermc.paper.registry.event.WritableRegistry\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::WritableRegistry>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryComposeEvent`",
+  "line": "(\"io.papermc.paper.registry.event.RegistryComposeEvent\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::RegistryComposeEvent>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryEntryAddEvent`",
+  "line": "(\"io.papermc.paper.registry.event.RegistryEntryAddEvent\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::RegistryEntryAddEvent>>()),"
+ },
+ {
+  "message": "missing generics for struct `RegistryEntryAddConfiguration`",
+  "line": "(\"io.papermc.paper.registry.event.type.RegistryEntryAddConfiguration\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::RegistryEntryAddConfiguration>>()),"
+ },
+ {
+  "message": "missing generics for struct `horizon_bukkit::fam_paper::PotionMix`",
+  "line": "(\"io.papermc.paper.potion.PotionMix\", || std::any::TypeId::of::<std::sync::Mutex<horizon_bukkit::fam_paper::PotionMix>>()),"
+ },
+ {
+  "message": "the size for values of type `str` cannot be known at compilation time",
+  "line": "if class == \"DamageState\" && name == \"getState\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); return Some(Ok(match horizon_bukkit::fam_ev_world::get_state(&p0) { Some(x_) => jrt::s(&x_), None => V::Null })); }"
+ },
+ {
+  "message": "the size for values of type `str` cannot be known at compilation time",
+  "line": "if class == \"DamageState\" && name == \"getState\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); return Some(Ok(match horizon_bukkit::fam_ev_world::get_state(&p0) { Some(x_) => jrt::s(&x_), None => V::Null })); }"
+ },
+ {
+  "message": "this function takes 1 argument but 0 arguments were supplied",
+  "line": "if class == \"ArgumentTypes\" && name == \"hexColor\" && a.len() == 0 {  return Some(Ok(jbridge::wrap(horizon_bukkit::fam_paper::hex_color()))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, Recipe>` in the current scope",
+  "line": "if class == \"Bukkit\" && name == \"addRecipe\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::extra::Recipe>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::extra::Recipe>(&a[0])?.clone(); return Some(Ok(V::Bool(horizon_bukkit::extra::add_recipe(&p0)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, Recipe>` in the current scope",
+  "line": "if class == \"Bukkit\" && name == \"addRecipes\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::extra::Recipe>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::extra::Recipe>(&a[0])?.clone(); return Some(Ok(V::Bool(horizon_bukkit::extra::add_recipe(&p0)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ChunkData>` in the current scope",
+  "line": "if name == \"overlay\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::worlds::ChunkData>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::worlds::ChunkData>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok({ t.overlay(&p0); V::Null })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, Conversation>` in the current scope",
+  "line": "if name == \"beginConversation\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::Player>>().is_some() && a[1].native::<Mutex<horizon_bukkit::pure::Conversation>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::Player>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::pure::Conversation>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok({ t.begin_conversation(&p0, p1); V::Null })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `Conversation` in the current scope",
+  "line": "if name == \"cancelBasedOnInput\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().with_escape_sequence(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "missing generics for struct `horizon_bukkit::fam_paper::PotionMix`",
+  "line": "fn nc_1064(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::PotionMix>>()?;"
+ },
+ {
+  "message": "no method named `clone` found for struct `Conversation` in the current scope",
+  "line": "if name == \"withEscapeSequence\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().with_escape_sequence(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "missing generics for struct `PrioritizedLifecycleEventHandlerConfiguration`",
+  "line": "fn nc_1067(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::PrioritizedLifecycleEventHandlerConfiguration>>()?;"
+ },
+ {
+  "message": "missing generics for struct `RegistrarEvent`",
+  "line": "fn nc_1069(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::RegistrarEvent>>()?;"
+ },
+ {
+  "message": "missing generics for struct `RegistryBuilderFactory`",
+  "line": "fn nc_1071(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::RegistryBuilderFactory>>()?;"
+ },
+ {
+  "message": "missing generics for struct `RegistryComposeEvent`",
+  "line": "fn nc_1072(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::RegistryComposeEvent>>()?;"
+ },
+ {
+  "message": "no method named `clone` found for struct `Conversation` in the current scope",
+  "line": "if name == \"withPrefix\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().with_prefix(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "missing generics for struct `RegistryEntryAddConfiguration`",
+  "line": "fn nc_1073(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::RegistryEntryAddConfiguration>>()?;"
+ },
+ {
+  "message": "missing generics for struct `RegistryEntryAddEvent`",
+  "line": "fn nc_1074(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::RegistryEntryAddEvent>>()?;"
+ },
+ {
+  "message": "missing generics for struct `RegistryEventProvider`",
+  "line": "fn nc_1075(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::RegistryEventProvider>>()?;"
+ },
+ {
+  "message": "missing generics for enum `RegistryHolder`",
+  "line": "fn nc_1076(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::RegistryHolder>>()?;"
+ },
+ {
+  "message": "missing generics for struct `RegistryValueSet`",
+  "line": "fn nc_1081(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::RegistryValueSet>>()?;"
+ },
+ {
+  "message": "missing generics for struct `ServerEventException`",
+  "line": "fn nc_1086(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::ServerEventException>>()?;"
+ },
+ {
+  "message": "this method takes 1 argument but 3 arguments were supplied",
+  "line": "if name == \"getBlockData\" && a.len() == 3 && matches!(a[0], V::Int(_) | V::Long(_) | V::Char(_)) && matches!(a[1], V::Int(_) | V::Long(_) | V::Char(_)) && matches!(a[2], V::Int(_) | V::Long(_) | V::Char(_)) {  let mut t = jrt::lock(held_); return Some(Ok(jrt::s(&t.get_block_data(a[0].long() as i32, a[1].long() as i32, a[2].long() as i32)))); }"
+ },
+ {
+  "message": "missing generics for struct `Filtered`",
+  "line": "fn nc_1039(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::Filtered>>()?;"
+ },
+ {
+  "message": "missing generics for struct `LifecycleEventType`",
+  "line": "fn nc_1045(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_paper::LifecycleEventType>>()?;"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerConnectionInitialConfigureEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut AsyncPlayerConnectionConfigureEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "this method takes 2 arguments but 4 arguments were supplied",
+  "line": "if name == \"setBlockData\" && a.len() == 4 && matches!(a[0], V::Int(_) | V::Long(_) | V::Char(_)) && matches!(a[1], V::Int(_) | V::Long(_) | V::Char(_)) && matches!(a[2], V::Int(_) | V::Long(_) | V::Char(_)) && jbridge::text_like(&a[3]) { let p3 = jbridge::text_arg(&a[3]); let mut t = jrt::lock(held_); return Some(Ok(V::Bool(t.set_block_data(a[0].long() as i32, a[1].long() as i32, a[2].long() as i32, &p3)))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerConnectionInitialConfigureEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut AsyncPlayerConnectionConfigureEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerConnectionValidateLoginEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerConnectionValidateLoginEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "the size for values of type `str` cannot be known at compilation time",
+  "line": "if name == \"getExamples\" && a.len() == 0 {  let mut t = jrt::lock(held_); return Some(Ok(jrt::list(t.get_examples().into_iter().map(|x_| jrt::s(&x_)).collect()))); }"
+ },
+ {
+  "message": "the size for values of type `str` cannot be known at compilation time",
+  "line": "if name == \"listSuggestions\" && a.len() == 0 {  let mut t = jrt::lock(held_); return Some(Ok(jrt::list(t.list_suggestions().into_iter().map(|x_| jrt::s(&x_)).collect()))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"blockCollisionMode\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().block_collision_mode(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"blockFilter\" && a.len() == 1 && matches!(a[0], V::Native(_) | V::Obj(_) | V::Func(_)) { let p0 = a[0].clone(); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().block_filter(move |c0_| jrt::call(&p0, \"*\", &[jbridge::wrap(c0_.clone())]).map(|v_| v_.truth()).unwrap_or(false)); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "missing generics for struct `PrimitiveTagType`",
+  "line": "fn nc_965(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_items::PrimitiveTagType>>()?;"
+ },
+ {
+  "message": "missing generics for struct `PrimitiveTagType`",
+  "line": "if name == \"fromPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_items::PrimitiveTagType::Primitive>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_items::ItemTagAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_items::PrimitiveTagType::Primitive>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_items::ItemTagAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.from_primitive(p0, &p1)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"direction\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::util::Vector>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::util::Vector>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().direction(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "missing generics for struct `PrimitiveTagType`",
+  "line": "if name == \"fromPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_items::PrimitiveTagType::Primitive>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_items::ItemTagAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_items::PrimitiveTagType::Primitive>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_items::ItemTagAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.from_primitive(p0, &p1)))); }"
+ },
+ {
+  "message": "missing generics for struct `PrimitiveTagType`",
+  "line": "if name == \"toPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_items::PrimitiveTagType::Complex>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_items::ItemTagAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_items::PrimitiveTagType::Complex>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_items::ItemTagAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.to_primitive(p0, &p1)))); }"
+ },
+ {
+  "message": "missing generics for struct `PrimitiveTagType`",
+  "line": "if name == \"toPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_items::PrimitiveTagType::Complex>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_items::ItemTagAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_items::PrimitiveTagType::Complex>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_items::ItemTagAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.to_primitive(p0, &p1)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"entityFilter\" && a.len() == 1 && matches!(a[0], V::Native(_) | V::Obj(_) | V::Func(_)) { let p0 = a[0].clone(); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().entity_filter(move |c0_| jrt::call(&p0, \"*\", &[jbridge::wrap(c0_.clone())]).map(|v_| v_.truth()).unwrap_or(false)); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"fluidCollisionMode\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().fluid_collision_mode(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"ignorePassableBlocks\" && a.len() == 1 && matches!(a[0], V::Bool(_)) {  let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().ignore_passable_blocks(a[0].truth()); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut RaidSpawnWaveEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut VehicleMoveEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"maxDistance\" && a.len() == 1 && matches!(a[0], V::Int(_) | V::Long(_) | V::Double(_)) {  let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().max_distance(a[0].double() as f64); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut RaidSpawnWaveEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"raySize\" && a.len() == 1 && matches!(a[0], V::Int(_) | V::Long(_) | V::Double(_)) {  let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().ray_size(a[0].double() as f64); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut VehicleMoveEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"start\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::Location>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::Location>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().start(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut RaidStopEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut VehicleUpdateEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `PositionedRayTraceConfigurationBuilder` in the current scope",
+  "line": "if name == \"targets\" && a.len() == 1 && !matches!(a[0], V::Null | V::Str(_) | V::Sb(_) | V::Int(_) | V::Long(_) | V::Double(_) | V::Bool(_) | V::Char(_)) { let p0: Vec<String> = a[0].items().ok()?.iter().map(V::text).collect(); let p0: Vec<&str> = p0.iter().map(String::as_str).collect(); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().targets(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut RaidStopEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut VehicleUpdateEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ServerTickEndEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut WhitelistToggleEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut LookupProfileEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ServerTickEndEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut WhitelistToggleEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut LookupProfileEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ServiceRegisterEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut WorldBorderBoundsChangeFinishEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut MapInitializeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ServiceRegisterEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut WorldBorderBoundsChangeFinishEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut MapInitializeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ServiceUnregisterEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ServiceUnregisterEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PluginDisableEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PluginDisableEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BrewingStartEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut SpawnChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PluginEnableEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BrewingStartEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut SpawnChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PluginEnableEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut CampfireStartEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut CampfireStartEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PreFillProfileEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut UnknownCommandEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PreFillProfileEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ChunkPopulateEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut UnknownCommandEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PreLookupProfileEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ChunkPopulateEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut VehicleBlockCollisionEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PreLookupProfileEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut horizon_bukkit::prelude::ChunkUnloadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut VehicleBlockCollisionEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ProfileWhitelistVerifyEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut horizon_bukkit::prelude::ChunkUnloadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ProfileWhitelistVerifyEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BlockExpEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut EntitiesLoadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut RaidFinishEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BlockExpEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut EntitiesLoadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut RaidFinishEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BlockFailedDispenseEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut EntitiesUnloadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut AsyncPlayerSendCommandsEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BlockFailedDispenseEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut EntitiesUnloadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut AsyncPlayerSendCommandsEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut FillProfileEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BlockLockCheckEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut AsyncServerDataFixerRemoveBlockEntityEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut FillProfileEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BlockLockCheckEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut AsyncServerDataFixerRemoveBlockEntityEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut GS4QueryEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut GS4QueryEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BeaconActivatedEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerUnregisterChannelEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BeaconActivatedEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerRecipeBookSettingsChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerUnregisterChannelEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BeaconDeactivatedEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerRecipeBookSettingsChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerUseUnknownEntityEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BeaconDeactivatedEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerRegisterChannelEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerUseUnknownEntityEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerRegisterChannelEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BellResonateEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PrepareAnvilEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BellResonateEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerResourcePackStatusEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PrepareAnvilEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerResourcePackStatusEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BlockBreakBlockEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PrepareGrindstoneEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BlockBreakBlockEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerRespawnEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PrepareGrindstoneEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerRespawnEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PrepareHopperTransferEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BlockBreakProgressUpdateEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PrepareHopperTransferEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BlockBreakProgressUpdateEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerServerFullCheckEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerServerFullCheckEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PrepareInventoryResultEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BlockCanBuildEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PrepareInventoryResultEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BlockCanBuildEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerShowEntityEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PrepareItemCraftEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut BlockDamageAbortEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerShowEntityEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PrepareItemCraftEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut BlockDamageAbortEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ChunkLoadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PrepareSmithingEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerStopUsingItemEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ChunkLoadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerStopUsingItemEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PrepareSmithingEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerLinksSendEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut horizon_bukkit::event2::ChunkUnloadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerLinksSendEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut horizon_bukkit::event2::ChunkUnloadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerConnectionReconfigureEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerArmorChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerLocaleChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerConnectionReconfigureEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut horizon_bukkit::event2::EntityDeathEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerArmorChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerLocaleChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut horizon_bukkit::event2::EntityDeathEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerEggThrowEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut horizon_bukkit::event2::EntitySpawnEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerMapFilledEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerEggThrowEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerChangedMainHandEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut horizon_bukkit::event2::EntitySpawnEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerMapFilledEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerExpChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerChangedMainHandEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerLevelChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerExpChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerLevelChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerChangedWorldEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerPostRespawnEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerChangedWorldEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerExpCooldownChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerPostRespawnEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut horizon_bukkit::prelude::PlayerDeathEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerExpCooldownChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut horizon_bukkit::prelude::PlayerDeathEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerChatTabCompleteEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut FurnaceExtractEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerFailMoveEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerChatTabCompleteEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerJoinEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut FurnaceExtractEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerFailMoveEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerJoinEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerChunkLoadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut FurnaceStartSmeltEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerLoginEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerChunkLoadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut FurnaceStartSmeltEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerHideEntityEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerLoginEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerChunkUnloadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerHideEntityEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut HopperInventorySearchEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerChunkUnloadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerQuitEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerInputEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut HopperInventorySearchEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerClientLoadedWorldEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerQuitEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerInputEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut IllegalPacketEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerClientLoadedWorldEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut IllegalPacketEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerInventorySlotChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ClientTickEndEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerClientOptionsChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut InventoryCloseEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ClientTickEndEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerInventorySlotChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerClientOptionsChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut InventoryCloseEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerItemBreakEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut EntityAddToWorldEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerCodeOfConductSendEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerItemBreakEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut EntityAddToWorldEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerCodeOfConductSendEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ItemCraftedEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerCommandSendEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ItemCraftedEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut EntityRemoveEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerCommandSendEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut EntityRemoveEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut AsyncPlayerChatPreviewEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerAdvancementDoneEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerConnectionCloseEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut EntityRemoveFromWorldEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut AsyncPlayerChatPreviewEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerAdvancementDoneEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerConnectionCloseEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut EntityRemoveFromWorldEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut AsyncPlayerPreLoginEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ExpBottleEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut AsyncPlayerPreLoginEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut PlayerUntrackEntityEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ExpBottleEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut PlayerUntrackEntityEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut AsyncPlayerSpawnLocationEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ThrownEggHatchEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut FishHookStateChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ThrownEggHatchEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut AsyncPlayerSpawnLocationEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut RegionizedServerInitEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut FishHookStateChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut RegionizedServerInitEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ItemTransportingEntitySortEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ServerLoadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut EntityPoseChangeEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `get_entity_id` found for mutable reference `&mut horizon_bukkit::prelude::EntityDeathEvent` in the current scope",
+  "line": "if name == \"getEntityId\" && a.len() == 0 {  return Some(Ok(V::Long(t.get_entity_id() as i64))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ItemTransportingEntitySortEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ServerLoadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut EntityPoseChangeEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ServerResourcesReloadedEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ItemTransportingEntityValidateTargetEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut EntityEquipmentChangedEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ItemTransportingEntityValidateTargetEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ServerResourcesReloadedEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut EntityEquipmentChangedEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut ServerTickStartEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `get_death_message` found for mutable reference `&mut horizon_bukkit::events::PlayerDeathEvent` in the current scope",
+  "line": "if name == \"getDeathMessage\" && a.len() == 0 {  return Some(Ok(match t.get_death_message() { Some(x_) => jrt::s(&x_), None => V::Null })); }"
+ },
+ {
+  "message": "the size for values of type `str` cannot be known at compilation time",
+  "line": "if name == \"getDeathMessage\" && a.len() == 0 {  return Some(Ok(match t.get_death_message() { Some(x_) => jrt::s(&x_), None => V::Null })); }"
+ },
+ {
+  "message": "the size for values of type `str` cannot be known at compilation time",
+  "line": "if name == \"getDeathMessage\" && a.len() == 0 {  return Some(Ok(match t.get_death_message() { Some(x_) => jrt::s(&x_), None => V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut ServerTickStartEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut EntityAttemptSmashAttackEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut WorldInitEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut EntityAttemptSmashAttackEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut WorldInitEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"blocksForInput\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(V::Bool(t.blocks_for_input(&p0)))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut WorldLoadEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"getPromptText\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::s(&t.get_prompt_text(&p0)))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut WorldLoadEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "no method named `get_entity_id` found for mutable reference `&mut horizon_bukkit::prelude::EntityDamageByEntityEvent` in the current scope",
+  "line": "if name == \"getEntityId\" && a.len() == 0 {  return Some(Ok(V::Long(t.get_entity_id() as i64))); }"
+ },
+ {
+  "message": "no method named `get_entity_type` found for mutable reference `&mut horizon_bukkit::prelude::EntityDamageByEntityEvent` in the current scope",
+  "line": "if name == \"getEntityType\" && a.len() == 0 {  return Some(Ok(jrt::s(&t.get_entity_type()))); }"
+ },
+ {
+  "message": "no method named `is_cancelled` found for mutable reference `&mut WorldSaveEvent` in the current scope",
+  "line": "if name == \"isCancelled\" { return Some(Ok(V::Bool(t.is_cancelled()))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"cancelBasedOnInput\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() && jbridge::text_like(&a[1]) { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let p1 = jbridge::text_arg(&a[1]); let mut t = jrt::lock(held_); return Some(Ok(V::Bool(t.cancel_based_on_input(&p0, &p1)))); }"
+ },
+ {
+  "message": "ambiguous associated type",
+  "line": "if name == \"toPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_core::BooleanPersistentDataType::Complex>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_core::PersistentDataAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_core::BooleanPersistentDataType::Complex>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_core::PersistentDataAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::javaio::from_json(&t.to_primitive(&p0, &p1)))); }"
+ },
+ {
+  "message": "no method named `set_cancelled` found for mutable reference `&mut WorldSaveEvent` in the current scope",
+  "line": "if name == \"setCancelled\" { return Some(Ok({ t.set_cancelled(a[0].truth()); V::Null })); }"
+ },
+ {
+  "message": "ambiguous associated type",
+  "line": "if name == \"toPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_core::BooleanPersistentDataType::Complex>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_core::PersistentDataAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_core::BooleanPersistentDataType::Complex>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_core::PersistentDataAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::javaio::from_json(&t.to_primitive(&p0, &p1)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"blocksForInput\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(V::Bool(t.blocks_for_input(&p0)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"getPromptText\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::s(&t.get_prompt_text(&p0)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `ConversationFactory` in the current scope",
+  "line": "if name == \"addConversationAbandonedListener\" && a.len() == 1 && matches!(a[0], V::Native(_) | V::Obj(_) | V::Func(_)) { let p0 = a[0].clone(); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().add_conversation_abandoned_listener(move |c0_| { let _ = jrt::report(\"callback\", jrt::call(&p0, \"*\", &[jbridge::wrap(c0_.clone())])); }); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"getPrefix\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::s(&t.get_prefix(&p0)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `ConversationFactory` in the current scope",
+  "line": "if name == \"buildConversation\" && a.len() == 1 && (a[0].native::<Mutex<horizon_bukkit::CommandSender>>().is_some() || a[0].native::<Mutex<horizon_bukkit::Player>>().is_some() || a[0].native::<Mutex<horizon_bukkit::entity::Entity>>().is_some()) { let p0 = match jbridge::held::<horizon_bukkit::CommandSender>(&a[0]) { Some(x_) => x_.clone(), None => match jbridge::held::<horizon_bukkit::Player>(&a[0]) { Some(x_) => horizon_bukkit::CommandSender::Player(x_.clone()), None => horizon_bukkit::CommandSender::Entity(jbridge::held::<horizon_bukkit::entity::Entity>(&a[0])?.clone()) } }; let mut t = jrt::"
+ },
+ {
+  "message": "no method named `clone` found for struct `ConversationFactory` in the current scope",
+  "line": "if name == \"escapeOn\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().escape_on(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `ConversationFactory` in the current scope",
+  "line": "if name == \"localEcho\" && a.len() == 1 && matches!(a[0], V::Bool(_)) {  let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().local_echo(a[0].truth()); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"getPrefix\" && a.len() == 1 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::s(&t.get_prefix(&p0)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `ConversationFactory` in the current scope",
+  "line": "if name == \"modal\" && a.len() == 1 && matches!(a[0], V::Bool(_)) {  let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().modal(a[0].truth()); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "ambiguous associated type",
+  "line": "if name == \"toPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_core::PrimitivePersistentDataType::Complex>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_core::PersistentDataAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_core::PrimitivePersistentDataType::Complex>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_core::PersistentDataAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::javaio::from_json(&t.to_primitive(&p0, &p1)))); }"
+ },
+ {
+  "message": "ambiguous associated type",
+  "line": "if name == \"toPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_core::PrimitivePersistentDataType::Complex>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_core::PersistentDataAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_core::PrimitivePersistentDataType::Complex>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_core::PersistentDataAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::javaio::from_json(&t.to_primitive(&p0, &p1)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `ConversationFactory` in the current scope",
+  "line": "if name == \"thatExcludesNonPlayersWithMessage\" && a.len() == 1 && jbridge::text_like(&a[0]) { let p0 = jbridge::text_arg(&a[0]); let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().that_excludes_non_players_with_message(&p0); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `ConversationFactory` in the current scope",
+  "line": "if name == \"withTimeout\" && a.len() == 1 && matches!(a[0], V::Int(_) | V::Long(_)) {  let mut t = jrt::lock(held_); return Some(Ok({ let r_ = (*t).clone().with_timeout(a[0].long() as u64); *t = r_.clone(); jbridge::wrap(r_) })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"cancelBasedOnInput\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() && jbridge::text_like(&a[1]) { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let p1 = jbridge::text_arg(&a[1]); let mut t = jrt::lock(held_); return Some(Ok(V::Bool(t.cancel_based_on_input(&p0, &p1)))); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `FullConversation` in the current scope",
+  "line": "if name == \"begin\" && a.len() == 1 { let plugin_ = jbridge::the_plugin(); let mut t = jrt::lock(held_); return Some(Ok({ (*t).clone().begin(&plugin_); V::Null })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `FullConversation` in the current scope",
+  "line": "if name == \"getPromptText\" && a.len() == 1 { let plugin_ = jbridge::the_plugin(); let mut t = jrt::lock(held_); return Some(Ok({ (*t).clone().begin(&plugin_); V::Null })); }"
+ },
+ {
+  "message": "no method named `clone` found for struct `std::sync::MutexGuard<'_, ConversationContext>` in the current scope",
+  "line": "if name == \"cancelBasedOnInput\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::pure::ConversationContext>>().is_some() && jbridge::text_like(&a[1]) { let p0 = jbridge::held::<horizon_bukkit::pure::ConversationContext>(&a[0])?.clone(); let p1 = jbridge::text_arg(&a[1]); let mut t = jrt::lock(held_); return Some(Ok(V::Bool(t.cancel_based_on_input(&p0, &p1)))); }"
+ },
+ {
+  "message": "missing generics for struct `ListPersistentDataType`",
+  "line": "fn nc_416(r: &V, name: &str, a: &[V]) -> Option<R> { let held_ = r.native::<Mutex<horizon_bukkit::fam_core::ListPersistentDataType>>()?;"
+ },
+ {
+  "message": "missing generics for struct `ListPersistentDataType`",
+  "line": "if name == \"toPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_core::ListPersistentDataType::Complex>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_core::PersistentDataAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_core::ListPersistentDataType::Complex>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_core::PersistentDataAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::javaio::from_json(&t.to_primitive(&p0, &p1)))); }"
+ },
+ {
+  "message": "missing generics for struct `ListPersistentDataType`",
+  "line": "if name == \"toPrimitive\" && a.len() == 2 && a[0].native::<Mutex<horizon_bukkit::fam_core::ListPersistentDataType::Complex>>().is_some() && a[1].native::<Mutex<horizon_bukkit::fam_core::PersistentDataAdapterContext>>().is_some() { let p0 = jbridge::held::<horizon_bukkit::fam_core::ListPersistentDataType::Complex>(&a[0])?.clone(); let p1 = jbridge::held::<horizon_bukkit::fam_core::PersistentDataAdapterContext>(&a[1])?.clone(); let mut t = jrt::lock(held_); return Some(Ok(jrt::javaio::from_json(&t.to_primitive(&p0, &p1)))); }"
+ },
+ {
+  "message": "`p1` does not live long enough",
+  "line": "if name == \"addResource\" && a.len() == 2 && jbridge::text_like(&a[0]) && matches!(a[1], V::Arr(_)) { let p0 = jbridge::text_arg(&a[0]); let p1 = jrt::javaio::bytes_of(&a[1])?; let mut t = jrt::lock(held_); return Some(Ok({ t.add_resource(&p0, &p1); V::Null })); }"
+ },
+ {
+  "message": "borrowed data escapes outside of function",
+  "line": "if name == \"getContext\" && a.len() == 0 {  let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.get_context().clone()))); }"
+ },
+ {
+  "message": "`t` does not live long enough",
+  "line": "if name == \"getContext\" && a.len() == 0 {  let mut t = jrt::lock(held_); return Some(Ok(jbridge::wrap(t.get_context().clone()))); }"
+ }
+]

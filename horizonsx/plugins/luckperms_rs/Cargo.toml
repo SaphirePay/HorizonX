@@ -1,0 +1,19 @@
+[package]
+name = "luckperms_rs"
+version = "5.5.71"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+serde_json = "1"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+codegen-units = 4
+
+[workspace]

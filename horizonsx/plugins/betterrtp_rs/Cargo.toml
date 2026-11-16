@@ -1,0 +1,26 @@
+[package]
+name = "betterrtp"
+version = "3.6.13"
+edition = "2024"
+publish = false
+# BetterRTP's repository states no licence (all rights reserved by SuperRonanCraft).
+license = "LicenseRef-BetterRTP"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde_json = "1"
+serde_yaml = "0.9"
+rusqlite = { version = "0.32", features = ["bundled"] }
+fastrand = "2"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[workspace]

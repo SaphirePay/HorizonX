@@ -1,0 +1,19 @@
+name: HorizonBoard
+version: '1.0.0'
+main: dev.horizon.board.HorizonBoard
+api-version: '1.21'
+description: A professional sidebar scoreboard and tab list (native Rust)
+softdepend: [LuckPerms, Essentials, Vault]
+commands:
+  board:
+    description: Show or hide your scoreboard
+    usage: /board
+  horizonboard:
+    description: Reload the scoreboard and tab list
+    usage: /horizonboard reload
+    permission: horizonboard.reload
+permissions:
+  horizonboard.toggle:
+    default: true
+  horizonboard.reload:
+    default: op

@@ -1,0 +1,21 @@
+[package]
+name = "minimotd"
+version = "2.2.5"
+edition = "2024"
+publish = false
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde_json = "1"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+codegen-units = 4
+
+[workspace]

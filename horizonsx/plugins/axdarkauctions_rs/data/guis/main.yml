@@ -1,0 +1,64 @@
+# DOCUMENTATION: https://docs.artillex-studios.com/axdarkauctions.html
+# ITEM BUILDER: https://docs.artillex-studios.com/item-builder.html
+
+title: "&0&lDark Auction > &0Bidding"
+# a gui can have 1-6 rows
+rows: 6
+
+# ----- ITEMS -----
+
+filler:
+  material: BLACK_STAINED_GLASS_PANE
+  name: " "
+  slot:
+    - "0-53"
+
+item:
+  slot: 3
+
+clock:
+  slot: 5
+  material: CLOCK
+  name: "&#D200FF&lBidding"
+  lore:
+    - " "
+    - " &#DDDDDD- &fEnds in: &#D200FF%time% seconds"
+    - " "
+
+# it is important to put these slots in the order that you want them to go!
+# X|Y - vertical range, for example 18|45 selects slots: 18, 27, 36, 45
+# X-Y - horizontal range, for example 45-47 selects slots: 45, 46, 47
+bid-slots:
+  - "18|45"
+  - "46"
+  - "47|20"
+  - "21"
+  - "22|49"
+  - "50"
+  - "51|24"
+  - "25"
+  - "26|53"
+
+bidding:
+  already-higher:
+    # by default, player head will use the bidder player's head
+    material: BARRIER
+    name: "&#D200FFBid &#7700FF%amount%"
+    lore:
+      - " "
+      - "&#D200FF&l> &#D200FFSomebody already bid more than this amount!"
+  current-bid:
+    # by default, player head will use the bidder player's head
+    material: PLAYER_HEAD
+    name: "&#D200FFBid &#7700FF%amount%"
+    lore:
+      - " "
+      - " &#DDDDDD- &#D200FF%player% &falready bid this amount!"
+      - " "
+      - "&#D200FF&l> &#D200FFYou can't bid because there is already a bid at this amount!"
+  bid:
+    # by default, the material will be used from the config.yml (check 'bidding' section) based on the money amount
+    name: "&#D200FFBid &#7700FF%amount%"
+    lore:
+      - " "
+      - "&#D200FF&l> &#D200FFClick here to place your bid!"

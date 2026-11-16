@@ -1,0 +1,26 @@
+[package]
+name = "deluxemenus_rs"
+version = "1.14.1"
+edition = "2024"
+publish = false
+license = "GPL-3.0-only"
+description = "DeluxeMenus for Horizon, written in Rust: same menu files, commands, actions and requirements."
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde_json = "1"
+serde_yaml = "0.9"
+regex = "1"
+base64 = "0.22"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[workspace]

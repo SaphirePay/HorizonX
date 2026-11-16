@@ -1,0 +1,30 @@
+[package]
+name = "votingplugin_rs"
+version = "7.1.1"
+edition = "2024"
+publish = false
+license = "CC-BY-3.0"
+description = "VotingPlugin (BenCodez, CC BY 3.0) rewritten natively in Rust for Horizon, with a built-in Votifier (v1 RSA + v2 token) receiver"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+horizon-bukkit = { path = "../../../sdk/horizon-bukkit" }
+horizon-kit = { path = "../horizon-kit" }
+serde_json = "1"
+serde_yaml = "0.9"
+rusqlite = { version = "0.32", features = ["bundled"] }
+rsa = "0.9"
+rand = "0.8"
+hmac = "0.12"
+sha2 = "0.10"
+base64 = "0.22"
+
+[profile.release]
+panic = "unwind"
+opt-level = 3
+lto = "thin"
+codegen-units = 4
+
+[workspace]
