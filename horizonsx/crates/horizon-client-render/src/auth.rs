@@ -523,8 +523,17 @@ pub fn has_joined(
     let body = match agent().get(&format!("{url}{separator}{query}")).call() {
         Ok(response) => response.into_string().unwrap_or_default(),
         Err(ureq::Error::Status(status, response)) => {
-            let error =
-                JoinError::from_response(status, &response.into_string().unwrap_or_default());
+            let body = response.into_string().unwrap_or_default();
+            log::warn!(
+                "The session service's player check answered HTTP {status}: {}",
+                body.chars().take(300).collect::<String>()
+            );
+            // A 429 (TooManyRequestsException) is the service limiting this server, not the player failing to
+            // log in: it refused them with "Failed to verify username". It is the service being unavailable.
+            if status == 429 || body.contains("TooManyRequestsException") {
+                return Err(JoinError::Unavailable);
+            }
+            let error = JoinError::from_response(status, &body);
             return match error {
                 JoinError::Unavailable => Err(error),
                 _ => Ok(None),
