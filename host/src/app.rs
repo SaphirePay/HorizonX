@@ -426,7 +426,7 @@ impl HostApp {
                         if l.starts_with("HorizonsX region threads:") {
                             continue;
                         }
-                        self.dash.log.push_back(crate::demo::mask_ips(&l));
+                        self.dash.log.push_back(crate::demo::mask_ips(&plain_text(&l)));
                     }
                     while self.dash.log.len() > 1500 {
                         self.dash.log.pop_front();
@@ -835,6 +835,44 @@ impl Render for HostApp {
             })
             .children(self.toast())
             .children(self.tour_overlay())
+    }
+}
+
+/// A console line as text: Minecraft's formatting codes (section sign + one character: colours, bold, and the hex
+/// colours as `x` followed by six pairs) and terminal colour sequences (`ESC[...m`) taken out, as a terminal that
+/// doesn't draw them would show the line.
+pub fn plain_text(line: &str) -> String {
+    let mut out = String::with_capacity(line.len());
+    let mut chars = line.chars().peekable();
+    while let Some(c) = chars.next() {
+        match c {
+            '\u{a7}' => {
+                chars.next();
+            }
+            '\u{1b}' if chars.peek() == Some(&'[') => {
+                chars.next();
+                // Parameters, then one final letter.
+                for c in chars.by_ref() {
+                    if c.is_ascii_alphabetic() || c == '~' {
+                        break;
+                    }
+                }
+            }
+            c => out.push(c),
+        }
+    }
+    out
+}
+
+#[cfg(test)]
+mod plain_text_tests {
+    #[test]
+    fn codes_go() {
+        let s = '\u{a7}';
+        assert_eq!(super::plain_text(&format!("[Essentials] {s}x{s}f{s}f{s}a{s}a{s}0{s}0Fetching version")), "[Essentials] Fetching version");
+        assert_eq!(super::plain_text(&format!("{s}aGreen {s}lbold{s}r end")), "Green bold end");
+        assert_eq!(super::plain_text("\u{1b}[0;32mok\u{1b}[m done"), "ok done");
+        assert_eq!(super::plain_text("100% plain"), "100% plain");
     }
 }
 

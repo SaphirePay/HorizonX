@@ -111,7 +111,8 @@ pub const SIDEBAR_IN: tokens::Motion = tokens::Motion {
     curve: [0.16, 1., 0.3, 1.],
 };
 
-/// The sidebar's width and the gutter after it.
+/// The sidebar's width and the gutter after it, in HorizonX's own units: scaled with the window (`ui::px`), as the
+/// panel itself is, or a wide window cuts the panel off.
 const SIDEBAR_W: f32 = 244.;
 const SIDEBAR_GAP: f32 = 16.;
 
@@ -124,19 +125,19 @@ pub fn sidebar_in(bar: Div, since: Option<Instant>) -> AnyElement {
         .flex_none()
         .h_full()
         .overflow_hidden()
-        .child(gpui::div().absolute().top_0().bottom_0().right(px(SIDEBAR_GAP)).w(px(SIDEBAR_W)).child(bar));
+        .child(gpui::div().absolute().top_0().bottom_0().right(crate::ui::px(SIDEBAR_GAP)).w(crate::ui::px(SIDEBAR_W)).child(bar));
     match since.filter(|t| t.elapsed() < SIDEBAR_IN.duration()) {
         Some(t) => {
             static START: std::sync::OnceLock<Instant> = std::sync::OnceLock::new();
             let start = *START.get_or_init(Instant::now);
             let key = t.saturating_duration_since(start).as_micros() as usize;
             column
-                .w(px(0.))
+                .w(crate::ui::px(0.))
                 .with_animation(ElementId::named_usize("sidebar-in", key), eased(SIDEBAR_IN), move |d, p| {
-                    d.w(px(full * p)).opacity(0.2 + 0.8 * p.min(1.))
+                    d.w(crate::ui::px(full * p)).opacity(0.2 + 0.8 * p.min(1.))
                 })
                 .into_any_element()
         }
-        None => column.w(px(full)).into_any_element(),
+        None => column.w(crate::ui::px(full)).into_any_element(),
     }
 }
