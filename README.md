@@ -29,19 +29,25 @@ This repository holds four parts that work together, and every program built fro
 
 ## Download
 
-1. Download **`HorizonX-0.3.0-windows-x64.zip`** from [the latest release](https://github.com/SaphirePay/HorizonX/releases/latest).
+1. Download from [the latest release](https://github.com/SaphirePay/HorizonX/releases/latest):
+   **`HorizonX-<version>-windows-x64.zip`** (Windows) or **`HorizonX-<version>-linux-x64.zip`** (Linux).
 2. Unzip it anywhere.
-3. Double-click **`HorizonX.exe`**.
+3. Windows: double-click **`HorizonX.exe`**. Linux: run **`./HorizonX`** (the first start adds it to your
+   applications menu).
 
 The same programs are in [`programs/`](programs) in this repository: clone it or download it as a zip, then run
-`programs/HorizonX.exe`. [programs/README.md](programs/README.md) lists what each file is.
+`programs/HorizonX.exe` (Windows) or `programs/linux/HorizonX` (Linux). [programs/README.md](programs/README.md) lists
+what each file is.
 
 There is nothing else to install. The zip carries the app, the HorizonsX engine and its network proxy, the built-in
-plugins, the Java layer with its own Java 25 runtime, and the Visual C++ runtime.
+plugins, the Java layer with its own Java 25 runtime, and (Windows) the Visual C++ runtime.
 
 **Requirements**
 
-- Windows 10 (1903 or newer) or Windows 11, 64-bit.
+- Windows 10 (1903 or newer) or Windows 11, 64-bit; or
+- Linux, 64-bit, glibc 2.35 or newer (Ubuntu 22.04+, Debian 12+, Fedora 36+, Mint 21+, Arch, SteamOS 3...), X11 or
+  Wayland, Vulkan or OpenGL. On a server with no screen, `./HorizonX mcp` runs everything without a window
+  (it needs `libxkbcommon-x11`).
 - Minecraft: Java Edition 26.3, played once on the PC. The first server is prepared from your own copy of the game;
   HorizonX contains no Minecraft code or assets.
 - About 2 GB of free memory for each running server.
@@ -289,7 +295,7 @@ cargo build --release --manifest-path host/Cargo.toml
 
 # HorizonsX with the Paper plugin layer (the engine HorizonX ships)
 cargo install --git https://github.com/horizon-rust/horizon-mixins
-python horizonsx/tools/v2/paper_build.py hostregions     # -> build/engines/hostregions/horizon-client.exe
+python horizonsx/tools/v2/paper_build.py hostregions     # -> build/engines/hostregions/horizon-client(.exe)
 
 # An SDK example plugin
 cargo build --release --manifest-path sdk/examples/heal/Cargo.toml
@@ -300,6 +306,11 @@ cargo build --release --manifest-path java-layer/rust/Cargo.toml
 ```
 
 If you cloned without `--recurse-submodules`, run `git submodule update --init` first.
+
+On Linux, the app needs these development packages (Debian/Ubuntu names):
+`pkg-config clang libxkbcommon-dev libxkbcommon-x11-dev libwayland-dev libvulkan-dev libfontconfig-dev libfreetype-dev
+libasound2-dev libudev-dev libssl-dev libx11-xcb-dev libxcb1-dev`, and the engine `libasound2-dev libudev-dev rsync`.
+`packaging/linux/make_package.py` puts the Linux builds together into the release zip.
 
 HorizonX looks for the engine in `engines/horizonsx/` and the plugins in `plugins/` beside its exe. The
 `HORIZON_HOST_ENGINE` and `HORIZON_HOST_PLUGINS` variables override those two folders.

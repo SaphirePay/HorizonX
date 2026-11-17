@@ -32,11 +32,23 @@ fn agent() -> ureq::Agent {
         .build()
 }
 
-/// The release asset this PC runs: `HorizonX-<version>-windows-x64.zip`.
+/// The release asset this PC runs: `HorizonX-<version>-windows-x64.zip` or `HorizonX-<version>-linux-x64.zip`.
 fn asset_suffix() -> Option<&'static str> {
     match (std::env::consts::OS, std::env::consts::ARCH) {
         ("windows", "x86_64") => Some("-windows-x64.zip"),
+        ("linux", "x86_64") => Some("-linux-x64.zip"),
         _ => None,
+    }
+}
+
+/// The app's own file in a release: `HorizonX.exe` on Windows, `HorizonX` elsewhere (any case).
+fn is_app_file(rel: &Path) -> bool {
+    if rel.components().count() != 1 || !rel.file_stem().is_some_and(|s| s.to_string_lossy().eq_ignore_ascii_case("horizonx")) {
+        return false;
+    }
+    match rel.extension() {
+        Some(e) => e.eq_ignore_ascii_case("exe"),
+        None => !cfg!(windows),
     }
 }
 
@@ -146,20 +158,30 @@ pub fn stage(zip_path: &Path, update_dir: &Path, exe_name: &str) -> Result<usize
         if rel.as_os_str().is_empty() || entry.is_dir() {
             continue;
         }
-        let is_app = rel.components().count() == 1 && rel.extension().is_some_and(|e| e.eq_ignore_ascii_case("exe")) && rel.file_stem().is_some_and(|s| s.to_string_lossy().eq_ignore_ascii_case("horizonx"));
+        let is_app = is_app_file(&rel);
+        #[cfg(unix)]
+        let mode = entry.unix_mode();
         let to = if is_app { update_dir.join(format!("{exe_name}.part")) } else { files.join(&rel) };
         if let Some(parent) = to.parent() {
             fs::create_dir_all(parent).map_err(|e| e.to_string())?;
         }
         let mut out = fs::File::create(&to).map_err(|e| e.to_string())?;
         std::io::copy(&mut entry, &mut out).map_err(|e| e.to_string())?;
+        // Linux: the engine, the app and the Java runtime's programs keep their executable bit (the zip carries
+        // each file's mode; the app is always executable).
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let mode = mode.map(|m| m & 0o777).filter(|m| *m != 0).unwrap_or(0o644) | if is_app { 0o755 } else { 0 };
+            fs::set_permissions(&to, fs::Permissions::from_mode(mode)).map_err(|e| e.to_string())?;
+        }
         if is_app {
             app = Some(to);
         } else {
             count += 1;
         }
     }
-    let app = app.ok_or("The release has no HorizonX.exe")?;
+    let app = app.ok_or(if cfg!(windows) { "The release has no HorizonX.exe" } else { "The release has no HorizonX program" })?;
     // Last, so the app's swap never sees half of it.
     fs::rename(&app, update_dir.join(exe_name)).map_err(|e| e.to_string())?;
     let _ = fs::remove_file(zip_path);
@@ -282,6 +304,41 @@ mod tests {
         assert_eq!(fs::read(app.join("engines/horizonsx/horizon-client.exe")).unwrap(), b"new engine");
         assert_eq!(fs::read(app.join("README.txt")).unwrap(), b"same");
         assert!(!update.join("files").exists());
+        let _ = fs::remove_dir_all(&base);
+    }
+
+    /// The Linux zip: the app has no `.exe`, and programs keep their executable bit through staging and placing.
+    #[cfg(unix)]
+    #[test]
+    fn a_linux_release_keeps_modes() {
+        use std::os::unix::fs::PermissionsExt;
+        let base = std::env::temp_dir().join(format!("hx-upd-linux-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&base);
+        let app = base.join("app");
+        let update = app.join("update");
+        fs::create_dir_all(&update).unwrap();
+        let zip_path = update.join("HorizonX-9.9.9-linux-x64.zip");
+        {
+            let mut w = zip::ZipWriter::new(fs::File::create(&zip_path).unwrap());
+            let exe = zip::write::SimpleFileOptions::default().unix_permissions(0o755);
+            let text = zip::write::SimpleFileOptions::default().unix_permissions(0o644);
+            w.start_file("HorizonX/HorizonX", text).unwrap();
+            w.write_all(b"new app").unwrap();
+            w.start_file("HorizonX/engines/horizonsx/horizon-client", exe).unwrap();
+            w.write_all(b"new engine").unwrap();
+            w.start_file("HorizonX/plugins/catalog.json", text).unwrap();
+            w.write_all(b"[]").unwrap();
+            w.finish().unwrap();
+        }
+        assert!(is_app_file(Path::new("HorizonX")));
+        assert!(!is_app_file(Path::new("engines/HorizonX")));
+        assert_eq!(stage(&zip_path, &update, "HorizonX").unwrap(), 2);
+        let mode = |p: &Path| fs::metadata(p).unwrap().permissions().mode() & 0o777;
+        // The app is always executable, even from a zip that lost its mode.
+        assert_eq!(mode(&update.join("HorizonX")), 0o755);
+        assert_eq!(place_files(&app), 0);
+        assert_eq!(mode(&app.join("engines/horizonsx/horizon-client")), 0o755);
+        assert_eq!(mode(&app.join("plugins/catalog.json")), 0o644);
         let _ = fs::remove_dir_all(&base);
     }
 }

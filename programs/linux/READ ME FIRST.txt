@@ -1,0 +1,57 @@
+HORIZONX 0.3.2 for Linux (64-bit)
+
+Start
+  1. Unzip this folder anywhere you like, for example ~/HorizonX.
+  2. Run ./HorizonX (or double-click it in your file manager).
+     The first start puts HorizonX in your applications menu.
+  3. Click "Make a server" and follow the five steps.
+
+Nothing else needs to be installed on a desktop Linux with glibc 2.35 or
+newer (Ubuntu 22.04+, Debian 12+, Fedora 36+, Mint 21+, Pop!_OS 22.04+,
+Arch, Manjaro, openSUSE Tumbleweed, SteamOS 3...). The
+server engine (HorizonsX) and its network proxy, the built-in plugins, and
+the Java layer with a Java runtime are all in this folder. HorizonX draws
+with Vulkan or OpenGL, on X11 or Wayland.
+
+The first time
+  HorizonX prepares the Minecraft 26.3 server files from your own copy of
+  Minecraft: Java Edition (~/.minecraft). Play 26.3 once on this PC first.
+  This takes a few minutes and happens only once.
+
+No screen (a headless server)
+  The app needs libxkbcommon-x11 even without a screen (Debian/Ubuntu:
+  sudo apt install libxkbcommon-x11-0; Fedora: libxkbcommon-x11).
+  ./HorizonX mcp      the AI assistant server (everything the app can do)
+  ./HorizonX update   update now
+  ./HorizonX version  this copy's version
+
+Friends joining from anywhere
+  Every server gets a public address through playit.gg, with no port
+  forwarding. The first time, HorizonX shows a link to claim the address.
+  Don't want one? Turn playit off while making the server (the wizard's
+  Plugins step), or later on its Plugins page.
+
+Plugins
+  28 plugins written in Rust come built in: pick them while making a server,
+  or add them later on its Plugins page (EssentialsX, LuckPerms, CoreProtect,
+  WorldEdit, Multiverse, mcMMO, Jobs, ChestShop, TAB and more).
+  Search Modrinth on the Plugins page and click Add, or click "Add a .jar" for
+  a Paper or Spigot plugin you already have. The Java layer and its own Java 25
+  runtime come with HorizonX; it has its own switch on each server.
+
+Opening at sign-in
+  Settings > General > "Open HorizonX when you sign in" adds it to
+  ~/.config/autostart (GNOME, KDE, Xfce, Cinnamon, MATE, LXQt...).
+
+Updates
+  HorizonX updates itself from GitHub: it checks when it opens and every 6
+  hours, then downloads, checks and installs the new version on its own.
+  Running servers keep running and use the new engine at their next restart.
+  You don't need to download this zip again.
+
+Folder contents
+  HorizonX                  the app
+  engines/horizonsx/        the HorizonsX server engine and horizon-proxy
+  plugins/                  plugins HorizonX can install with one click
+  java/                     the Java layer for Paper/Spigot plugins, and Java 25
+                            (Eclipse Temurin, GPLv2 with Classpath Exception)

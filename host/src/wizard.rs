@@ -34,6 +34,9 @@ pub struct Wizard {
     pub friends_only: bool,
     pub accounts: bool,
     pub backups: bool,
+    /// playit.gg (a public address with no port forwarding). On by default; off = only this network (or a
+    /// forwarded port) can join, and HorizonX never puts it back on its own.
+    pub playit: bool,
     pub error: Option<String>,
 }
 
@@ -54,6 +57,7 @@ impl Default for Wizard {
             friends_only: false,
             accounts: true,
             backups: true,
+            playit: true,
             error: None,
         }
     }
@@ -307,8 +311,10 @@ impl HostApp {
             return div().child(ui::text(15., FontWeight::NORMAL, ink::QUIET).child("No plugins came with HorizonX."));
         }
         for p in self.catalog.clone() {
-            let built_in = p.built_in;
-            let on = built_in || self.wiz.plugins.contains(&p.file);
+            // playit (the catalog's built-in plugin) is the wizard's public-address switch, on unless turned off.
+            let is_playit = p.file == host::PLAYIT;
+            let built_in = p.built_in && !is_playit;
+            let on = built_in || if is_playit { self.wiz.playit } else { self.wiz.plugins.contains(&p.file) };
             let file = p.file.clone();
             let card = crate::demo::mark(format!("plug-{}", p.file), ui::choice(SharedString::from(format!("plug-{}", p.file)), on))
                 .w(px(270.))
@@ -327,7 +333,9 @@ impl HostApp {
                 )
                 .child(ui::text(13., FontWeight::NORMAL, ink::QUIET).child(p.description.clone()))
                 .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
-                    if !built_in && !this.wiz.plugins.remove(&file) {
+                    if is_playit {
+                        this.wiz.playit = !this.wiz.playit;
+                    } else if !built_in && !this.wiz.plugins.remove(&file) {
                         this.wiz.plugins.insert(file.clone());
                     }
                     cx.notify();
@@ -442,6 +450,7 @@ impl HostApp {
         let friends = toggle(self, "friends-only", self.wiz.friends_only, |w| w.friends_only = !w.friends_only, cx);
         let accounts = toggle(self, "accounts", self.wiz.accounts, |w| w.accounts = !w.accounts, cx);
         let backups = crate::demo::mark("toggle-backups-row", toggle(self, "backups", self.wiz.backups, |w| w.backups = !w.backups, cx));
+        let playit = toggle(self, "playit", self.wiz.playit, |w| w.playit = !w.playit, cx);
         let folder = servers::new_folder(&self.text(Field::Name));
         div()
             .flex()
@@ -456,15 +465,20 @@ impl HostApp {
             .child(ui::setting_row("Check Minecraft accounts", "Players sign in with Microsoft. Turn off only for testing.", accounts))
             .child(ui::setting_row("Automatic backups", "A backup every 6 hours, keeping the last 3.", backups))
             .child(ui::setting_row(
-                "Public address",
-                "Friends join from anywhere through playit.gg, with no port forwarding.",
-                ui::chip("Built in", Some(Tone::Live)),
+                "Public address (playit.gg)",
+                if self.wiz.playit {
+                    "Friends join from anywhere, with no port forwarding."
+                } else {
+                    "Off: players on your network join, others only through a port you forward. Turn it on any time on the Plugins page."
+                },
+                playit,
             ))
     }
 
     fn step_review(&self) -> Div {
         let w = &self.wiz;
-        let plugins: Vec<String> = crate::app::with_playit(&w.plugins)
+        let chosen = if w.playit { crate::app::with_playit(&w.plugins) } else { w.plugins.clone() };
+        let plugins: Vec<String> = chosen
             .iter()
             .map(|f| self.catalog.iter().find(|p| &p.file == f).map(|p| p.name.clone()).unwrap_or_else(|| f.clone()))
             .collect();
@@ -492,12 +506,12 @@ impl HostApp {
             .child(row("Server type", if w.engine == Engine::HorizonsX { "HorizonsX".into() } else { "Horizon".into() }))
             .child(row("Minecraft", "Java Edition 26.3".into()))
             .child(row("World", world))
-            .child(row("Plugins", plugins.join(", ")))
+            .child(row("Plugins", if plugins.is_empty() { "None".into() } else { plugins.join(", ") }))
             .child(row("Players", format!("Up to {}{}", w.max_players, if w.friends_only { " · friends only" } else { "" })))
             .child(row("Distances", format!("View {} · simulation {} chunks", w.view, w.sim)))
             .child(row("Accounts", if w.accounts { "Checked (Microsoft sign-in)".into() } else { "Not checked (offline)".into() }))
             .child(row("Backups", if w.backups { "Every 6 hours, last 3 kept".into() } else { "Off".into() }))
-            .child(row("Public address", "playit.gg, no port forwarding".into()))
+            .child(row("Public address", if w.playit { "playit.gg, no port forwarding".into() } else { "Off (your network, or a forwarded port)".into() }))
             .child(
                 ui::text(12., FontWeight::NORMAL, ink::QUIET)
                     .mt(px(14.))
@@ -521,8 +535,10 @@ impl HostApp {
             check_accounts: w.accounts,
             players: vec![],
             eula: true,
+            playit: w.playit,
         };
-        let plugins: Vec<String> = crate::app::with_playit(&w.plugins).into_iter().collect();
+        let playit = w.playit;
+        let plugins: Vec<String> = (if playit { crate::app::with_playit(&w.plugins) } else { w.plugins.clone() }).into_iter().collect();
         // Both run the HorizonsX engine: HorizonsX with region threads (a TPS per region), Horizon without (one
         // TPS for the server). The server's Settings switch them later.
         let regions = w.engine == Engine::HorizonsX;
@@ -533,7 +549,9 @@ impl HostApp {
             ("backups.every", if w.backups { "6h".into() } else { "0".into() }),
             ("backups.keep", "3".to_string()),
         ];
-        self.setup = Setup { name: name.clone(), steps: SETUP_STEPS.iter().map(|s| (*s, Step::Waiting)).collect(), ..Setup::default() };
+        // No public address step without playit.
+        let steps = SETUP_STEPS.iter().take(if playit { SETUP_STEPS.len() } else { PUBLIC }).map(|s| (*s, Step::Waiting)).collect();
+        self.setup = Setup { name: name.clone(), steps, ..Setup::default() };
         self.view = View::Setup;
         let tx = self.tx.clone();
         std::thread::spawn(move || {
@@ -598,8 +616,12 @@ impl HostApp {
         let running = self.status.get(dir).is_some_and(|s| s.running());
         if running && self.setup.steps.get(START).is_some_and(|s| s.1 != Step::Done) {
             self.setup.steps[START].1 = Step::Done;
-            self.setup.steps[PUBLIC].1 = Step::Running;
-            self.setup.line = Some("The server is up. Asking playit.gg for an address".into());
+            if let Some(public) = self.setup.steps.get_mut(PUBLIC) {
+                public.1 = Step::Running;
+                self.setup.line = Some("The server is up. Asking playit.gg for an address".into());
+            } else {
+                self.setup.line = None;
+            }
         }
         if let Some(p) = self.playit.get(dir) {
             if (p.online() || p.waiting_for_claim()) && self.setup.steps.get(PUBLIC).is_some_and(|s| s.1 != Step::Done) {
@@ -678,6 +700,9 @@ impl HostApp {
         let lan = self.lan_address(dir);
         let mut public = div().flex().flex_col().gap(px(6.)).flex_1().min_w_0().child(ui::text(13., FontWeight::MEDIUM, ink::NOTE).child("Anywhere on the internet"));
         public = match (&p, status.running()) {
+            _ if !host::playit_on(dir) => public.child(ui::text(15., FontWeight::NORMAL, ink::QUIET).child(
+                "playit is off for this server: friends outside your network join through a port you forward. Turn it on on the Plugins page.",
+            )),
             (_, false) => public.child(ui::text(15., FontWeight::NORMAL, ink::QUIET).child("Start the server to get its address")),
             (Some(p), true) if p.online() => {
                 let a = p.address.clone().unwrap_or_default();

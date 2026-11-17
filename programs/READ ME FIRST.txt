@@ -1,4 +1,4 @@
-HORIZONX 0.3.1 for Windows (64-bit)
+HORIZONX 0.3.2 for Windows (64-bit)
 
 Start
   1. Unzip this folder anywhere you like, for example Documents\HorizonX.
@@ -17,7 +17,8 @@ The first time
 Friends joining from anywhere
   Every server gets a public address through playit.gg, with no port
   forwarding. The first time, HorizonX shows a link to claim the address.
-  Turn playit off on a server's Plugins page if you don't want one.
+  Don't want one? Turn playit off while making the server (the wizard's
+  Plugins step), or later on its Plugins page.
 
 Plugins
   28 plugins written in Rust come built in: pick them while making a server,

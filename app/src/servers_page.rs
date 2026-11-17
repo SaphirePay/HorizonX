@@ -1009,6 +1009,7 @@ impl Launcher {
             check_accounts: c.check_accounts,
             players,
             eula: c.eula,
+            playit: true,
         };
         let tag = self.selected().cloned();
         let tx = self.servers.tx.clone();

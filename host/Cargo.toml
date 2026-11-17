@@ -1,6 +1,6 @@
 [package]
 name = "horizonx"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2021"
 license = "MIT"
 description = "Make a Minecraft server on HorizonsX in a few clicks; friends join from anywhere with no port forwarding"
@@ -25,6 +25,8 @@ serde_json = "1"
 horizon-mcp = { path = "../vendor/horizon/crates/horizon-mcp" }
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "gif"] }
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
+# `HORIZONX_LOG=info` (or debug, warn...): the app's and the renderer's messages on stderr, for a problem report.
+log = "0.4"
 
 [target.'cfg(target_os = "macos")'.dependencies]
 objc2-app-kit = { version = "0.3", default-features = false, features = ["NSAccessibility", "NSAppearance", "NSView", "NSWindow", "NSWorkspace"] }

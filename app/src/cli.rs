@@ -2264,6 +2264,7 @@ fn servers(action: ServersCmd, as_json: bool) -> Result<(), String> {
                 check_accounts: !offline,
                 players,
                 eula: accept_eula,
+                playit: true,
             };
             let tag = backend::resolve_version(version.as_deref()).ok();
             let entry = servers::create(&spec, tag.as_deref(), &|l| eprintln!("{l}"))

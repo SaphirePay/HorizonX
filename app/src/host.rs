@@ -228,9 +228,21 @@ pub fn get_ready(log: &dyn Fn(String)) -> Result<String, String> {
         backend::sounds(&tag, &minecraft, log);
         match preparer {
             backend::Preparer::Process(mut cmd) => {
-                let status = cmd.status().map_err(|e| format!("Couldn't run the preparer: {e}"))?;
-                if !status.success() {
-                    return Err("Preparing Minecraft's files failed".into());
+                // Its output goes to `log`, never to this process's stdout: under `HorizonX mcp` stdout is the
+                // protocol, and a line of the preparer there breaks the AI assistant's connection.
+                let out = cmd
+                    .stdin(std::process::Stdio::null())
+                    .output()
+                    .map_err(|e| format!("Preparing Minecraft 26.3: couldn't run the preparer: {e}"))?;
+                let text = format!("{}{}", String::from_utf8_lossy(&out.stdout), String::from_utf8_lossy(&out.stderr));
+                for l in text.lines().filter(|l| !l.trim().is_empty()) {
+                    log(l.to_string());
+                }
+                if !out.status.success() {
+                    let tail: Vec<&str> = text.lines().filter(|l| !l.trim().is_empty()).collect();
+                    let tail = tail[tail.len().saturating_sub(6)..].join("
+");
+                    return Err(format!("Preparing Minecraft 26.3 failed ({}): {}", out.status, if tail.is_empty() { "the preparer said nothing" } else { &tail }));
                 }
             }
             backend::Preparer::InProcess(options) => backend::prepare_in_process(&options, log)?,
@@ -811,7 +823,11 @@ mod tests {
         let d = Path::new("C:/srv");
         assert!(inside(d, "plugins/x.yml").is_ok());
         assert!(inside(d, "../x").is_err());
+        // Each system's own absolute paths (on Linux "C:/Windows/x" is a plain relative name).
+        #[cfg(windows)]
         assert!(inside(d, "C:/Windows/x").is_err());
+        assert!(inside(d, "/etc/passwd").is_err());
+        assert!(inside(d, "plugins/../../x").is_err());
         assert!(editable("server.properties") && editable("a.YML") && !editable("world.dat"));
     }
 

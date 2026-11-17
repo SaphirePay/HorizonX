@@ -4,7 +4,7 @@
 //! 6 px rise over 200 ms); a switch's knob slides for 200 ms. Under reduced motion
 //! ([`crate::sky::motion`]) nothing moves: everything is drawn where it ends. Menus open at once:
 //! an animation inside a `deferred` menu kept its first frame (invisible) under GPUI Fast.
-use gpui::{px, Animation, AnimationExt, AnyElement, Div, ElementId, IntoElement, Styled};
+use gpui::{px, Animation, AnimationExt, AnyElement, Div, ElementId, IntoElement, ParentElement, Styled};
 use horizon_theme as tokens;
 use std::cell::RefCell;
 use std::collections::HashMap;
@@ -100,5 +100,43 @@ mod tests {
             slide("test-a", false, flip + Duration::from_millis(250)),
             None
         );
+    }
+}
+
+/// The sidebar's arrival after setting up: its column opens from nothing to its width while the panel slides
+/// in from the left edge and fades up, pushing the page to the right. 520 ms on a soft ease-out.
+pub const SIDEBAR_IN: tokens::Motion = tokens::Motion {
+    name: "sidebar-in",
+    ms: 520,
+    curve: [0.16, 1., 0.3, 1.],
+};
+
+/// The sidebar's width and the gutter after it.
+const SIDEBAR_W: f32 = 244.;
+const SIDEBAR_GAP: f32 = 16.;
+
+/// `bar` in its column; sliding in when it came back (`since`) less than [`SIDEBAR_IN`] ago. The panel is pinned
+/// to the column's right edge, so as the column opens the panel travels in from the left and the page moves right.
+pub fn sidebar_in(bar: Div, since: Option<Instant>) -> AnyElement {
+    let full = SIDEBAR_W + SIDEBAR_GAP;
+    let column = gpui::div()
+        .relative()
+        .flex_none()
+        .h_full()
+        .overflow_hidden()
+        .child(gpui::div().absolute().top_0().bottom_0().right(px(SIDEBAR_GAP)).w(px(SIDEBAR_W)).child(bar));
+    match since.filter(|t| t.elapsed() < SIDEBAR_IN.duration()) {
+        Some(t) => {
+            static START: std::sync::OnceLock<Instant> = std::sync::OnceLock::new();
+            let start = *START.get_or_init(Instant::now);
+            let key = t.saturating_duration_since(start).as_micros() as usize;
+            column
+                .w(px(0.))
+                .with_animation(ElementId::named_usize("sidebar-in", key), eased(SIDEBAR_IN), move |d, p| {
+                    d.w(px(full * p)).opacity(0.2 + 0.8 * p.min(1.))
+                })
+                .into_any_element()
+        }
+        None => column.w(px(full)).into_any_element(),
     }
 }

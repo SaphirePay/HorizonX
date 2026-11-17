@@ -139,6 +139,38 @@ fn script() -> Vec<Act> {
     if std::env::var("HORIZON_HOST_DEMO_SCRIPT").as_deref() == Ok("toggles") {
         return vec![Wait(2500), Click("set-friends"), Wait(3000), Click("set-friends"), Wait(3000)];
     }
+    // `HORIZON_HOST_DEMO_SCRIPT=sidebar`: a first server from the welcome (no sidebar while setting up), then the
+    // sidebar sliding in when it opens.
+    if std::env::var("HORIZON_HOST_DEMO_SCRIPT").as_deref() == Ok("sidebar") {
+        let plug = |name: &'static str| -> &'static str { Box::leak(format!("plug-{}", host_plugin(name)).into_boxed_str()) };
+        return vec![
+            Wait(2500),
+            Click("welcome-start"),
+            Wait(1300),
+            Click("engine-hx"),
+            Wait(700),
+            Click("wiz-next"),
+            Wait(1100),
+            Click(plug("luckperms_rs")),
+            Wait(400),
+            Click(plug("essentials_bundle")),
+            Wait(900),
+            Click("wiz-next"),
+            Wait(1100),
+            Click("wiz-next"),
+            Wait(1100),
+            Click("field-Name"),
+            Type(Field::Name, "Friends SMP"),
+            Wait(700),
+            Click("wiz-next"),
+            Wait(2200),
+            Click("wiz-create"),
+            UntilSetup(90_000),
+            Wait(2500),
+            Click("setup-open"),
+            Wait(4500),
+        ];
+    }
     vec![
         Wait(2200),
         Click("welcome-start"),
@@ -434,4 +466,9 @@ mod tests {
         assert_eq!(super::mask_ips("visit: https://playit.gg/claim/a566ac9a065a3171"), "visit: https://playit.gg/claim/••••••••");
         assert_eq!(super::mask_ips("generate claim code: a566ac9a"), "generate claim code: ••••••••");
     }
+}
+
+/// A plugin's file on this system (`luckperms_rs` -> `luckperms_rs.dll` / `libluckperms_rs.so`).
+fn host_plugin(stem: &str) -> String {
+    if cfg!(windows) { format!("{stem}.dll") } else { format!("lib{stem}.so") }
 }

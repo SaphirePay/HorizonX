@@ -2813,7 +2813,7 @@ dependencies = [
 
 [[package]]
 name = "horizonx"
-version = "0.3.1"
+version = "0.3.2"
 dependencies = [
  "chrono",
  "gpui-fast",
@@ -2822,6 +2822,7 @@ dependencies = [
  "horizon-theme",
  "horizonx-core",
  "image",
+ "log",
  "objc2-app-kit 0.3.2",
  "serde_json",
  "winresource",

@@ -87,7 +87,7 @@ impl HostApp {
             cx.notify();
         }));
         group("General")
-            .child(row("Open HorizonX when Windows starts", "Your servers come back after a reboot, with the setting below.", t1))
+            .child(row(if cfg!(windows) { "Open HorizonX when Windows starts" } else { "Open HorizonX when you sign in" }, "Your servers come back after a reboot, with the setting below.", t1))
             .child(row("Start servers that were running when HorizonX opens", "The ones running when it last closed.", t2))
             .child(row("Warn players before a scheduled restart", "A chat message 5 minutes ahead.", t3))
     }

@@ -17,6 +17,9 @@ pub mod game_log;
 pub mod github;
 pub mod github_mods;
 pub mod heads;
+/// Linux: HorizonX's applications-menu entry and opening at sign-in.
+#[cfg(target_os = "linux")]
+pub mod hx_desktop;
 pub mod i18n;
 pub mod import;
 #[cfg(windows)]

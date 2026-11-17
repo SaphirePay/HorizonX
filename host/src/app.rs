@@ -91,6 +91,10 @@ pub enum Step {
 pub struct HostApp {
     pub scene: Entity<Scene>,
     pub view: View,
+    /// Whether the sidebar was hidden at the last frame (None before the first), and when it last came back:
+    /// it slides in once the first server is set up.
+    pub sidebar_hidden: Option<bool>,
+    pub sidebar_in: Option<Instant>,
     pub list: Vec<Entry>,
     pub status: HashMap<PathBuf, Status>,
     pub playit: HashMap<PathBuf, Playit>,
@@ -162,6 +166,8 @@ impl HostApp {
         let mut app = Self {
             scene: cx.new(|_| Scene::new()),
             view: View::Page(Page::Dashboard),
+            sidebar_hidden: None,
+            sidebar_in: None,
             list,
             status: HashMap::new(),
             playit: HashMap::new(),
@@ -787,9 +793,17 @@ impl Render for HostApp {
             View::Setup => self.setup_view(cx),
             View::Server(dir) => self.dashboard(&dir, window, cx),
         };
-        // The setup wizard (and its setup screen) has the window to itself: no sidebar while setting up.
-        let setting_up = matches!(self.view, View::Wizard | View::Setup);
-        let sidebar = (!setting_up).then(|| self.sidebar(cx));
+        // Setting up has the window to itself: no sidebar on the welcome (no server yet), in the wizard or on its
+        // setup screen. When the server is set up and opened, the sidebar slides in from the left.
+        let setting_up = matches!(self.view, View::Wizard | View::Setup) || (self.list.is_empty() && matches!(self.view, View::Page(Page::Dashboard)));
+        if self.sidebar_hidden == Some(true) && !setting_up {
+            self.sidebar_in = Some(Instant::now());
+        }
+        self.sidebar_hidden = Some(setting_up);
+        let sidebar = (!setting_up).then(|| {
+            let bar = self.sidebar(cx);
+            crate::motion::sidebar_in(bar, self.sidebar_in)
+        });
         let menu_open = self.pages.menu.is_some();
         div()
             .id("root")
@@ -805,7 +819,6 @@ impl Render for HostApp {
                     .relative()
                     .size_full()
                     .flex()
-                    .gap(px(16.))
                     .p(px(16.))
                     .children(sidebar)
                     .child(div().relative().flex_1().min_w_0().h_full().flex().flex_col().child(body)),

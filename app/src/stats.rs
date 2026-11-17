@@ -433,14 +433,25 @@ pub fn set_opens_with_windows(on: bool) -> Result<(), String> {
     }
 }
 
-#[cfg(not(windows))]
+/// Linux: an entry in the XDG autostart folder (`~/.config/autostart/horizonx.desktop`).
+#[cfg(target_os = "linux")]
+pub fn opens_with_windows() -> bool {
+    crate::hx_desktop::opens_at_login()
+}
+
+#[cfg(target_os = "linux")]
+pub fn set_opens_with_windows(on: bool) -> Result<(), String> {
+    crate::hx_desktop::set_opens_at_login(on)
+}
+
+#[cfg(not(any(windows, target_os = "linux")))]
 pub fn opens_with_windows() -> bool {
     false
 }
 
-#[cfg(not(windows))]
+#[cfg(not(any(windows, target_os = "linux")))]
 pub fn set_opens_with_windows(_on: bool) -> Result<(), String> {
-    Err("Only on Windows for now".into())
+    Err("Opening at sign-in is on Windows and Linux".into())
 }
 
 #[cfg(test)]

@@ -112,6 +112,7 @@ pub fn tools() -> Vec<Value> {
             "view_distance": { "type": "integer", "description": "Default 10." },
             "simulation_distance": { "type": "integer", "description": "Default 8." },
             "backups": { "type": "boolean", "description": "A backup every 6 hours, keeping 3 (default true)." },
+            "playit": { "type": "boolean", "description": "A public address through playit.gg, no port forwarding (default true). false = only this network or a forwarded port; plugin_set turns it on later." },
             "plugins": { "type": "array", "items": { "type": "string" }, "description": "Plugins HorizonX ships to add (plugin_catalog: file or name)." },
             "start": { "type": "boolean", "description": "Start it once made (default true)." }
         }), &["name", "accept_eula"]),
@@ -611,18 +612,21 @@ fn create(a: &Value) -> Result<Value, String> {
         check_accounts: !b(a, "offline", false),
         players: list(a, "players"),
         eula: true,
+        playit: b(a, "playit", true),
     };
     let notes = std::sync::Mutex::new(Vec::<String>::new());
     let log = |l: String| notes.lock().unwrap().push(l);
     let tag = host::get_ready(&log)?;
     let entry = servers::create(&spec, Some(&tag), &log).map_err(|p| p.message)?;
     let dir = entry.dir.clone();
+    let playit = spec.playit;
     for note in host::adopt(&dir) {
         log(note);
     }
-    let mut chosen: Vec<String> = vec![host::PLAYIT.to_string()];
+    let mut chosen: Vec<String> = if playit { vec![host::PLAYIT.to_string()] } else { vec![] };
     for p in list(a, "plugins") {
         match catalog_file(&p) {
+            Some(f) if f == host::PLAYIT && !playit => log("playit: left out (playit=false)".into()),
             Some(f) => chosen.push(f),
             None => log(format!("{p}: not one of HorizonX's plugins (plugin_catalog); modrinth_install adds others")),
         }

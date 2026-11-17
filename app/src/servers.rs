@@ -557,6 +557,9 @@ pub struct NewServer {
     /// Who may join first (whitelisted), and the first of them becomes an operator.
     pub players: Vec<String>,
     pub eula: bool,
+    /// HorizonX: a public address through playit.gg (on by default). Off is remembered in the server's host.json,
+    /// so nothing puts playit back on its own.
+    pub playit: bool,
 }
 
 impl Default for NewServer {
@@ -573,6 +576,7 @@ impl Default for NewServer {
             check_accounts: true,
             players: Vec::new(),
             eula: false,
+            playit: true,
         }
     }
 }
@@ -735,7 +739,13 @@ pub fn create(spec: &NewServer, tag: Option<&str>, log: &dyn Fn(String)) -> Resu
         &settings.iter().map(String::as_str).collect::<Vec<_>>(),
     )
     .map_err(undo)?;
-    // HorizonX: HorizonsX as the engine and the playit plugin in (public address, no port forwarding).
+    // HorizonX: HorizonsX as the engine and the playit plugin in (public address, no port forwarding), unless
+    // the owner chose no public address: that is remembered first, so adopt leaves playit out.
+    if !spec.playit {
+        let mut s = crate::host::schedule(&dir);
+        s.playit_off = true;
+        crate::host::save_schedule(&dir, &s).map_err(|e| undo(Problem::plain(format!("Saving that playit is off: {e}"))))?;
+    }
     for line in crate::host::adopt(&dir) {
         log(line);
     }

@@ -15,6 +15,7 @@ mod glass;
 mod highlight;
 mod home;
 mod line_edit;
+mod logging;
 mod mcp;
 mod network_page;
 mod motion;
@@ -48,6 +49,7 @@ impl gpui::AssetSource for Assets {
 }
 
 fn main() {
+    logging::init();
     // `HorizonX mcp`: the MCP server for AI assistants, on stdin and stdout (no window).
     if std::env::args().nth(1).as_deref() == Some("mcp") {
         if let Err(e) = mcp::serve() {
@@ -65,6 +67,16 @@ fn main() {
             return;
         }
         _ => {}
+    }
+    // Linux: an installed copy (its engine beside it) puts itself in the applications menu, and fixes the entry
+    // when the folder moved. A build from source leaves the menu alone.
+    #[cfg(target_os = "linux")]
+    if let Ok(exe) = std::env::current_exe() {
+        if exe.parent().is_some_and(|d| d.join("engines").join("horizonsx").is_dir()) {
+            if let Err(e) = horizon_launcher::hx_desktop::repair(&exe) {
+                eprintln!("HorizonX: couldn't add the applications-menu entry: {e}");
+            }
+        }
     }
     // New releases from GitHub, in the background (an installed copy; a build from source is left alone).
     update::start_checking();

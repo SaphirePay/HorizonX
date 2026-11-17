@@ -9,7 +9,7 @@ this tree instead of the pinned GitHub source:
   2. the plugin layer's bundle, paper_api, is applied with horizon-mixins
   3. dim_patch: created worlds (Dim::Custom) and every plugin-layer/family/*_engine.py row
   4. compiled (profile fast, Segment Heap) with its own cache, ../build/horizonsx-paper-target
-The engine lands in ../build/engines/NAME/horizon-client.exe.
+The engine lands in ../build/engines/NAME/horizon-client.exe (horizon-client on Linux and macOS).
 
 horizon-mixins (https://github.com/horizon-rust/horizon-mixins) must be on the PATH:
 `cargo install --git https://github.com/horizon-rust/horizon-mixins`, or name it with HORIZON_MIXINS.
@@ -44,8 +44,22 @@ def load(path, name):
     return module
 
 
+# Program names: horizon-client.exe on Windows, horizon-client on Linux and macOS.
+EXE = '.exe' if os.name == 'nt' else ''
+
+
 def copy_tree(target):
-    """The worktree as it is now (uncommitted edits too); robocopy keeps file times, so cargo rebuilds little."""
+    """The worktree as it is now (uncommitted edits too); robocopy (Windows) or rsync (Linux, macOS) keep file times,
+    so cargo rebuilds little."""
+    if os.name != 'nt':
+        target.mkdir(parents=True, exist_ok=True)
+        if shutil.which('rsync'):
+            subprocess.run(['rsync', '-a', '--delete', '--exclude', '.git', '--exclude', 'target', f'{TREE}/', f'{target}/'],
+                           check=True)
+        else:
+            shutil.rmtree(target, ignore_errors=True)
+            shutil.copytree(TREE, target, ignore=shutil.ignore_patterns('.git', 'target'), symlinks=True)
+        return
     result = subprocess.run(['robocopy', str(TREE), str(target), '/MIR', '/XD', '.git', 'target', '/XF', '.git',
                              '/NFL', '/NDL', '/NJH', '/NJS', '/NP'], capture_output=True, text=True)
     if result.returncode >= 8:
@@ -412,15 +426,17 @@ def main():
         command += ['-Zprofile-rustflags', '--config', 'profile.fast.package.horizon-client.rustflags=' + json.dumps(rustflags)]
         env['RUSTC_BOOTSTRAP'] = '1'
     print('compiling', flush=True)
-    subprocess.run(command, cwd=stage, env=env, check=True, creationflags=BELOW_NORMAL)
+    # Below normal priority, so the PC stays usable while it compiles.
+    low = {'creationflags': BELOW_NORMAL} if os.name == 'nt' else {'preexec_fn': lambda: os.nice(5)}
+    subprocess.run(command, cwd=stage, env=env, check=True, **low)
     print(f'done in {time.monotonic() - started:.0f} s', flush=True)
     if check:
         return
     folder = PERF / name
     folder.mkdir(parents=True, exist_ok=True)
-    built = pathlib.Path(env['CARGO_TARGET_DIR']) / 'fast' / 'horizon-client.exe'
-    shutil.copy2(built, folder / 'horizon-client.exe')
-    for tool_name in ('horizon-server.exe', 'horizon-bots.exe'):
+    built = pathlib.Path(env['CARGO_TARGET_DIR']) / 'fast' / f'horizon-client{EXE}'
+    shutil.copy2(built, folder / f'horizon-client{EXE}')
+    for tool_name in (f'horizon-server{EXE}', f'horizon-bots{EXE}'):
         if (PERF / 'before' / tool_name).is_file():
             shutil.copy2(PERF / 'before' / tool_name, folder / tool_name)
     print('built', folder, flush=True)

@@ -13,7 +13,7 @@ use std::io;
 use std::path::{Path, PathBuf};
 
 /// The icon theme sizes, as `packaging/icons/hicolor` holds them (`cargo run -p xtask -- icons`).
-const ICONS: [(&str, &[u8]); 9] = [
+pub(crate) const ICONS: [(&str, &[u8]); 9] = [
     (
         "16x16",
         include_bytes!("../../packaging/icons/hicolor/16x16/apps/horizon.png"),
