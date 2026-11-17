@@ -119,7 +119,9 @@ fn write_config(net: &Network) -> Result<(), String> {
 fn config_text(net: &Network) -> String {
     let mut t = String::new();
     t.push_str("# Written by HorizonX from network.json: change the network in the app (edits here are replaced).\n");
-    t.push_str(&format!("bind = \"0.0.0.0:{}\"\n", net.port));
+    // Test runs keep the proxy on this PC (no Windows Firewall prompt for each test copy).
+    let host = if servers::loopback_only() { "127.0.0.1" } else { "0.0.0.0" };
+    t.push_str(&format!("bind = \"{host}:{}\"\n", net.port));
     t.push_str(&format!("motd = {}\n", toml_str(&net.motd)));
     t.push_str("max_players = 10000\n");
     t.push_str(&format!("online_mode = {}\n", net.online_mode));

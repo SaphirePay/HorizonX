@@ -45,7 +45,7 @@ fn create_asks_init_and_config_set() {
     assert_eq!(
         settings_args(&spec, 8131).join(" "),
         "config set world.game_mode=survival world.difficulty=normal server.max_players=10 \
-         server.motd=Friends panel.bind=127.0.0.1:8131"
+         server.motd=Friends panel.bind=127.0.0.1:8131 server.bind=127.0.0.1"
     );
 }
 
@@ -291,4 +291,15 @@ fn the_game_mode_comes_from_server_toml() {
     fs::write(dir.join("server.toml"), "[server]\nport = 25565\n").unwrap();
     assert_eq!(game_mode(&dir), None);
     let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn a_busy_port_is_found_without_listening_on_the_network() {
+    // Only the loopback address: a test listening on every address would itself make Windows Firewall ask.
+    let busy = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+    let port = busy.local_addr().unwrap().port();
+    assert!(!port_free(port));
+    assert_ne!(free_port(port, &[]), port);
+    drop(busy);
+    assert!(port_free(port));
 }

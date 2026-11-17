@@ -1,4 +1,4 @@
-HORIZONX 0.3.3 for Windows (64-bit)
+HORIZONX 0.3.4 for Windows (64-bit)
 
 Start
   1. Unzip this folder anywhere you like, for example Documents\HorizonX.

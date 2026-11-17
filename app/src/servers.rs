@@ -583,15 +583,26 @@ impl Default for NewServer {
 
 /// A port nobody listens on, from `from` up, and not one of `taken`.
 pub fn free_port(from: u16, taken: &[u16]) -> u16 {
-    let bind = if cfg!(test) || std::env::var_os("HORIZON_TEST_LOOPBACK").is_some_and(|v| v == "1")
-    {
-        "127.0.0.1"
-    } else {
-        "0.0.0.0"
-    };
     (from..u16::MAX)
-        .find(|p| !taken.contains(p) && std::net::TcpListener::bind((bind, *p)).is_ok())
+        .find(|p| !taken.contains(p) && port_free(*p))
         .unwrap_or(from)
+}
+
+/// Nothing listens on `port`. Checked from this PC only: a local connection finds a server on every address
+/// (that takes the loopback address too), binding the loopback address finds one listening there alone. Neither
+/// listens on the network, so Windows Firewall never asks about HorizonX for it (listening on 0.0.0.0 did).
+fn port_free(port: u16) -> bool {
+    let local = std::net::SocketAddr::from((std::net::Ipv4Addr::LOCALHOST, port));
+    if std::net::TcpStream::connect_timeout(&local, std::time::Duration::from_millis(150)).is_ok() {
+        return false;
+    }
+    std::net::TcpListener::bind(local).is_ok()
+}
+
+/// Test runs (`HORIZON_TEST_LOOPBACK=1`, and unit tests) keep every server and the proxy on this PC: no new
+/// program listening on the network, so no Windows Firewall prompt for each test copy.
+pub fn loopback_only() -> bool {
+    cfg!(test) || std::env::var_os("HORIZON_TEST_LOOPBACK").is_some_and(|v| v == "1")
 }
 
 /// The ports the launcher's other servers use: their game port and their web panel.
@@ -665,7 +676,7 @@ pub fn init_args(spec: &NewServer, world: &str, port: u16) -> Vec<String> {
 
 /// The `horizon-server config set` arguments that finish a new server.
 pub fn settings_args(spec: &NewServer, panel_port: u16) -> Vec<String> {
-    vec![
+    let mut args = vec![
         "config".into(),
         "set".into(),
         format!("world.game_mode={}", spec.game_mode),
@@ -673,7 +684,11 @@ pub fn settings_args(spec: &NewServer, panel_port: u16) -> Vec<String> {
         format!("server.max_players={}", spec.max_players.clamp(1, 1000)),
         format!("server.motd={}", spec.name.trim()),
         format!("panel.bind=127.0.0.1:{panel_port}"),
-    ]
+    ];
+    if loopback_only() {
+        args.push("server.bind=127.0.0.1".into());
+    }
+    args
 }
 
 /// Creates a server: its folder, the world (a copy when asked), `init` and the settings, then adds it to
