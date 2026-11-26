@@ -2813,7 +2813,7 @@ dependencies = [
 
 [[package]]
 name = "horizonx"
-version = "0.3.4"
+version = "0.3.5"
 dependencies = [
  "chrono",
  "gpui-fast",
