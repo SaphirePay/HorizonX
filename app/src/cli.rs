@@ -87,6 +87,10 @@ enum ServersCmd {
         /// Agree to the Minecraft EULA (https://aka.ms/MinecraftEULA)
         #[arg(long)]
         accept_eula: bool,
+        /// A public address through playit.gg (off by default). The server is private with it: only the
+        /// whitelist joins, and it doesn't answer server scanners' status pings
+        #[arg(long)]
+        playit: bool,
     },
     /// Copy an installed, prepared version's programs and game files for the servers (again)
     SetUp {
@@ -2248,6 +2252,7 @@ fn servers(action: ServersCmd, as_json: bool) -> Result<(), String> {
             players,
             version,
             accept_eula,
+            playit,
         } => {
             let spec = NewServer {
                 name,
@@ -2264,7 +2269,8 @@ fn servers(action: ServersCmd, as_json: bool) -> Result<(), String> {
                 check_accounts: !offline,
                 players,
                 eula: accept_eula,
-                playit: true,
+                // A public address is the owner's choice: off unless asked for (`host::set_playit`).
+                playit,
             };
             let tag = backend::resolve_version(version.as_deref()).ok();
             let entry = servers::create(&spec, tag.as_deref(), &|l| eprintln!("{l}"))

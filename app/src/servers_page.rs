@@ -1009,7 +1009,8 @@ impl Launcher {
             check_accounts: c.check_accounts,
             players,
             eula: c.eula,
-            playit: true,
+            // A public address is the owner's choice: off until they turn it on (`host::set_playit`).
+            playit: false,
         };
         let tag = self.selected().cloned();
         let tx = self.servers.tx.clone();

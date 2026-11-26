@@ -167,7 +167,7 @@ pub fn run(dir: &Path, answers: Answers) -> Result<(), String> {
             .parse()
             .map_err(|_| "the port must be a number from 1 to 65535".to_owned())?,
     };
-    if std::net::TcpListener::bind(("0.0.0.0", cfg.server.port)).is_err() {
+    if port_in_use(cfg.server.port) {
         println!(
             "Port {} is in use right now: stop what uses it, or change server.port in server.toml.",
             cfg.server.port
@@ -267,6 +267,16 @@ fn add_players(
     Ok(())
 }
 
+/// Something listens on `port`, checked from this computer only: a local connection finds a server on every
+/// address (that takes the loopback address too), binding the loopback address finds one listening there alone.
+/// Neither listens on the network, so Windows Firewall doesn't ask about horizon-server (listening on 0.0.0.0 did,
+/// for every new copy).
+fn port_in_use(port: u16) -> bool {
+    let local = std::net::SocketAddr::from((std::net::Ipv4Addr::LOCALHOST, port));
+    std::net::TcpStream::connect_timeout(&local, std::time::Duration::from_millis(150)).is_ok()
+        || std::net::TcpListener::bind(local).is_err()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -326,5 +336,14 @@ mod tests {
         assert!(!dir.join(config::FILE).exists());
         assert!(!eula::agreed(&dir.join("eula.txt")).unwrap());
         std::fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn a_busy_port_is_found_without_listening_on_the_network() {
+        let busy = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = busy.local_addr().unwrap().port();
+        assert!(port_in_use(port));
+        drop(busy);
+        assert!(!port_in_use(port));
     }
 }

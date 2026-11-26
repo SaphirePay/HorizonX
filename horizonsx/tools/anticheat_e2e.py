@@ -20,7 +20,7 @@ Checks:
          soul sand, swims, walks into cows, has blocks changed around it, flies in creative, glides with an
          elytra and a firework, launches with riptide and rides a boat: it is never flagged. A bot, which
          moves by its own rules and sends no keys, is flagged and sent back.
-- combat: no server.toml (the anticheat's defaults: `combat` acts), survival: a bot attacking a player
+- combat: `[anticheat] enabled = true` and nothing else (its thresholds' defaults: `combat` acts), survival: a bot attacking a player
          twice a second and swinging each time, as vanilla's client does, is never flagged and its hits
          land; one that doesn't swing, and one that attacks two players in the same tick, are flagged,
          their attacks dropped, and kicked.
@@ -81,6 +81,8 @@ kick = 20
 enabled = false
 '''
 OFF = '[anticheat]\nenabled = false\n'
+# On, with every threshold at its default (the anticheat itself is off by default).
+DEFAULT_ON = '[anticheat]\nenabled = true\n'
 
 
 class Failed(Exception):
@@ -537,7 +539,7 @@ def check_prediction_vanilla(bins, scratch, out, seconds):
 
 def check_combat(bins, scratch, out, seconds):
     folder = scratch / 'combat'
-    server, port = start(bins, folder, None, out, 'combat', gamemode='survival', difficulty='peaceful')
+    server, port = start(bins, folder, DEFAULT_ON, out, 'combat', gamemode='survival', difficulty='peaceful')
     try:
         # Everyone spawns on one spot, within reach of the others, and a hit's damage stays.
         server.console('gamerule respawn_radius 0')

@@ -612,7 +612,8 @@ fn create(a: &Value) -> Result<Value, String> {
         check_accounts: !b(a, "offline", false),
         players: list(a, "players"),
         eula: true,
-        playit: b(a, "playit", true),
+        // A public address only when asked for (and then the server is private: whitelist, no status pings).
+        playit: b(a, "playit", false),
     };
     let notes = std::sync::Mutex::new(Vec::<String>::new());
     let log = |l: String| notes.lock().unwrap().push(l);

@@ -557,8 +557,8 @@ pub struct NewServer {
     /// Who may join first (whitelisted), and the first of them becomes an operator.
     pub players: Vec<String>,
     pub eula: bool,
-    /// HorizonX: a public address through playit.gg (on by default). Off is remembered in the server's host.json,
-    /// so nothing puts playit back on its own.
+    /// HorizonX: a public address through playit.gg. Off by default: a public address is found by the scanners
+    /// that sweep playit.gg, so the owner turns it on (and the server goes private with it: `host::set_playit`).
     pub playit: bool,
 }
 
@@ -576,7 +576,7 @@ impl Default for NewServer {
             check_accounts: true,
             players: Vec::new(),
             eula: false,
-            playit: true,
+            playit: false,
         }
     }
 }
@@ -754,8 +754,8 @@ pub fn create(spec: &NewServer, tag: Option<&str>, log: &dyn Fn(String)) -> Resu
         &settings.iter().map(String::as_str).collect::<Vec<_>>(),
     )
     .map_err(undo)?;
-    // HorizonX: HorizonsX as the engine and the playit plugin in (public address, no port forwarding), unless
-    // the owner chose no public address: that is remembered first, so adopt leaves playit out.
+    // HorizonX: HorizonsX as the engine; playit (a public address) only when the owner asked for it, and then
+    // with the server private (whitelist, no answer to status pings: `host::set_playit`).
     if !spec.playit {
         let mut s = crate::host::schedule(&dir);
         s.playit_off = true;
@@ -763,6 +763,12 @@ pub fn create(spec: &NewServer, tag: Option<&str>, log: &dyn Fn(String)) -> Resu
     }
     for line in crate::host::adopt(&dir) {
         log(line);
+    }
+    if spec.playit {
+        match crate::host::set_playit(&dir, true) {
+            Ok(()) => log("Public address: playit is in; only the whitelist joins, and server scanners get no answer".into()),
+            Err(e) => log(format!("Couldn't turn playit on: {e}")),
+        }
     }
     let entry = Entry {
         name,

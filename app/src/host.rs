@@ -67,11 +67,10 @@ pub fn adopt(dir: &Path) -> Vec<String> {
             }
         }
     }
-    if !plugin_installed(dir, PLAYIT) && !plugin_installed(dir, &format!("{PLAYIT}.disabled")) && !schedule(dir).playit_off {
-        match install_plugin(dir, PLAYIT) {
-            Ok(()) => did.push("Public address: the playit plugin is in".to_string()),
-            Err(e) => did.push(format!("Couldn't add the playit plugin: {e}")),
-        }
+    // playit (a public address) is never put in here: only the owner turns it on (`set_playit`), so a server
+    // HorizonX takes over stays on its own network until they choose otherwise.
+    if let Some(note) = make_private_once(dir) {
+        did.push(note);
     }
     // The app shipped newer builds of plugins this server has (after an update): put them in.
     let fresh = refresh_plugins(dir);
@@ -457,6 +456,10 @@ pub struct Schedule {
     /// The owner turned playit off: the app leaves it out (no public address).
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub playit_off: bool,
+    /// The server was made private for its public address (`make_private_once`): done once, so an owner who
+    /// later turns the whitelist off on purpose isn't overruled.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub made_private: bool,
     /// The owner turned the Java layer off: jars stay, and nothing puts the layer back.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub java_layer_off: bool,
@@ -647,7 +650,113 @@ pub fn playit_on(dir: &Path) -> bool {
 }
 
 /// Turns playit on or off for a server, and remembers it. A running HorizonsX server loads or unloads it at once.
+/// On, the server is private as well (`playit_privacy`): a public address is found by the scanners that sweep
+/// playit.gg's shared addresses for Minecraft servers.
 pub fn set_playit(dir: &Path, on: bool) -> Result<(), String> {
+    switch_playit(dir, on)?;
+    playit_privacy(dir, on)?;
+    if on {
+        let mut s = schedule(dir);
+        s.made_private = true;
+        save_schedule(dir, &s)?;
+    }
+    Ok(())
+}
+
+/// What a public address takes with it. playit.gg puts every tunnel on its shared addresses, and server
+/// scanners sweep those for Minecraft servers and publish what answers: so with playit on, only the
+/// whitelist joins (the owner's own account added and made an operator, so they aren't locked out), the
+/// server doesn't answer status pings (a scanner gets nothing back and never lists it; a player who has
+/// the address still joins) and its player names aren't shown. Off, status pings are answered again (the
+/// whitelist stays as the owner left it).
+pub fn playit_privacy(dir: &Path, on: bool) -> Result<(), String> {
+    let changes: Vec<(&str, String)> = if on {
+        vec![
+            ("server.whitelist", "true".into()),
+            ("server.enforce_whitelist", "true".into()),
+            ("properties.enable-status", "false".into()),
+            ("properties.hide-online-players", "true".into()),
+        ]
+    } else {
+        vec![("properties.enable-status", "true".into())]
+    };
+    servers::set_config(dir, &changes).map_err(|e| format!("Couldn't make the server private: {}", e.message))?;
+    if on {
+        let_owner_in(dir);
+    }
+    Ok(())
+}
+
+/// The signed-in account (HorizonX shares the launcher's accounts) on the whitelist and an operator: through
+/// the console when the server runs, else into whitelist.json and ops.json as vanilla writes them. Its name,
+/// or None with nobody signed in.
+pub fn let_owner_in(dir: &Path) -> Option<String> {
+    let account = crate::account::Accounts::load().selected().cloned()?;
+    let name = account.name.clone();
+    let has = |file: &str| servers::names(dir, file).iter().any(|n| n.eq_ignore_ascii_case(&name));
+    let (listed, opped) = (has("whitelist.json"), has("ops.json"));
+    if listed && opped {
+        return Some(name);
+    }
+    if servers::run(dir, &["cmd", "whitelist", "add", &name]).is_ok() {
+        if !opped {
+            let _ = servers::run(dir, &["cmd", "op", &name]);
+        }
+        return Some(name);
+    }
+    let uuid = dashed_uuid(&account.uuid);
+    if !listed {
+        add_list_entry(dir, "whitelist.json", serde_json::json!({ "uuid": uuid, "name": name }));
+    }
+    if !opped {
+        add_list_entry(dir, "ops.json", serde_json::json!({ "uuid": uuid, "name": name, "level": 4, "bypassesPlayerLimit": false }));
+    }
+    Some(name)
+}
+
+/// A profile UUID with its dashes (8-4-4-4-12), as the list files keep it.
+fn dashed_uuid(uuid: &str) -> String {
+    let u: String = uuid.chars().filter(|c| *c != '-').collect();
+    if u.len() != 32 {
+        return uuid.to_string();
+    }
+    format!("{}-{}-{}-{}-{}", &u[0..8], &u[8..12], &u[12..16], &u[16..20], &u[20..32])
+}
+
+/// One more entry in a list file (`whitelist.json`, `ops.json`); a missing or unreadable file starts empty.
+fn add_list_entry(dir: &Path, file: &str, entry: Value) {
+    let path = dir.join(file);
+    let mut list: Vec<Value> = fs::read_to_string(&path).ok().and_then(|t| serde_json::from_str(&t).ok()).unwrap_or_default();
+    list.push(entry);
+    if let Ok(text) = serde_json::to_string_pretty(&list) {
+        let _ = fs::write(&path, text + "\n");
+    }
+}
+
+/// HorizonX 0.3.5: a server that already had a public address (playit on, from before it was off by default)
+/// is made private once, as `set_playit` makes one now: only its whitelist joins (the owner added) and server
+/// scanners get no answer. What it tells the owner, or None when there was nothing to do. Run when a server is
+/// opened (`adopt`) and for every server when HorizonX starts, so one that runs unattended is covered too.
+pub fn make_private_once(dir: &Path) -> Option<String> {
+    let mut s = schedule(dir);
+    if s.made_private || !playit_on(dir) {
+        return None;
+    }
+    let name = dir.file_name().map_or_else(|| "This server".to_string(), |n| n.to_string_lossy().into_owned());
+    match playit_privacy(dir, true) {
+        Ok(()) => {
+            s.made_private = true;
+            let _ = save_schedule(dir, &s);
+            Some(format!(
+                "Security update: {name} has a public playit.gg address, so it's private now. Only players on its                  whitelist can join, and server scanners can't see it. Add your friends on the Players page."
+            ))
+        }
+        Err(e) => Some(format!("Security update: couldn't make {name} private yet ({e}); it is tried again next time.")),
+    }
+}
+
+/// [`set_playit`]'s plugin switch and the remembered choice.
+fn switch_playit(dir: &Path, on: bool) -> Result<(), String> {
     let mut s = schedule(dir);
     s.playit_off = !on;
     save_schedule(dir, &s)?;
@@ -862,6 +971,26 @@ mod tests {
     }
 
     #[test]
+    fn the_owner_goes_on_the_lists_once_with_a_dashed_uuid() {
+        assert_eq!(dashed_uuid("0123456789abcdef0123456789abcdef"), "01234567-89ab-cdef-0123-456789abcdef");
+        assert_eq!(dashed_uuid("01234567-89ab-cdef-0123-456789abcdef"), "01234567-89ab-cdef-0123-456789abcdef");
+        let dir = std::env::temp_dir().join(format!("hh-lists-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).unwrap();
+        fs::write(dir.join("whitelist.json"), r#"[{"uuid":"a","name":"Friend"}]"#).unwrap();
+        add_list_entry(&dir, "whitelist.json", serde_json::json!({ "uuid": "b", "name": "Owner" }));
+        add_list_entry(&dir, "ops.json", serde_json::json!({ "uuid": "b", "name": "Owner", "level": 4, "bypassesPlayerLimit": false }));
+        assert_eq!(servers::names(&dir, "whitelist.json"), ["Friend", "Owner"]);
+        assert_eq!(servers::names(&dir, "ops.json"), ["Owner"]);
+        let _ = fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn playit_is_off_unless_asked_for() {
+        assert!(!servers::NewServer::default().playit);
+    }
+
+    #[test]
     fn playit_can_be_turned_off_and_stays_off() {
         let base = std::env::temp_dir().join(format!("hh-playit-{}", std::process::id()));
         let _ = fs::remove_dir_all(&base);
@@ -872,15 +1001,19 @@ mod tests {
         fs::create_dir_all(server.join("plugins")).unwrap();
         // SAFETY: the only test that reads this variable.
         unsafe { std::env::set_var("HORIZON_HOST_PLUGINS", &plugins) };
-        set_playit(&server, true).unwrap();
+        // A server HorizonX opens for the first time gets no public address of its own accord.
+        adopt(&server);
+        assert!(!playit_on(&server));
+        // The switch itself (set_playit adds the privacy settings, which need a real server).
+        switch_playit(&server, true).unwrap();
         assert!(playit_on(&server));
-        set_playit(&server, false).unwrap();
+        switch_playit(&server, false).unwrap();
         assert!(!playit_on(&server));
         assert!(schedule(&server).playit_off);
         // Opening the server again doesn't put it back.
         adopt(&server);
         assert!(!playit_on(&server));
-        set_playit(&server, true).unwrap();
+        switch_playit(&server, true).unwrap();
         assert!(playit_on(&server));
         assert!(!server.join("plugins").join(format!("{PLAYIT}.disabled")).exists());
         unsafe { std::env::remove_var("HORIZON_HOST_PLUGINS") };

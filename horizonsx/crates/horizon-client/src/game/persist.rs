@@ -301,6 +301,12 @@ impl Game<'_> {
         let loaded = std::mem::take(&mut self.world.loaded_entities);
         let player_uuid = self.level.player_uuid;
         for (key, tags) in loaded {
+            // PersistentEntitySectionManager.addEntityUuid: an entity whose UUID is already in the level isn't
+            // added ("UUID of added entity already exists"). Here within the chunk being loaded: it clears the
+            // copies of one entity that a plugin's chunk load once saved into a chunk (hundreds of one animal,
+            // all with the same few UUIDs); the chunk saves without them next time.
+            let mut seen: HashSet<[i32; 4]> = HashSet::new();
+            let mut repeats = 0usize;
             for mut tag in tags {
                 // PersistentEntitySectionManager.addEntity's `loaded`.
                 let from_disk = !take_fresh(&mut tag);
@@ -308,6 +314,12 @@ impl Game<'_> {
                 let moved = take_moved(&mut tag);
                 let kind = entity_nbt::kind(&tag).unwrap_or_default();
                 let uuid = entity_nbt::uuid(&tag);
+                if let Some(u) = uuid
+                    && !seen.insert(u)
+                {
+                    repeats += 1;
+                    continue;
+                }
                 if uuid.is_some_and(|u| self.restored_vehicle(u).is_some()) {
                     continue;
                 }
@@ -567,6 +579,9 @@ impl Game<'_> {
                     }
                     _ => self.persist.unknown.entry(key).or_default().push(tag),
                 }
+            }
+            if repeats > 0 {
+                log::warn!("Horizon: chunk {key:?}: {repeats} saved entities repeat a UUID already loaded there; left out");
             }
         }
     }

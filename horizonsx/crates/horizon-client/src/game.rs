@@ -2332,6 +2332,11 @@ struct Game<'a> {
     resident_land: bool,
     /// Resident regions are out on their threads this tick (the rest of the level keeps none of its own then).
     residents_out: bool,
+    /// HorizonsX: this tick's regions hold their chunks (from the split until the last of them is back, parked or
+    /// late; parked and late ones are in `streaming.away`). Meanwhile the level's world here lacks those chunks,
+    /// so nothing may run the chunk streamer: it would load or generate them again (a plugin's `getBlockAt`
+    /// did, and the regions' own copies came back on top: animals and minecarts twice).
+    pub(super) regions_lending: bool,
     /// No region stays resident this tick: the server's thread has players' packets or commands to handle, which
     /// may read or change any place of the level.
     keep_blocked: bool,
@@ -16338,6 +16343,53 @@ impl Game<'_> {
             self.lod_observe.extend(self.world.chunks.keys().copied());
         }
     }
+    /// What a streaming update's unloaded columns leave to do (`ChunkMap.processUnloads`): the mods told (before
+    /// the block entities are written and dropped), the far terrain given their summaries, the changed ones saved
+    /// with their entities, the entities saved and taken out of the level, their block entities dropped.
+    /// HorizonsX: every `Streaming::update` hands its unloaded columns here, at once. A plugin's synchronous chunk load
+    /// (`getBlockAt`, `loadChunk`, WorldEdit's boxes) once dropped them: their mobs stayed in the level with no
+    /// chunk under them and new terrain went unsaved, so the column generated again later and its animals and
+    /// structure entities came a second time, with the same UUIDs (hundreds of one animal on HorizonX servers).
+    pub(super) fn chunks_unloaded(&mut self, unloaded: &[Arc<horizon_client::chunk::Chunk>]) {
+        // Before the unloaded chunks' block entities are written and dropped.
+        self.native_chunks_changed(unloaded);
+        if let Some(lod) = &mut self.lod {
+            for chunk in unloaded {
+                self.lod_observe.remove(&(chunk.x, chunk.z));
+            }
+            // Unloaded columns first: their summaries are all that remains.
+            horizon_client::spans::time("lod_observe", || {
+                for chunk in unloaded {
+                    lod.observe(chunk.clone(), self.res.facts());
+                }
+            });
+        }
+        let dirty: Vec<_> = unloaded
+            .iter()
+            .filter(|c| self.world.modified.remove(&(c.x, c.z)))
+            .cloned()
+            .collect();
+        let modified = horizon_client::spans::time("with_entities", || self.with_entities(&dirty));
+        horizon_client::spans::time("unload_entities", || self.unload_entities(unloaded));
+        if !unloaded.is_empty() {
+            let gone: horizon_client::fast_hash::FxHashSet<(i32, i32)> =
+                unloaded.iter().map(|c| (c.x, c.z)).collect();
+            self.world
+                .block_entities
+                .retain(|p, _| !gone.contains(&(p.0 >> 4, p.2 >> 4)));
+            self.world
+                .block_names
+                .retain(|p, _| !gone.contains(&(p.0 >> 4, p.2 >> 4)));
+        }
+        if !modified.is_empty()
+            && let Err(e) = horizon_client::spans::time("save_chunks", || {
+                self.save
+                    .save_later(&modified, self.pack.assets.registry, world_biomes!(self))
+            })
+        {
+            log::warn!("Horizon: failed to save unloaded chunks: {e}");
+        }
+    }
     pub(super) fn update_world(&mut self) {
         if let Err(e) = self.poll_remote() {
             log::warn!("Horizon: {e}");
@@ -16372,21 +16424,15 @@ impl Game<'_> {
             horizon_client::spans::time("streaming", || self.streaming.update(&mut self.world));
         self.streaming.extra.truncate(areas);
         self.spawn_fresh_chunks();
-        // Before the unloaded chunks' block entities are written and dropped.
-        self.native_chunks_changed(&unloaded);
-        if let Some(lod) = &mut self.lod {
+        if self.lod.is_some() {
             self.lod_observe
                 .extend(uploads.iter().map(|(key, _)| (key.0, key.2)));
-            for chunk in &unloaded {
-                self.lod_observe.remove(&(chunk.x, chunk.z));
-            }
-            // Unloaded columns first (their summaries are all that remains),
-            // then a few resident ones (an edit copies a chunk the worker
-            // still holds). The worker summarizes them.
+        }
+        self.chunks_unloaded(&unloaded);
+        if let Some(lod) = &mut self.lod {
+            // Then a few resident columns (an edit copies a chunk the worker still holds). The worker
+            // summarizes them.
             horizon_client::spans::time("lod_observe", || {
-                for chunk in &unloaded {
-                    lod.observe(chunk.clone(), self.res.facts());
-                }
                 while lod.observing() < horizon_client::lod::OBSERVE_AHEAD
                     && let Some(&key) = self.lod_observe.iter().next()
                 {
@@ -16396,31 +16442,6 @@ impl Game<'_> {
                     }
                 }
             });
-        }
-        let dirty: Vec<_> = unloaded
-            .iter()
-            .filter(|c| self.world.modified.remove(&(c.x, c.z)))
-            .cloned()
-            .collect();
-        let modified = horizon_client::spans::time("with_entities", || self.with_entities(&dirty));
-        horizon_client::spans::time("unload_entities", || self.unload_entities(&unloaded));
-        if !unloaded.is_empty() {
-            let gone: horizon_client::fast_hash::FxHashSet<(i32, i32)> =
-                unloaded.iter().map(|c| (c.x, c.z)).collect();
-            self.world
-                .block_entities
-                .retain(|p, _| !gone.contains(&(p.0 >> 4, p.2 >> 4)));
-            self.world
-                .block_names
-                .retain(|p, _| !gone.contains(&(p.0 >> 4, p.2 >> 4)));
-        }
-        if !modified.is_empty()
-            && let Err(e) = horizon_client::spans::time("save_chunks", || {
-                self.save
-                    .save_later(&modified, self.pack.assets.registry, world_biomes!(self))
-            })
-        {
-            log::warn!("Horizon: failed to save unloaded chunks: {e}");
         }
         let (far_distance, far_reduced) = self.far_terrain_choice();
         if let Some(renderer) = self.renderer.as_mut() {
@@ -18015,6 +18036,7 @@ impl<'a> Game<'a> {
             resident_ticks: 0,
             resident_land: false,
             residents_out: false,
+            regions_lending: false,
             keep_blocked: false,
             resident_players: Vec::new(),
             world_update_due: false,

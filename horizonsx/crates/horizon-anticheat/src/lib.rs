@@ -2,10 +2,11 @@
 //! `server.toml`, each player's violation levels, and the rules of the checks. The server's hub
 //! (`horizon_client::lan`) feeds it what players send and carries out what it decides.
 //!
-//! It is on by default, and so is every check, but only the checks a vanilla client can't trip act on
-//! their own (`combat`); the others log only until they have shown no false positive with real
-//! players (their `setback`, `alert` and `kick` are 0). `enabled = false` turns the anticheat, or one
-//! check, off. A check that fails *flags* the player: its violation level (VL) rises by the flag's
+//! It is off by default (owner, 2026-11-25: its movement checks flagged creative players toggling flight
+//! hundreds of times a minute); `[anticheat] enabled = true` turns it on, every check with it, and then
+//! only the checks a vanilla client can't trip act on their own (`combat`); the others log only until
+//! they have shown no false positive with real players (their `setback`, `alert` and `kick` are 0).
+//! `enabled = false` on a check turns that one off. A check that fails *flags* the player: its violation level (VL) rises by the flag's
 //! weight and falls back by `decay` a second. From `setback` on, the move or action is cancelled (the
 //! player is sent back where the server last had them); from `alert` on, online operators and the
 //! console are told; from `kick` on, the player is disconnected. A check's kicks are counted per player
@@ -104,7 +105,8 @@ macro_rules! checks {
         impl Default for Config {
             fn default() -> Self {
                 Self {
-                    enabled: true,
+                    // Off unless the server turns it on (`[anticheat] enabled = true`).
+                    enabled: false,
                     alerts: true,
                     alert_level: 2,
                     log: "logs/anticheat.log".into(),
@@ -326,9 +328,15 @@ mod tests {
     }
 
     #[test]
-    fn on_by_default_but_only_combat_and_ground_act() {
+    fn off_by_default() {
         let c = Config::from_server_toml("[server]\nport = 25565\n").unwrap();
         assert_eq!(c, Config::default());
+        assert!(Check::ALL.iter().all(|&check| !c.runs(check)));
+    }
+
+    #[test]
+    fn turned_on_only_combat_and_ground_act() {
+        let c = Config::from_server_toml("[server]\nport = 25565\n[anticheat]\nenabled = true\n").unwrap();
         for &check in Check::ALL {
             assert!(c.runs(check), "{}", check.name());
             let a = c.actions(check);

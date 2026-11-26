@@ -34,8 +34,8 @@ pub struct Wizard {
     pub friends_only: bool,
     pub accounts: bool,
     pub backups: bool,
-    /// playit.gg (a public address with no port forwarding). On by default; off = only this network (or a
-    /// forwarded port) can join, and HorizonX never puts it back on its own.
+    /// playit.gg (a public address with no port forwarding). Off by default: server scanners sweep playit.gg's
+    /// addresses, so on = Friends only too and no answer to status pings (`host::set_playit`).
     pub playit: bool,
     pub error: Option<String>,
 }
@@ -57,7 +57,7 @@ impl Default for Wizard {
             friends_only: false,
             accounts: true,
             backups: true,
-            playit: true,
+            playit: false,
             error: None,
         }
     }
@@ -450,7 +450,19 @@ impl HostApp {
         let friends = toggle(self, "friends-only", self.wiz.friends_only, |w| w.friends_only = !w.friends_only, cx);
         let accounts = toggle(self, "accounts", self.wiz.accounts, |w| w.accounts = !w.accounts, cx);
         let backups = crate::demo::mark("toggle-backups-row", toggle(self, "backups", self.wiz.backups, |w| w.backups = !w.backups, cx));
-        let playit = toggle(self, "playit", self.wiz.playit, |w| w.playit = !w.playit, cx);
+        // A public address goes with Friends only: scanners find playit.gg addresses.
+        let playit = toggle(
+            self,
+            "playit",
+            self.wiz.playit,
+            |w| {
+                w.playit = !w.playit;
+                if w.playit {
+                    w.friends_only = true;
+                }
+            },
+            cx,
+        );
         let folder = servers::new_folder(&self.text(Field::Name));
         div()
             .flex()
@@ -467,9 +479,9 @@ impl HostApp {
             .child(ui::setting_row(
                 "Public address (playit.gg)",
                 if self.wiz.playit {
-                    "Friends join from anywhere, with no port forwarding."
+                    "Friends join from anywhere with the address. Only players you add get in, and the server stays hidden from server scanners."
                 } else {
-                    "Off: players on your network join, others only through a port you forward. Turn it on any time on the Plugins page."
+                    "Off: only players on your network can join. Turn it on any time on the Plugins page."
                 },
                 playit,
             ))
@@ -538,7 +550,8 @@ impl HostApp {
             playit: w.playit,
         };
         let playit = w.playit;
-        let plugins: Vec<String> = (if playit { crate::app::with_playit(&w.plugins) } else { w.plugins.clone() }).into_iter().collect();
+        // playit isn't one of the wizard's plugins: making the server turns it on, private (`host::set_playit`).
+        let plugins: Vec<String> = w.plugins.iter().filter(|p| p.as_str() != host::PLAYIT).cloned().collect();
         // Both run the HorizonsX engine: HorizonsX with region threads (a TPS per region), Horizon without (one
         // TPS for the server). The server's Settings switch them later.
         let regions = w.engine == Engine::HorizonsX;

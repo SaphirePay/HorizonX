@@ -56,10 +56,10 @@ EDITS = [
     # HorizonsX's resident regions: a chunk a region holds on its thread never loads here (streaming leaves it out),
     # so a plugin's box over one waited the whole minute and froze the server: the regions come back next tick
     # instead, and the plugin's next try finds the chunks here.
-    ('horizon-client/src/game.rs', '''        if game.region_worker {
+    ('horizon-client/src/game.rs', '''        if game.region_worker || game.regions_lending {
             return false;
         }
-        let added: Vec<(i32, i32)> = wanted''', '''        if game.region_worker {
+        let added: Vec<(i32, i32)> = wanted''', '''        if game.region_worker || game.regions_lending {
             return false;
         }
         if wanted.iter().any(|c| game.streaming.away.contains(c)) {

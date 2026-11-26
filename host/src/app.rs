@@ -153,6 +153,17 @@ impl HostApp {
         })
         .detach();
         let list = servers::list();
+        // HorizonX 0.3.5: servers that already had a public address are made private once, opened or not (a server
+        // that runs unattended is covered too); each owner is told what changed.
+        {
+            let (tx, dirs) = (tx.clone(), list.iter().map(|e| e.dir.clone()).collect::<Vec<_>>());
+            std::thread::spawn(move || {
+                let notes: Vec<String> = dirs.iter().filter_map(|d| host::make_private_once(d)).collect();
+                if !notes.is_empty() {
+                    let _ = tx.send(Ev::Note(notes.join(" · ")));
+                }
+            });
+        }
         // What was remembered: each server's players over time.
         {
             let (tx, dirs) = (tx.clone(), list.iter().map(|e| e.dir.clone()).collect::<Vec<_>>());
@@ -531,6 +542,8 @@ impl HostApp {
                         self.busy.insert(d.clone(), "Starting".into());
                         let tx = self.tx.clone();
                         std::thread::spawn(move || {
+                            // Private before it is up, if it had a public address (the startup sweep may still be on it).
+                            let _ = host::make_private_once(&d);
                             let r = servers::run_streamed(&d, &["start"], &|_| {}).map(|_| String::new()).map_err(|e| e.message);
                             let _ = tx.send(Ev::Done(d, r));
                         });

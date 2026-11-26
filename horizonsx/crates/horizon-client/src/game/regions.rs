@@ -1673,6 +1673,9 @@ impl<'a> Game<'a> {
                 self.world.light_log = Some(Default::default());
             }
         }
+        // From here until every region of this tick is back (or parked or late, in `streaming.away`), their chunks
+        // are not in this game's world: nothing may run the chunk streamer (`regions_lending`).
+        self.regions_lending = true;
         let LevelSplit { parts, chunks } = horizon_client::spans::time("rg_split", || self.split_level(&regions));
         if let Ok(mut l) = LEFTOVER.lock() {
             (l.1, l.2) = (self.world.chunks.len(), self.mobs.len());
@@ -1908,6 +1911,7 @@ impl<'a> Game<'a> {
                 self.region_flights.push(f);
             }
         }
+        self.regions_lending = false;
         {
             let mut times = REGION_TIMES.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
             *times = (count, slowest, total / count.max(1) as f32, times.3 + late);

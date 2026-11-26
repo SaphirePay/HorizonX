@@ -366,7 +366,9 @@ pub(in crate::game) fn resident(game: &mut Game<'_>, min: [i32; 3], max: [i32; 3
     }
     // A region's thread holds only its region's chunks and can't load others: waiting here (a minute) for one
     // that another thread holds took the whole server down on the watchdog. Not there is the answer.
-    if game.region_worker {
+    // The server's own thread while this tick's regions hold their chunks (`regions_lending`): its world lacks
+    // them, and the streamer run here loaded or generated them again (their animals and minecarts twice).
+    if game.region_worker || game.regions_lending {
         return false;
     }
     let added: Vec<(i32, i32)> = wanted.iter().copied().filter(|c| game.streaming.forced.insert(*c)).collect();
@@ -376,7 +378,11 @@ pub(in crate::game) fn resident(game: &mut Game<'_>, min: [i32; 3], max: [i32; 3
     let generated = game.streaming.generated_total;
     let mut told = false;
     while !missing(game).is_empty() && std::time::Instant::now() < deadline {
-        let _ = game.streaming.update(&mut game.world);
+        // What this update unloads is saved and let go now, as the world update does (`Game::chunks_unloaded`):
+        // dropped here, its mobs stayed in the level and its new terrain went unsaved, so the column generated
+        // again later and its animals and structure entities came twice (HorizonX's piles of one animal).
+        let (_, unloaded) = game.streaming.update(&mut game.world);
+        game.chunks_unloaded(&unloaded);
         game.streaming.wait(std::time::Duration::from_millis(2));
         if !told && started.elapsed() > std::time::Duration::from_secs(3) && game.streaming.generated_total == generated && missing(game).len() == wanted.len() {
             told = true;

@@ -847,7 +847,9 @@ impl Game<'_> {
         self.force_load_test_chunks(area);
         let deadline = Instant::now() + std::time::Duration::from_secs(120);
         while missing(self) && Instant::now() < deadline {
-            let _ = self.streaming.update(&mut self.world);
+            // What this update unloads is saved and let go as the world update does (`Game::chunks_unloaded`).
+            let (_, unloaded) = self.streaming.update(&mut self.world);
+            self.chunks_unloaded(&unloaded);
             self.streaming.wait(std::time::Duration::from_millis(5));
         }
     }
